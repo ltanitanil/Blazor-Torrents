@@ -26,17 +26,29 @@ namespace Web.Setvices
         }
 
         //тут должен быть таск
-        public CatalogIndexViewModel GetCatalogItems(int pageIndex, int itemsPage)
+        public async Task<CatalogIndexViewModel> GetCatalogItems(int pageIndex, int itemsPage)
         {
-            _torrentRepository.ListAsync();
-            CatalogTorrentViewModel torrentViewModel = new CatalogTorrentViewModel()
+            var torrentsOnPage = await _torrentRepository.ListAsync();
+            var ci = new CatalogIndexViewModel
             {
-                Id = 1,
-                CountFile = 8,
-                Size = "215214",
-                Title = "hi!hi!hi!hi!hi!HI!hI!"
+                CatalogTorrents = torrentsOnPage.Select(x => new CatalogTorrentViewModel
+                {
+                    Id = x.Id,
+                    Title = x.Title,
+                    Size = x.Size,
+                }),
+                PaginationInfo = new PaginationInfoViewModel()
+                {
+                    ActualPage= pageIndex,
+                    TorrentsPerPage = torrentsOnPage.Count,
+                    TotalTorrents = 50,//correct
+                    TotalPages = 0//correct
+                }
             };
-            return new CatalogIndexViewModel { catalogTorrents = new CatalogTorrentViewModel[] {torrentViewModel}};
+
+
+
+            return ci;
         }
     }
 }

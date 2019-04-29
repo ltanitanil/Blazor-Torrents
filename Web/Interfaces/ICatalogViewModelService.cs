@@ -8,6 +8,6 @@ namespace Web.Interfaces
 {
     public interface ICatalogViewModelService
     {
-        CatalogIndexViewModel GetCatalogItems(int pageIndex, int itemsPage);
+        Task<CatalogIndexViewModel> GetCatalogItems(int pageIndex, int itemsPage);
     }
 }

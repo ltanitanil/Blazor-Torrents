@@ -22,7 +22,7 @@ namespace Web.Pages
 
         public async Task OnGet(CatalogIndexViewModel catalogModel, int? pageId)
         {
-            CatalogModel =  _catalogViewModelService.GetCatalogItems(pageId ?? 0, 10);
+            CatalogModel =  await _catalogViewModelService.GetCatalogItems(pageId ?? 0, 10);
         }
 
     }

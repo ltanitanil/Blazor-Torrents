@@ -1,7 +1,20 @@
 ﻿@page
 @{
     ViewData["Title"] = "Каталог";
-    @model Web.Pages.IndexModel
+    @model IndexModel
 }
-@Model.CatalogModel.catalogTorrents.FirstOrDefault().Title
-<div>"ОЛололололололололол"</div>
+<div class="container">
+    @if (Model.CatalogModel.CatalogTorrents.Any())
+    {
+
+        <div class="esh-catalog-items row">
+            @foreach (var catalogTorrent in Model.CatalogModel.CatalogTorrents)
+            {
+                <div class="esh-catalog-torrent clo-md-4">
+                    <partial name="_torrent" for="@catalogTorrent">
+                </div>
+            }
+        </div>
+
+    }
+</div>

@@ -14,7 +14,7 @@ namespace Infrastructure.Data
 
         public CatalogContext(DbContextOptions<CatalogContext> options):base(options)
         {
-            Database.EnsureCreated();
+            //Database.EnsureCreated();
         }
 
     }

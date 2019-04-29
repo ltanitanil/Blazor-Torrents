@@ -7,7 +7,7 @@ namespace Web.ViewModels
 {
     public class CatalogIndexViewModel
     {
-        public IEnumerable<CatalogTorrentViewModel> catalogTorrents { get; set; }
-        
+        public IEnumerable<CatalogTorrentViewModel> CatalogTorrents { get; set; }
+        public PaginationInfoViewModel PaginationInfo { get; set; }
     }
 }

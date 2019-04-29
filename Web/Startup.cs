@@ -33,12 +33,9 @@ namespace Web
             services.AddScoped<CatalogViewModelService>();
             string connection = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<CatalogContext>(c =>
-                c.UseInMemoryDatabase(connection));
-            services.AddMvc().AddRazorPagesOptions(options =>
-            {
-                options.RootDirectory = "/Pages";
-            });
+                c.UseSqlServer(connection));
             services.AddMvc();
+   
             _services = services;
         }
 
@@ -49,12 +46,9 @@ namespace Web
             {
                 app.UseDeveloperExceptionPage();
             }
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller}/{action=Index}/{id?}");
-            });
+            app.UseMvc();
+            app.UseStaticFiles();
+
         }
     }
 }

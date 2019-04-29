@@ -1,7 +1,9 @@
 ﻿using ApplicationCore.Entities;
 using ApplicationCore.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -26,6 +28,11 @@ namespace Infrastructure.Data
             throw new NotImplementedException();
         }
 
+        public Task<int> CountAsync(ISpecification<T> specification)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task DeleteAsync(T entity)
         {
             throw new NotImplementedException();
@@ -41,7 +48,12 @@ namespace Infrastructure.Data
             throw new NotImplementedException();
         }
 
-        public Task<IReadOnlyList<T>> ListAsync()
+        public async Task<IReadOnlyList<T>> ListAsync()
+        {
+            return await _eFContext.Set<T>().AsQueryable().ToListAsync();
+        }
+
+        public Task<IReadOnlyList<T>> ListAsync(ISpecification<T> specification)
         {
             throw new NotImplementedException();
         }
