@@ -14,7 +14,11 @@ namespace Infrastructure.Data
 
         public CatalogContext(DbContextOptions<CatalogContext> options):base(options)
         {
-            //Database.EnsureCreated();
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseLazyLoadingProxies();
         }
 
     }

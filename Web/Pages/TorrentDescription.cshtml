@@ -1,0 +1,23 @@
+﻿@page
+@model Web.Pages.TorrentDescriptionModel
+@{
+}
+<div>@Model.TorrentModel.Title</div>
+<div>@Model.TorrentModel.RegistredAt</div>
+<div>@Model.TorrentModel.Size</div>
+<div>@Model.TorrentModel.Forum.Value</div>
+<div>
+    @foreach (var a in Model.TorrentModel.File)
+    {
+        <div>
+            <span>
+                @a.Name
+            </span>
+            <span>
+                @a.Size
+            </span>
+        </div>
+    }
+</div>
+<div style="max-width:1000px;margin:0;">@Html.Raw(@Model.TorrentModel.Content)</div>
+<a asp-page="Index">Главная</a>

@@ -1,20 +1,37 @@
 ﻿@page
 @{
     ViewData["Title"] = "Каталог";
+
     @model IndexModel
 }
-<div class="container">
-    @if (Model.CatalogModel.CatalogTorrents.Any())
-    {
 
-        <div class="esh-catalog-items row">
+
+<form method="get">
+    <label>
+        <input asp-for="@Model.CatalogModel.SearchText" />
+    </label>
+    <input type="image" @*src="images/arrow-right.svg" *@ />
+</form>
+
+@if (Model.CatalogModel.CatalogTorrents.Any())
+{
+    <partial name="_pagination" for="CatalogModel.PaginationInfo" view-data="@{new ViewDataDictionary(this.ViewData) { { "searchText", Model.CatalogModel.SearchText} }} " />
+    <div>
+        <table>
+            <tr>
+                <th> Название</th>
+                <th>Дата загрузки</th>
+                <th>Размер</th>
+            </tr>
             @foreach (var catalogTorrent in Model.CatalogModel.CatalogTorrents)
             {
-                <div class="esh-catalog-torrent clo-md-4">
-                    <partial name="_torrent" for="@catalogTorrent">
-                </div>
+                <tr><partial name="_torrent" for="@catalogTorrent" /></tr>
             }
-        </div>
-
-    }
-</div>
+        </table>
+    </div>
+    <partial name="_pagination" for="CatalogModel.PaginationInfo" />
+}
+else
+{
+    <div>Увы, ничего не найдено</div>
+}

@@ -16,8 +16,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\css\catalog\" />
+    <Folder Include="wwwroot\css\" />
     <Folder Include="wwwroot\lib\" />
+    <Folder Include="wwwroot\images\" />
   </ItemGroup>
 
 </Project>

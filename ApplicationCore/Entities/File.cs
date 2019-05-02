@@ -6,6 +6,10 @@ namespace ApplicationCore.Entities
 {
     public class File : BaseEntity
     {
-        public string Value { get; set; }
+        public string Name { get; set; }
+        public string Size { get; set; }
+
+        //public int TorrentId { get; set; }
+
     }
 }

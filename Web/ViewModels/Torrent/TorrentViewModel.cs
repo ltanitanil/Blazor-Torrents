@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ApplicationCore.Entities;
 
 namespace Web.ViewModels
 {
-    public class CatalogTorrentViewModel
+    public class TorrentViewModel
     {
         public int Id { get; set; }
         public string Title { get; set; }
         public string Size { get; set; } 
-        public int CountFile { get; set; }
+        public DateTimeOffset RegistredAt { get; set; }
     }
 }

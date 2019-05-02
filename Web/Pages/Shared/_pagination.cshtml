@@ -1,0 +1,18 @@
+﻿@model PaginationInfoViewModel
+
+
+<a id="Previous"
+   asp-all-route-data='new Dictionary<string, string> {
+                                { "pageId", (@Model.ActualPage - 1).ToString() },
+                                { "searchText", (@ViewData["searchText"]??"").ToString()} }'>
+    Предыдущая страница
+</a>
+
+<a id="Next"
+   asp-all-route-data='new Dictionary<string, string> {
+                                { "pageId", (@Model.ActualPage + 1).ToString() },
+                                { "searchText", (@ViewData["searchText"]??"").ToString()} }'
+   aria-label="Next">
+    Следующая страница
+</a>
+

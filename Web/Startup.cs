@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Web.Interfaces;
-using Web.Setvices;
+using Web.Services;
 
 namespace Web
 {
@@ -29,8 +29,8 @@ namespace Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped(typeof(IAsyncRepository<>), typeof(EFRepository<>));
-            services.AddScoped<ICatalogViewModelService,CatalogViewModelService>();
-            services.AddScoped<CatalogViewModelService>();
+            services.AddScoped<ITorrentsViewModelService,TorrentsViewModelService>();
+            services.AddScoped<TorrentsViewModelService>();
             string connection = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<CatalogContext>(c =>
                 c.UseSqlServer(connection));

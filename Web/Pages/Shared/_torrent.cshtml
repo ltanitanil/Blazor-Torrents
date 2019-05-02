@@ -1,6 +1,16 @@
-﻿@model CatalogTorrentViewModel
-
-<div class="esh-catalog-name">
-    <span>@Model.Title</span>
-    <span>@Model.Size</span>
-</div>
+﻿@model TorrentViewModel
+<td>
+    <div class="esh-catalog-name">
+        <a asp-page="TorrentDescription" asp-route-id="@Model.Id">@Model.Title</a>
+    </div>
+</td>
+<td>
+    <div>
+        <span>@Model.RegistredAt.Date</span>
+    </div>
+</td>
+<td>
+    <div>
+        <span>@Model.Size</span>
+    </div>
+</td>

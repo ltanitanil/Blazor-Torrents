@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Data
 {
-    public class EFRepository<T> : IAsyncRepository<T> where T: BaseEntity
+    public class EFRepository<T> : IAsyncRepository<T> where T : BaseEntity
     {
         protected readonly CatalogContext _eFContext;
 
@@ -18,24 +18,9 @@ namespace Infrastructure.Data
             _eFContext = eFContext;
         }
 
-        public Task<T> AddAsync(T entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<int> CountAsync()
-        {
-            throw new NotImplementedException();
-        }
-
         public Task<int> CountAsync(ISpecification<T> specification)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task DeleteAsync(T entity)
-        {
-            throw new NotImplementedException();
+            return ApplySpecification(specification).CountAsync();
         }
 
         public async Task<T> GetByIdAsync(int id)
@@ -43,24 +28,14 @@ namespace Infrastructure.Data
             return await _eFContext.Set<T>().FindAsync(id);
         }
 
-        public Task<IReadOnlyList<T>> ListAllAsync()
+        public async Task<IReadOnlyList<T>> ListAsync(ISpecification<T> specification)
         {
-            throw new NotImplementedException();
+            return await ApplySpecification(specification).ToListAsync();
         }
 
-        public async Task<IReadOnlyList<T>> ListAsync()
+        public IQueryable<T> ApplySpecification(ISpecification<T> spec)
         {
-            return await _eFContext.Set<T>().AsQueryable().ToListAsync();
-        }
-
-        public Task<IReadOnlyList<T>> ListAsync(ISpecification<T> specification)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task UpdateAsync(T entity)
-        {
-            throw new NotImplementedException();
+            return SpecificationEvaluator<T>.GetQuery(_eFContext.Set<T>().AsQueryable(), spec);
         }
     }
 }
