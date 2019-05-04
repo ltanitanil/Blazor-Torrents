@@ -11,6 +11,6 @@ namespace Web.ViewModels.Torrent
         public string Content { get; set; }
         public string Dir_Name { get; set; }
         public Forum Forum { get; set; }
-        public IEnumerable<File> File { get; set; }
+        public IEnumerable<File> Files { get; set; }
     }
 }

@@ -7,11 +7,11 @@ namespace Web.ViewModels
 {
     public class PaginationInfoViewModel
     {
-        public int TotalTorrents { get; set; }//Всего торрентов
-        public int TorrentsPerPage { get; set; }//Торренты на странице
-        public int ActualPage { get; set; }//Текущая страница
-        public int TotalPages { get; set; }//всего страниц
-        public string Previous { get; set; }//предыдущая
-        public string Next { get; set; }//следующая
+        public int TotalTorrents { get; set; }
+        public int TorrentsPerPage { get; set; }
+        public int ActualPage { get; set; }
+        public int TotalPages { get; set; }
+        public string Previous { get; set; }
+        public string Next { get; set; }
     }
 }

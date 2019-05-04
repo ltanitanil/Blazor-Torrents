@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/css/app.css" />
+    <link rel="stylesheet" href="~/css/_pager.css" />
+    <link rel="stylesheet" href="~/css/index.css" />
+    <link rel="stylesheet" href="~/css/torrentDesctiption.css" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
+</head>
+<body>
+    <section class="sa-torrents">
+        <a asp-page="Index" class="sa-torrents-title">Торренты</a>
+    </section>
+    <section class="sa-torrents-search">
+        <div class="sa-torrents">
+            <form method="get" asp-page="Index" class="sa-torrents-flex-input">
+                <div class="item-input-search">
+                    <input name="CatalogModel.SearchText" placeholder="Найти..." class="sa-torrents-search-input" />
+                </div>
+                <div class="item-input-button">
+                    <input type="image" src="~/images/icons8-google-поиск-48.png" class="sa-torrents-search-image" />
+                </div>
+            </form>
+        </div>
+    </section>
+    <div class="sa-torrents">
+        @RenderBody()
+    </div>
+</body>
+</html>

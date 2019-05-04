@@ -28,14 +28,18 @@ namespace Web
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped(typeof(IAsyncRepository<>), typeof(EFRepository<>));
-            services.AddScoped<ITorrentsViewModelService,TorrentsViewModelService>();
-            services.AddScoped<TorrentsViewModelService>();
             string connection = Configuration.GetConnectionString("DefaultConnection");
-            services.AddDbContext<CatalogContext>(c =>
-                c.UseSqlServer(connection));
+            services.AddDbContext<CatalogContext>(c => c.UseSqlServer(connection));
+
+            services.AddScoped(typeof(IAsyncRepository<>), typeof(EFRepository<>));
+
+            services.AddScoped<ITorrentsViewModelService, CachedTorrentsViewModelService>();
+            services.AddScoped<TorrentsViewModelService>();
+
+            services.AddMemoryCache();
+
             services.AddMvc();
-   
+
             _services = services;
         }
 
@@ -48,7 +52,6 @@ namespace Web
             }
             app.UseMvc();
             app.UseStaticFiles();
-
         }
     }
 }

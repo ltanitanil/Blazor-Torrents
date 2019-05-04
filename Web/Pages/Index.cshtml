@@ -1,37 +1,47 @@
 ﻿@page
 @{
     ViewData["Title"] = "Каталог";
-
     @model IndexModel
 }
 
-
-<form method="get">
-    <label>
-        <input asp-for="@Model.CatalogModel.SearchText" />
-    </label>
-    <input type="image" @*src="images/arrow-right.svg" *@ />
-</form>
-
 @if (Model.CatalogModel.CatalogTorrents.Any())
 {
+    @if (!string.IsNullOrEmpty(Model.CatalogModel.SearchText))
+    {
+        <div class="message">
+            Результат  поиска "@Model.CatalogModel.SearchText"
+            <div><a asp-page="Index"><-ВЕРНУТЬСЯ КО ВСЕМ ТОРРЕНТАМ</a></div>
+        </div>
+    }
     <partial name="_pagination" for="CatalogModel.PaginationInfo" view-data="@{new ViewDataDictionary(this.ViewData) { { "searchText", Model.CatalogModel.SearchText} }} " />
     <div>
         <table>
             <tr>
-                <th> Название</th>
-                <th>Дата загрузки</th>
-                <th>Размер</th>
+                <th style="width:70%;">Название</th>
+                <th style="width:15%;">Дата загрузки</th>
+                <th style="width:5%;">Размер</th>
             </tr>
             @foreach (var catalogTorrent in Model.CatalogModel.CatalogTorrents)
             {
-                <tr><partial name="_torrent" for="@catalogTorrent" /></tr>
+                <tr>
+                    <td style="width:70%;">
+                        <a asp-page="TorrentDescription" asp-route-id="@catalogTorrent.Id">@catalogTorrent.Title</a>
+                    </td>
+                    <td style="width:15%;">
+                        <span>@catalogTorrent.RegistredAt.Date.ToShortDateString()</span>
+                    </td>
+                    <td style="width:5%;">
+                        <span>@catalogTorrent.Size</span>
+                    </td>
+                </tr>
             }
         </table>
     </div>
     <partial name="_pagination" for="CatalogModel.PaginationInfo" />
+
 }
 else
 {
     <div>Увы, ничего не найдено</div>
 }
+

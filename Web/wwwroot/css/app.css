@@ -1,0 +1,76 @@
+﻿body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+.sa-torrents {
+    max-width: 1200px;
+    margin: auto;
+    padding: 10px 10px;
+}
+
+.sa-torrents-search {
+    background-color: #00A69C;
+}
+
+.sa-torrents-title {
+    color: black;
+    font-family: 'Lobster', cursive;
+    font-size: 36px;
+}
+
+.sa-torrents-search-input {
+    background-color: transparent;
+    border-color: #00d9cc;
+    border-width: 1px;
+    padding: 5px;
+    min-height: 50px;
+    outline-color: #83D01B;
+    width: 100%;
+    height: calc(100% - 20px);
+}
+
+.sa-torrents-flex-input {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+    .sa-torrents-flex-input .item-input-search {
+        flex: 1 1 calc(33.33% - 30px);
+        max-width: 700px;
+    }
+
+    .sa-torrents-flex-input .item-input-button {
+        margin: 8px 0px 0px 10px;
+    }
+
+        .sa-torrents-flex-input .item-input-button .sa-torrents-search-image {
+            background-color: white;
+            width: 35px;
+            cursor: pointer;
+        }
+
+            .sa-torrents-flex-input .item-input-button .sa-torrents-search-image:hover {
+                background-color: #4a760f;
+                transition: all 0.35s;
+            }
+
+.container-page {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+}
+
+.message {
+    width: 100%;
+    text-align: center;
+    background-color: transparent;
+    min-height: 50px;
+    font-size:18px;
+}

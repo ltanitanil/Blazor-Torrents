@@ -1,23 +1,41 @@
-﻿@page
+﻿@page "{id}"
 @model Web.Pages.TorrentDescriptionModel
-@{
-}
-<div>@Model.TorrentModel.Title</div>
-<div>@Model.TorrentModel.RegistredAt</div>
-<div>@Model.TorrentModel.Size</div>
-<div>@Model.TorrentModel.Forum.Value</div>
-<div>
-    @foreach (var a in Model.TorrentModel.File)
-    {
-        <div>
-            <span>
-                @a.Name
-            </span>
-            <span>
-                @a.Size
-            </span>
-        </div>
-    }
+
+<div class="sa-dt-title" id="sa-dt-title"><h1>@Model.TorrentModel.Title</h1></div>
+<div class="sa-dt-fragment">
+    <a asp-fragment="sa-dt-files" asp-route-id="@Model.TorrentModel.Id">
+        <img src="~/images/icons8-толстая-стрелка-вниз-52.png" class="sa-dt-img orig" />
+        Перейти к файлам
+    </a>
 </div>
-<div style="max-width:1000px;margin:0;">@Html.Raw(@Model.TorrentModel.Content)</div>
-<a asp-page="Index">Главная</a>
+<div class="sa-dt-flex-value-datetime">
+    <div class="sa-dt-flex-value">@Model.TorrentModel.Forum.Value</div>
+    <div class="sa-dt-flex-datetime">Дата регистрации: @Model.TorrentModel.RegistredAt.UtcDateTime</div>
+</div>
+<h3 class="sa-dt-desc">
+    Описание:
+</h3>
+<div class="sa-dt-content">
+    @Html.Raw(@Model.TorrentModel.Content)
+</div>
+<div id="sa-dt-files">
+    <div class="sa-dt-files-size">Общий размер файлов(@Model.TorrentModel.Files.Count()): @Model.TorrentModel.Size</div>
+    <div class="sa-dt-files">
+        @foreach (var a in Model.TorrentModel.Files)
+        {
+            <div class="sa-dt-files-file">
+                <div>
+                    @a.Name
+                </div>
+                <div>
+                    Размер: @a.Size
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<div class="sa-dt-flex-fr">
+    <a asp-fragment="sa-dt-title" asp-route-id="@Model.TorrentModel.Id"><img src="~/images/icons8-толстая-стрелка-вниз-52.png" class="sa-dt-img" /> К описанию</a>
+    <a asp-page="Index" class="sa-dt-link-main"><--На Главную</a>
+</div>
+

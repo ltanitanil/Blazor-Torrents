@@ -57,13 +57,14 @@ namespace Web.Services
             var torrent = await _torrentRepository.GetByIdAsync(id);
             var t = new TorrentDescriptionViewModel()
             {
+                Id = torrent.Id,
                 Title = torrent.Title,
                 RegistredAt = torrent.RegistredAt,
                 Size = torrent.Size,
                 Content = BBCodeHelper.Format(torrent.Content),
                 Dir_Name = torrent.Dir_Name,
                 Forum = torrent.Forum,
-                File = torrent.Files
+                Files = torrent.Files
             };
             return t;
         }
