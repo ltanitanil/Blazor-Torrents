@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -36,6 +37,25 @@ namespace Infrastructure.Data
         public IQueryable<T> ApplySpecification(ISpecification<T> spec)
         {
             return SpecificationEvaluator<T>.GetQuery(_eFContext.Set<T>().AsQueryable(), spec);
+        }
+
+        public async Task<IReadOnlyList<int>> GetPopularEntriesAsync(int count, Expression<Func<T, int>> expression)
+        {
+            return await _eFContext.Set<T>().GroupBy(expression)
+                                            .OrderByDescending(x => x.Count())
+                                            .Take(count)
+                                            .Select(x => x.Key)
+                                            .ToListAsync();
+        }
+
+        public async Task<IReadOnlyList<T>> GetListByIDsAsync(IReadOnlyList<int> iDs)
+        {
+            return await _eFContext.Set<T>().Where(x => iDs.Any(z => z == x.Id)).ToListAsync();
+        }
+
+        public async Task<int> GetMaxValueAsync(Expression<Func<T, int>> expression)
+        {
+            return await _eFContext.Set<T>().MaxAsync(expression);
         }
     }
 }

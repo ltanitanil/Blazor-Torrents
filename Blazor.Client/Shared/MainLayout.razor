@@ -1,0 +1,16 @@
+﻿@inherits LayoutComponentBase
+@namespace Blazor.Client.Services
+@inject AppStateService state
+
+
+<div class="content px-4">
+    @Body
+</div>
+
+@code{
+
+    protected override void OnInit()
+    {
+        state.OnChange += StateHasChanged;
+    }
+}
