@@ -9,8 +9,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Blazor.Server.Controllers.Api
 {
-    [Route("api/[controller]")]
-    [ApiController]
     public class TorrentsController : BaseController
     {
         private readonly ITorrentsViewModelService _torrentsViewModelService;
@@ -35,7 +33,7 @@ namespace Blazor.Server.Controllers.Api
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetPopularForums()
+        public async Task<IActionResult> GetDataToFilter()
         {
             var popularForums = await _torrentsViewModelService.GetDataToFilter(Constants.FORUMS_PER_PAGE);
             return Ok(popularForums);

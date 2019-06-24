@@ -14,6 +14,6 @@ namespace ApplicationCore.Interfaces
         Task<IReadOnlyList<int>> GetPopularEntriesAsync(int count, Expression<Func<T, int>> expression);
         Task<IReadOnlyList<T>> GetListByIDsAsync(IReadOnlyList<int> iDs);
         Task<int> CountAsync(ISpecification<T> specification);
-        Task<int> GetMaxValueAsync(Expression<Func<T, int>> expression);
+        Task<long> GetMaxValueAsync(Expression<Func<T, long>> expression);
     }
 }

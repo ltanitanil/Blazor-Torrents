@@ -53,7 +53,7 @@ namespace Infrastructure.Data
             return await _eFContext.Set<T>().Where(x => iDs.Any(z => z == x.Id)).ToListAsync();
         }
 
-        public async Task<int> GetMaxValueAsync(Expression<Func<T, int>> expression)
+        public async Task<long> GetMaxValueAsync(Expression<Func<T, long>> expression)
         {
             return await _eFContext.Set<T>().MaxAsync(expression);
         }

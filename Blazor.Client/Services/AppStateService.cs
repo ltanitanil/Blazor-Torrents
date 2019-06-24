@@ -13,24 +13,21 @@ namespace Blazor.Client.Services
     {
         private readonly HttpClient _httpClient;
 
-        public TorrentsViewModel TorrentsViewModel { get; set; }
-        public bool SearchInProgress { get; private set; }
-        public event Action OnChange;
-
         public AppStateService(HttpClient httpClient)
         {
             _httpClient = httpClient;
         }
 
-        public async Task GetTorrentsAsync(SearchAndFilterCriteria criteria, int? pageIndex)
+        public async Task<TorrentsViewModel> GetTorrentsAsync(SearchAndFilterCriteria criteria, int? pageIndex)
         {
-            SearchInProgress = true;
-            NotiflyStateChanged();
-            TorrentsViewModel = await _httpClient.PostJsonAsync<TorrentsViewModel>(string.Format("api/Torrents/GetTorrents/?pageIndex={0}", pageIndex), criteria);
-            SearchInProgress = false;
-            NotiflyStateChanged();
+            return await _httpClient.PostJsonAsync<TorrentsViewModel>(string.Format("api/Torrents/GetTorrents/?pageIndex={0}", pageIndex), criteria);
         }
 
-        private void NotiflyStateChanged() => OnChange?.Invoke();
+        public async Task<SearchAndFilterData> GetDataToFilter()
+        {
+            return await _httpClient.GetJsonAsync<SearchAndFilterData>("api/Torrents/GetDataToFilter");
+        }
+
+
     }
 }

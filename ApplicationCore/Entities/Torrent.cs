@@ -7,7 +7,7 @@ namespace ApplicationCore.Entities
     public class Torrent : BaseEntity
     {
         public DateTimeOffset RegistredAt { get; set; }
-        public string Size { get; set; }
+        public long Size { get; set; }
         public string Title { get; set; }
         public string Hash { get; set; }
         public int? TrackerId { get; set; }

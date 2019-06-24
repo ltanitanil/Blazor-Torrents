@@ -1,0 +1,11 @@
+﻿@namespace Blazor.Shared.ViewModels
+
+@foreach (var p in PaginationModel.Pages)
+{
+    <a @onclick=@(async() =>await GetTorrentsList(p-1))>@p</a>
+}
+
+@code{
+[Parameter] PaginationInfoViewModel PaginationModel { get; set; }
+[Parameter] Func<int, Task> GetTorrentsList { get; set; }
+}

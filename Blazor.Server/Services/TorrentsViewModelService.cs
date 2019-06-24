@@ -84,7 +84,7 @@ namespace Blazor.Server.Services
             SearchAndFilterData data = new SearchAndFilterData()
             {
                 Forums = forumsList.Select(x => new ForumView() { Id = x.Id, Value = x.Value }),
-                TorrentMaxSize = await _torrentRepository.GetMaxValueAsync(x =>int.Parse(x.Size))//тут херня
+                TorrentMaxSize = await _torrentRepository.GetMaxValueAsync(x =>x.Size)
             };
 
             return data;

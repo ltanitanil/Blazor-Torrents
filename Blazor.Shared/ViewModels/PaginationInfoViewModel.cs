@@ -7,18 +7,15 @@ namespace Blazor.Shared.ViewModels
 {
     public class PaginationInfoViewModel
     {
-        public int TotalItems { get; private set; }
-        public int CurrentPage { get; private set; }
-        public int PageSize { get; private set; }
-        public int TotalPages { get; private set; }
-        public int StartIndex { get; private set; }
-        public int EndIndex { get; private set; }
-        public IEnumerable<int> Pages { get; private set; }
+        public int TotalItems { get; set; }
+        public int CurrentPage { get; set; }
+        public int PageSize { get; set; }
+        public int TotalPages { get; set; }
+        public int StartIndex { get; set; }
+        public int EndIndex { get; set; }
+        public IEnumerable<int> Pages { get; set; }
 
-        public PaginationInfoViewModel()
-        {
-
-        }
+        public PaginationInfoViewModel() {}
 
         public PaginationInfoViewModel(int totalItems, int currentPage, int pageSize, int maxPages)
         {
@@ -83,6 +80,5 @@ namespace Blazor.Shared.ViewModels
             EndIndex = endIndex;
             Pages = pages;
         }
-
     }
 }

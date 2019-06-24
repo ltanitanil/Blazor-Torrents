@@ -10,10 +10,15 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Blazor" Version="3.0.0-preview6.19307.2" />
     <PackageReference Include="Microsoft.AspNetCore.Blazor.Build" Version="3.0.0-preview6.19307.2" PrivateAssets="all" />
+    <PackageReference Include="Syncfusion.EJ2.AspNet.Core.RazorComponents" Version="17.1.0.52-beta" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Blazor.Shared\Blazor.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\images\" />
   </ItemGroup>
 
 </Project>

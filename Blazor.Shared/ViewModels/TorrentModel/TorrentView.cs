@@ -8,7 +8,7 @@ namespace Blazor.Shared.ViewModels.TorrentModel
     {
         public int Id { get; set; }
         public string Title { get; set; }
-        public string Size { get; set; }
+        public long Size { get; set; }
         public DateTimeOffset RegistredAt { get; set; }
     }
 }

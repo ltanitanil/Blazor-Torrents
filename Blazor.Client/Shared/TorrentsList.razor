@@ -1,0 +1,13 @@
+﻿@namespace Blazor.Shared.ViewModels.TorrentModel
+
+
+@foreach(var torrent in TorrentsModel)
+{
+    <div>@torrent.Title</div>
+    <div>@torrent.Size</div>
+}
+
+
+@code{
+    [Parameter] IEnumerable<TorrentView> TorrentsModel { get; set; }
+}

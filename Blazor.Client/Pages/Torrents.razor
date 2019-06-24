@@ -1,0 +1,34 @@
+﻿@page "/"
+
+@inject AppStateService state
+
+<Blazor.Shared.ViewModels.Search.SearchAndFilterPanel GetTorrentsList=@LoadTorrentsAsync GetData=@state.GetDataToFilter Criteria=@Criteria />
+
+@if (TorrentsModel != null)
+{
+    <Blazor.Shared.ViewModels.TorrentModel.TorrentsList TorrentsModel=@TorrentsModel.Torrents />
+    <Blazor.Shared.ViewModels.Pagination PaginationModel=@TorrentsModel.PaginationInfo GetTorrentsList=@LoadTorrentsAsync />
+}
+else
+{
+    <div>Загрузка списка торрентов</div>
+}
+
+
+@code{
+    TorrentsViewModel TorrentsModel { get; set; }
+    SearchAndFilterCriteria Criteria { get; set; } = new SearchAndFilterCriteria();
+
+    protected override async Task OnInitAsync()
+    {
+        await LoadTorrentsAsync();
+    }
+
+    async Task LoadTorrentsAsync(int page=0)
+    {
+        TorrentsModel = null;
+        StateHasChanged();
+        TorrentsModel = await state.GetTorrentsAsync(Criteria, page);
+        StateHasChanged();
+    }
+}
