@@ -1,5 +1,7 @@
-﻿using Blazor.Shared.ViewModels;
+﻿using Blazor.Client.Interfaces;
+using Blazor.Shared.ViewModels;
 using Blazor.Shared.ViewModels.Search;
+using Blazor.Shared.ViewModels.TorrentModel;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
@@ -9,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Blazor.Client.Services
 {
-    public class AppStateService
+    public class AppStateService:IAppStateService
     {
         private readonly HttpClient _httpClient;
 
@@ -26,6 +28,11 @@ namespace Blazor.Client.Services
         public async Task<SearchAndFilterData> GetDataToFilter()
         {
             return await _httpClient.GetJsonAsync<SearchAndFilterData>("api/Torrents/GetDataToFilter");
+        }
+
+        public async Task<TorrentDescriptionView> GetTorrentDescription(int id)
+        {
+            return await _httpClient.GetJsonAsync<TorrentDescriptionView>(string.Format("api/Torrents/GetTorrent/?id={0}", id));
         }
 
 

@@ -1,0 +1,291 @@
+﻿#a {
+    text-decoration: none;
+}
+
+
+.searchAndFilterPanel {
+    max-width: 1200px;
+    margin: auto;
+    padding: 0px 10px;
+    width: 100%;
+}
+
+.filters {
+    background: #3d3d3d;
+    margin-top: -17px;
+}
+
+    .filters button {
+        background-color: #1f8a50;
+        border: none;
+        margin: 10px;
+        padding: 10px;
+        color: white;
+        min-width: 100px;
+    }
+
+.filters-items input {
+    min-width: 300px;
+}
+
+.filters-items-size input {
+    width: 49.8%;
+}
+
+.label-size {
+    display: inline-block;
+    margin-bottom: .5rem;
+    font-weight: bold;
+    color: rgba(255, 255, 255, 0.5);
+    content: attr(data-title);
+    font-size: 0.65rem;
+    margin-left: 0.5rem;
+    margin-top: 0.65rem;
+    text-transform: uppercase;
+
+}
+
+.filters.False {
+    display: none;
+}
+
+.filterItem {
+    border: 1px solid #0094ff;
+    max-width: 300px;
+    margin: 20px;
+}
+.filter-buttons {
+    text-align: end;
+}
+    .filter-buttons [type="reset"] {
+        color: white;
+        min-width: 100px;
+        border: 1px solid white;
+        background: #3d3d3d;
+    }
+
+a.TitleTorrents {
+    color: #3d3d3d;
+    font-family: 'Yanone Kaffeesatz', sans-serif;
+    font-size: 65px;
+    text-decoration: none;
+}
+
+    a.TitleTorrents .catalogText {
+        margin: 0px;
+        color: white;
+        max-height: 50px;
+    }
+
+.input-group {
+    max-width: 362px;
+    margin: 6% 0px 40px 0px;
+}
+
+    .input-group input {
+        border: none;
+        color: white;
+        background-color: #1f8a50;
+        height: 65px;
+        width: 81.5%;
+        color: white;
+    }
+
+.input-group-append {
+    background: #1f8a50;
+    max-height: 65px;
+}
+
+    .input-group-append button {
+        border: none;
+        background-color: white;
+        border-radius: unset;
+        min-width: 65px;
+    }
+
+.fa fa-search {
+    color: #1f8a50;
+    font-size: 35px;
+}
+
+.searchAndFilterPanel-search {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 10px 0px;
+}
+
+.searchAndFilterPanel-1-header {
+    background-image: url('/images/imgonline-com-ua-Replace-color-K8woXqamMl1).png');
+    width: 100%;
+    max-height: 300px;
+}
+
+.searchAndFilterPanel.menu {
+    background-color: white;
+    width: 100%;
+    color: #243238;
+    border-bottom: 11px solid #3d3d3d;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.searchAndFilterPanel-1-header-search {
+    max-width: 1200px;
+    margin: auto;
+    padding: 10px 10px;
+    width: 100%;
+}
+
+.searchAndFilterPanel-1-header-search-flex {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.sa-torrents-title {
+    color: #3d3d3d;
+    font-family: 'Yanone Kaffeesatz', sans-serif;
+    font-size: 65px;
+    text-decoration: none;
+    padding: 30px 0px;
+}
+
+    .sa-torrents-title .Item1 {
+        margin: 0px;
+        color: white;
+    }
+
+    .sa-torrents-title .Item2 {
+        margin-top: -45px;
+    }
+
+.input-group-append {
+    background: #1f8a50;
+    max-height: 65px;
+    font-size: 35px;
+    color: #1f8a50;
+}
+
+    .input-group-append button {
+        border: none;
+        background-color: white;
+        border-radius: unset;
+        min-width: 65px;
+        color: #1f8a50;
+        font-size: 35px;
+    }
+
+        .input-group-append button:hover {
+            background-color: #3d3d3d;
+            color: white;
+        }
+
+.menu {
+    background-color: white;
+    width: 100%;
+    color: #243238;
+    border-bottom: 11px solid #3d3d3d;
+    display: flex;
+    justify-content: flex-start;
+}
+
+    .menu .filterswitch {
+        background-color: #3d3d3d;
+        color: white;
+        padding: 15px 20px;
+    }
+
+        .menu .filterswitch button {
+            background: #3d3d3d;
+            border: unset;
+            color: white;
+            font-size: 35px;
+            outline: none;
+        }
+
+    .menu .emptiness {
+        background-color: white;
+        width: 90%;
+    }
+
+.filter-label {
+    display: inline-block;
+    position: relative;
+    z-index: 0;
+    font-weight: bold;
+    width: 100%;
+}
+
+    .filter-label::after {
+        background-image: url('../images/arrow-down.png');
+        content: '';
+        height: 7px;
+        position: absolute;
+        right: 1.5rem;
+        top: 2.5rem;
+        width: 10px;
+        z-index: 1;
+    }
+
+    .filter-label::before {
+        color: rgba(255, 255, 255, 0.5);
+        content: attr(data-title);
+        font-size: 0.65rem;
+        margin-left: 0.5rem;
+        margin-top: 0.65rem;
+        position: absolute;
+        text-transform: uppercase;
+        z-index: 1;
+    }
+
+    .filter-label option {
+        background-color: #3d3d3d;
+        white-space: nowrap; /* Запрещаем перенос строк */
+        overflow: hidden;
+        font-size: 80%;
+        left: 0;
+        width: 100px;
+        top: 100%;
+        right: 0;
+    }
+
+.filter-select {
+    -webkit-appearance: none;
+    background-color: transparent;
+    border-color: #1f8a50;
+    color: #FFFFFF;
+    cursor: pointer;
+    margin-right: 1rem;
+    margin-top: .5rem;
+    min-width: 140px;
+    outline-color: #1f8a50;
+    padding-bottom: 0;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    padding-top: 1.5rem;
+    white-space: pre-wrap;
+    width: 100%;
+}
+
+.filters-items {
+    padding: 10px;
+    color: white;
+}
+.filters-items-size {
+    padding-bottom: 10px;
+    border: 1px solid #1f8a50;
+    position: relative;
+}
+
+
+
+@media (max-width: 768px) {
+    .searchAndFilterPanel-1-header {
+        max-height: 500px;
+    }
+
+    .input-group input {
+        border: 1px solid #ffffff;
+    }
+}

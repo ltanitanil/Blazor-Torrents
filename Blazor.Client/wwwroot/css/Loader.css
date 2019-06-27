@@ -1,0 +1,20 @@
+﻿.second_transform {
+    box-sizing: border-box;
+    height: 57px;
+    width: 57px;
+    margin: 73px auto;
+    border: 0px solid #27ae60;
+    border-radius: 83%;
+    box-shadow: 0 -19px 0 23px #27ae60 inset;
+    animation: rotate 1s infinite linear;
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}

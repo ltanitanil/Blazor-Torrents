@@ -1,0 +1,80 @@
+﻿.torrents-flex-item {
+    flex: 1 1 calc(25% - 30px);
+    margin: 5px;
+    box-sizing: border-box;
+    background: linear-gradient(45deg, black, transparent);
+    padding: 200px 20px 50px 20px;
+    opacity: 0.99;
+    color: white;
+    position: relative;
+    min-width: 270px;
+}
+.torrents-flex-item:hover {
+    background: linear-gradient(69deg, black, transparent);
+}
+.a-size {
+    color: #959595;
+    margin: 10px 0px;
+}
+.a-date {
+    background: #e74c3c;
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+    font-size: 15px;
+    line-height: 23px;
+    min-width: 112px;
+    padding: 7px 10px 7px 10px;
+    text-align: center;
+}
+.not-found {
+    margin: 0 auto;
+    font-size: 30px;
+    max-width: 1200px;
+    text-align: center;
+}
+.fas.fa-indent {
+    position: absolute;
+    left: 50%;
+    top: 25%;
+    margin: -36px 0 0 -36px;
+    width: 54px;
+    z-index: 1;
+    background: #1f8a50;
+    color: #ffffff;
+    text-shadow: none;
+    border: none;
+    text-align: center;
+    -webkit-border-radius: 1000px;
+    -moz-border-radius: 1000px;
+    border-radius: 1000px;
+    -moz-transition: all 0.2s linear;
+    -o-transition: all 0.2s linear;
+    transition: all 0.2s linear;
+    font-size: 20px;
+    line-height: 71px;
+    width: 71px;
+}
+
+.torrents-flex-item a {
+    cursor: pointer;
+    color: white;
+    text-decoration: none;
+}
+    .torrents-flex-item a:hover {
+        color: black;
+        opacity: 0.9;
+    }
+
+.torrents-model {
+    max-width: 1210px;
+    margin: 10px auto;
+}
+.torrentslist-items {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 10px;
+    font-family: 'Arimo', sans-serif;
+    text-transform: uppercase;
+}

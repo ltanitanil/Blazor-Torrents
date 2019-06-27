@@ -53,7 +53,7 @@ namespace Blazor.Server.Services
                     Size = x.Size,
                     RegistredAt = x.RegistredAt
                 }),
-                PaginationInfo = new PaginationInfoViewModel(totalTorrents, pageIndex, 10, 10)
+                PaginationInfo = new PaginationInfoViewModel(totalTorrents, pageIndex, 10, 5)
             };
             return ci;
 

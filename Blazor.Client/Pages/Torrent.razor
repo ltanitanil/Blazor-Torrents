@@ -1,0 +1,57 @@
+﻿@page "/Torrent/{Id:int}"
+
+@inject IAppStateService state
+
+@if (TorrentModel != null)
+{
+    <div class="torrent-model">
+        <div class="torrent-model-title">@TorrentModel.Title</div>
+        <div class="torrent-model-flex">
+            <div class="torrent-model-flex-item">
+                <div><a href="/" style=""><i class="fas fa-chevron-circle-left"></i>На главную</a></div>
+                <div class="torrent-model-flex-item-flex">
+                    <div class="torrent-model-flex-item-flex-forum">@TorrentModel.Forum.Value</div>
+                    <div class="torrent-model-flex-item-flex-date">@TorrentModel.RegistredAt.Date.ToShortDateString()</div>
+                </div>
+                <div class="torrent-model-flex-item-flex-content">@((MarkupString)TorrentModel.Content)</div>
+            </div>
+            <div class="torrent-model-flex-item2">
+                <div class="torrent-model-flex-item2-Dir">@TorrentModel.Dir_Name (@TorrentModel.Size)</div>
+                <div class="torrent-model-flex-item2-Files">
+                    @foreach (var file in @TorrentModel.Files)
+                    {
+                        <div class="torrent-model-flex-item2-File">
+                            <div class="torrent-model-flex-item2-File-item"><i class="fas fa-photo-video"></i></div>
+                            <div class="torrent-model-flex-item2-File-item2">
+                                <div class="torrent-model-flex-item2-File-name">@file.Name</div>
+                                <div class="torrent-model-flex-item2-File-size">@file.Size</div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <Blazor.Client.Shared.Loader />
+}
+
+
+@code{
+    [Parameter] protected int Id { get; set; }
+
+    private TorrentDescriptionView TorrentModel { get; set; }
+    
+    protected override async Task OnInitAsync()
+    {
+        await LoadTorrentAsync();
+    }
+
+    private async Task LoadTorrentAsync()
+    {
+        TorrentModel = await state.GetTorrentDescription(Id);
+    }
+}
+

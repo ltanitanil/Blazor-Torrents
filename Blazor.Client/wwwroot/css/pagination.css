@@ -1,0 +1,27 @@
+﻿
+.mypagination {
+    text-align: center;
+    padding-bottom: 50px;
+    margin: 0 auto;
+}
+
+    .mypagination a {
+        padding: 10px 0px;
+        margin: 10px;
+        color: white;
+        font-size:20px;
+    }
+
+.fas.fa-chevron-circle-left {
+    font-size: 35px;
+    /* margin-bottom: 20px; */
+    color: #3d3d3d;
+    vertical-align:sub;
+}
+
+.fas.fa-chevron-circle-right {
+    font-size: 35px;
+    /* margin-bottom: 20px; */
+    color: #3d3d3d;
+    vertical-align: sub;
+}

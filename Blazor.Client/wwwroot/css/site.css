@@ -1,7 +1,7 @@
 ﻿@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
 
 html, body {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    background-image: url('/images/главная.jpg');
 }
 
 app {
@@ -95,6 +95,9 @@ app {
 .validation-message {
     color: red;
 }
+a{
+    text-decoration:none;
+}
 
 @media (max-width: 767.98px) {
     .main .top-row {
@@ -104,7 +107,7 @@ app {
 
 @media (min-width: 768px) {
     app {
-        flex-direction: row;
+        /*flex-direction: row;*/
     }
 
     .sidebar {

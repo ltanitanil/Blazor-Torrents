@@ -1,0 +1,100 @@
+﻿.torrent-model {
+    background-color: #ffffff;
+    padding: 10px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.torrent-model-title {
+    color: #3d3d3d;
+    color: #3d3d3d;
+    font: 300 40px/40px 'Yanone Kaffeesatz', sans-serif;
+    margin: 30px 0px 50px 0px;
+    position: relative;
+    text-transform: uppercase;
+    text-align: justify;
+}
+
+.torrent-model-flex {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+
+.torrent-model-flex-item {
+    flex: 1 1 calc(70.33% - 30px);
+    width: 100%;
+}
+
+.fas.fa-chevron-circle-left {
+    font-size: 35px;
+    margin-bottom: 20px;
+    color: #3d3d3d;
+    vertical-align: sub;
+}
+
+.torrent-model-flex-item-flex {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 20px;
+}
+
+.torrent-model-flex-item-flex-forum {
+    background-color: #1f8a50;
+    padding: 10px 0px;
+}
+
+.torrent-model-flex-item-flex-date {
+    padding: 10px;
+}
+
+.torrent-model-flex-item-flex-content {
+    word-wrap: break-word;
+    max-width: 800px;
+    width: 100%;
+}
+
+.torrent-model-flex-item2 {
+    flex: 1 1 calc(20.33% - 30px);
+    width: 100%;
+    word-wrap: break-word;
+}
+
+.torrent-model-flex-item2-Dir {
+    font: 300 40px/40px 'Yanone Kaffeesatz', sans-serif;
+    margin-bottom: 15px;
+}
+
+.torrent-model-flex-item2-Files {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+}
+
+.torrent-model-flex-item2-File {
+    background: #f4f5f5;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 10px 0px;
+}
+
+    .torrent-model-flex-item2-File-item {
+        font-size: 35px;
+        color: #3d3d3d;
+        padding: 20px;
+        background-color: #1f8a50;
+    }
+
+    .torrent-model-flex-item2-File-item2 {
+        padding: 10px;
+        margin: 10px;
+    }
+
+.torrent-model-flex-item2-File-name {
+    color: #3d3d3d;
+    text-transform: uppercase;
+}
+
+.torrent-model-flex-item2-File-size {
+    color: #a9aaaa;
+}

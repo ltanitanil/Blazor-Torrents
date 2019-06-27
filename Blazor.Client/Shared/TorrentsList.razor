@@ -1,13 +1,24 @@
-﻿@namespace Blazor.Shared.ViewModels.TorrentModel
-
-
-@foreach(var torrent in TorrentsModel)
-{
-    <div>@torrent.Title</div>
-    <div>@torrent.Size</div>
-}
+﻿
+<div class="torrentslist-items">
+    @foreach (var torrent in TorrentsModel)
+    {
+        <div class="torrents-flex-item">
+            <a href="@GetPath(torrent.Id)">
+                <i class="fas fa-indent"></i>
+                <div>@torrent.Title</div>
+                <div class="a-size">Размер: @torrent.Size</div>
+                <div class="a-date">@torrent.RegistredAt.Date.ToShortDateString()</div>
+            </a>
+        </div>
+    }
+</div>
 
 
 @code{
     [Parameter] IEnumerable<TorrentView> TorrentsModel { get; set; }
+
+    string GetPath(int id)
+    {
+        return string.Format("/Torrent/{0}", id);
+    }
 }

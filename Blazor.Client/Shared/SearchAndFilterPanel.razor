@@ -1,57 +1,71 @@
-﻿@namespace Blazor.Shared.ViewModels.Search
-@using Syncfusion.EJ2.RazorComponents.Calendars
-@using Syncfusion.EJ2.RazorComponents.Inputs
-
-
-<div>
-    <EditForm Model=@Criteria OnValidSubmit="@(async()=>await GetTorrentsList(0))">
-        <div style="display:flex; flex-wrap:wrap;justify-content:space-between;">
-            <div style="display:flex; flex-wrap:wrap;">
-                <span><img src="/images/kisspng-computer-icons-torrent-file-desktop-wallpaper-desk-neon-retro-arcade-pasadena-5b1c784d588a20.3808463115285924613627.png" style="width:100px;" /></span>
-                <a href="/" class="sa-torrents-title">Каталог торрентов</a>
-            </div>
-            <div class="input-group" style="max-width:362px;">
-                <input type="search" @bind=@Criteria.SearchText placeholder="Найти..." style="border:none;color:white;background-color:#1f8a50;height:65px;" />
-                <div class="input-group-append" style="background:#1f8a50;max-height:65px;">
-                    <button class="btn btn-secondary" type="button" style="border:none;background-color:white;border-radius:unset;min-width:65px;">
-                        <i class="fa fa-search" style="color:#1f8a50;font-size: 35px;"></i>
-                    </button>
+﻿<div class="searchAndFilterPanel-1">
+    <EditForm Model=@Criteria OnValidSubmit=@(async() => await GetTorrentsList(0))>
+        <div class="searchAndFilterPanel-1-header">
+            <div class="searchAndFilterPanel-1-header-search">
+                <div class="searchAndFilterPanel-1-header-search-flex">
+                    <div class="sa-torrents-title"><div class="Item1">Каталог</div><div class="Item2">торрентов</div></div>
+                    <div class="input-group">
+                        <input type="search" @bind=@Criteria.SearchText />
+                        <div class="input-group-append">
+                            <button type="button" @onclick=@(async() =>await GetTorrentsList(0))><i class="fa fa-search"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu">
+                    <div class="filterswitch"><button type="button" @onclick="@((e)=>FilterSwitch = !FilterSwitch)"><i class="fa fa-filter" aria-hidden="true"></i></button></div>
                 </div>
             </div>
         </div>
-        @if (Data != null)
-        {
-        @Data.TorrentMaxSize
-        <div style="border:1px solid #0094ff;">
-            <EjsSlider ID="rangeValue2" Min="0" Max=@Data.TorrentMaxSize type=SliderType.Range Value="@rangeValue" Changed=@((e) => SliderChange(e.Value))></EjsSlider>
+        <div class="searchAndFilterPanel-1-header-search">
+            <div class="filters @FilterSwitch">
+                @if (Data != null)
+                {
+                    <div class="filters-items">
+                        <lable class="filter-label" data-title="Форумы">
+                            <select @onchange=@ForumsClicked class="filter-select">
+                                <option>Все</option>
+                                @foreach (var forum in Data.Forums)
+                                {
+                                    <option value=@forum.Id>@forum.Value</option>
+                                }
+                            </select>
+                        </lable>
+                    </div>
+                    <div class="filters-items">
+                        <EjsDateRangePicker id='daterangepicker' min='@minDate' max='@maxDate' Change=@((e) => DateChange(e.Value))> </EjsDateRangePicker>
+                    </div>
+                    <div class="filters-items">
+                        <div class="filters-items-size">
+                            <label class="label-size">Размер торрентов:</label>
+                            <div style="padding:10px;">
+                                <input type="number" @bind=@Criteria.Size.From placeholder="0" />
+                                <input type="number" @bind=@Criteria.Size.To placeholder=@Data.TorrentMaxSize />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="filter-buttons">
+                        <button type="reset" @onclick=@ResetFilters>Сбросить</button>
+                        <button>Применить</button>
+
+                    </div>
+                }
+                else
+                {
+                    <div>Загрузка...</div>
+                }
+            </div>
         </div>
-        <div style="border:1px solid #0094ff;">
-            <EjsDateRangePicker id='daterangepicker' min='@minDate' max='@maxDate' Change=@((e) => DateChange(e.Value))> </EjsDateRangePicker>
-        </div>
-        <select @onchange=@ForumsClicked>
-            <option>Все</option>
-            @foreach (var forum in Data.Forums)
-            {
-            <option value=@forum.Id>@forum.Value</option>
-            }
-        </select>
-        }
-        else
-        {
-        <div>Загрузка...</div>
-        }
-        <button>Применить</button>
     </EditForm>
 </div>
+
 @code{
     [Parameter] Func<Task<SearchAndFilterData>> GetData { get; set; }
     [Parameter] protected SearchAndFilterCriteria Criteria { get; set; }
     [Parameter] Func<int, Task> GetTorrentsList { get; set; }
 
     private SearchAndFilterData Data { get; set; }
+    private bool FilterSwitch { get; set; }
 
-    long[] rangeValue;
-    object tooltip = new { showOn = "Always", isVisible = "true", placement = "Before" };
 
     public DateTime minDate { get; set; } = new DateTime(2005, 5, 1);
     public DateTime maxDate { get; set; } = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
@@ -59,29 +73,35 @@
     protected override async Task OnInitAsync()
     {
         Data = await GetData();
-        rangeValue = new long[] { 0, Data.TorrentMaxSize };
     }
 
-    void SliderChange(object value)
+    private void DateChange(object value)
     {
         var temp = SplitValue(value);
-        Criteria.Size.From = long.Parse(temp.ElementAt(0));
-        Criteria.Size.To = long.Parse(temp.ElementAt(1));
+
+        Criteria.Date.From = DateTimeOffset.Parse(temp.ElementAtOrDefault(0));
+        Criteria.Date.To = DateTimeOffset.Parse(temp.ElementAtOrDefault(1));
     }
 
-    void DateChange(object value)
-    {
-        var temp = SplitValue(value);
-        Criteria.Date.From = DateTimeOffset.Parse(temp.ElementAt(0));
-        Criteria.Date.To = DateTimeOffset.Parse(temp.ElementAt(1));
-    }
-
-    IEnumerable<string> SplitValue(object value)
+    private IEnumerable<string> SplitValue(object value)
     {
         return value.ToString().Split(new[] { '[', ']', ',', '"' }).Where(x => !string.IsNullOrWhiteSpace(x));
     }
 
-    protected void ForumsClicked(UIChangeEventArgs forumEvent)
+
+    private async void ResetFilters()
+    {
+        Criteria.SearchText = null;
+        Criteria.SelectedForumId = null;
+        Criteria.Size.From = null;
+        Criteria.Size.To = null;
+        Criteria.Date.From = null;
+        Criteria.Date.To = null;
+
+        await GetTorrentsList(0);
+    }
+
+    private protected void ForumsClicked(UIChangeEventArgs forumEvent)
     {
         Criteria.SelectedForumId = Int32.TryParse(forumEvent.Value.ToString(), out var tempVal) ? tempVal : (int?)null;
     }
