@@ -51,7 +51,7 @@ namespace Blazor.Server.Services
                     Id = x.Id,
                     Title = x.Title,
                     Size = x.Size,
-                    RegistredAt = x.RegistredAt
+                    RegisteredAt = x.RegisteredAt
                 }),
                 PaginationInfo = new PaginationInfoViewModel(totalTorrents, pageIndex, 10, 5)
             };
@@ -66,7 +66,7 @@ namespace Blazor.Server.Services
             {
                 Id = torrent.Id,
                 Title = torrent.Title,
-                RegistredAt = torrent.RegistredAt,
+                RegisteredAt = torrent.RegisteredAt,
                 Size = torrent.Size,
                 Content = BBCodeHelper.Format(torrent.Content),
                 Dir_Name = torrent.Dir_Name,

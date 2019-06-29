@@ -12,7 +12,7 @@ namespace ApplicationCore.Specifications
                         && (!forumid.HasValue || x.ForumId == forumid)
                         && (!sizeFrom.HasValue || x.Size>=sizeFrom.Value)
                         && (!sizeTo.HasValue || x.Size <= sizeTo.Value)
-                        && ((!dateFrom.HasValue&&!dateTo.HasValue)||(dateFrom<=x.RegistredAt&&x.RegistredAt<=dateTo)))
+                        && ((!dateFrom.HasValue&&!dateTo.HasValue)||(dateFrom<=x.RegisteredAt&&x.RegisteredAt<=dateTo)))
         {
         }
     }

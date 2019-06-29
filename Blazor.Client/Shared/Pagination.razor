@@ -1,12 +1,22 @@
 ﻿
-<div class="mypagination">
-    <a @onclick=@(async()=>await GetTorrentsList(PaginationModel.Pages.FirstOrDefault()-1))><i class="fas fa-chevron-circle-left"></i></a>
-    @foreach (var p in PaginationModel.Pages)
-    {
-        <a @onclick=@(async() =>await GetTorrentsList(p-1))>@p</a>
-    }
-    <a @onclick=@(async()=>await GetTorrentsList(PaginationModel.Pages.LastOrDefault()))><i class="fas fa-chevron-circle-right"></i></a>
-</div>
+    <div class="mypagination">
+        @PaginationModel.CurrentPage
+        <a @onclick=@(async()=>await GetTorrentsList(PaginationModel.Pages.FirstOrDefault()-1))><i class="fas fa-chevron-circle-left"></i></a>
+        @foreach (var p in PaginationModel.Pages)
+        {
+            if (p != PaginationModel.CurrentPage )
+            {
+                <a @onclick=@(async() =>await GetTorrentsList(p-1))>@p</a>
+            }
+            else
+            {
+                <a @onclick=@(async() =>await GetTorrentsList(p-1)) style="background-color:darkgreen;border-radius:20px;">@p</a>
+            }
+
+
+        }
+        <a @onclick=@(async()=>await GetTorrentsList(PaginationModel.Pages.LastOrDefault()))><i class="fas fa-chevron-circle-right"></i></a>
+    </div>
 
 @code{
     [Parameter] PaginationInfoViewModel PaginationModel { get; set; }

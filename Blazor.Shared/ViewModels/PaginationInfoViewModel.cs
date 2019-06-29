@@ -13,7 +13,7 @@ namespace Blazor.Shared.ViewModels
         public int TotalPages { get; set; }
         public IEnumerable<int> Pages { get; set; }
 
-        public PaginationInfoViewModel() {}
+        public PaginationInfoViewModel() { }
 
         public PaginationInfoViewModel(int totalItems, int currentPage, int pageSize, int maxPages)
         {

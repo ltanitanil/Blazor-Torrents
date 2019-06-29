@@ -7,7 +7,7 @@
                 <i class="fas fa-indent"></i>
                 <div>@torrent.Title</div>
                 <div class="a-size">Размер: @torrent.Size</div>
-                <div class="a-date">@torrent.RegistredAt.Date.ToShortDateString()</div>
+                <div class="a-date">@torrent.RegisteredAt.Date.ToShortDateString()</div>
             </a>
         </div>
     }
@@ -17,7 +17,7 @@
 @code{
     [Parameter] IEnumerable<TorrentView> TorrentsModel { get; set; }
 
-    string GetPath(int id)
+    private string GetPath(int id)
     {
         return string.Format("/Torrent/{0}", id);
     }
