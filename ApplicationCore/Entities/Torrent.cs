@@ -12,7 +12,7 @@ namespace ApplicationCore.Entities
         public string Hash { get; set; }
         public int? TrackerId { get; set; }
         public string Content { get; set; }
-        public string Dir_Name { get; set; }
+        public string DirName { get; set; }
 
         public int ForumId { get; set; }
         public virtual Forum Forum { get; set; }

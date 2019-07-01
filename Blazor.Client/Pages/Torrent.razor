@@ -16,7 +16,7 @@
                 <div class="torrent-model-flex-item-flex-content">@((MarkupString)TorrentModel.Content)</div>
             </div>
             <div class="torrent-model-flex-item2">
-                <div class="torrent-model-flex-item2-Dir">@TorrentModel.Dir_Name (@TorrentModel.Size)</div>
+                <div class="torrent-model-flex-item2-Dir">@TorrentModel.DirName (@TorrentModel.Size)</div>
                 <div class="torrent-model-flex-item2-Files">
                     @foreach (var file in @TorrentModel.Files)
                     {

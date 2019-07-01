@@ -12,18 +12,15 @@ namespace Infrastructure.Data
         public static IQueryable<T> GetQuery(IQueryable<T> inputQuery, ISpecification<T> specification)
         {
             var query = inputQuery;
-            var a = query.Count();
             if (specification.Criteria != null)
             {
                 query = query.Where(specification.Criteria);
-                var t = query.Count();
             }
             if (specification.IsPagingEnabled)
             {
                 query = query.Skip(specification.Skip)
                              .Take(specification.Take);
             }
-
             return query;
         }
     }
