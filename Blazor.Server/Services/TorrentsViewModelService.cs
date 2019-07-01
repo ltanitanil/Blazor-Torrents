@@ -68,7 +68,7 @@ namespace Blazor.Server.Services
                 Title = torrent.Title,
                 RegisteredAt = torrent.RegisteredAt,
                 Size = torrent.Size,
-                Content = BBCodeHelper.Format(torrent.Content),
+                Content = BBCodeToHTMLConverter.Format(torrent.Content),
                 DirName = torrent.DirName,
                 Forum = new ForumView { Id = torrent.Forum.Id, Value = torrent.Forum.Value },
                 Files = torrent.Files.Select(x => new FileView { Name = x.Name, Size = x.Size })

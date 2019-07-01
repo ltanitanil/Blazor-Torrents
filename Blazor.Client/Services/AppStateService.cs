@@ -22,7 +22,7 @@ namespace Blazor.Client.Services
 
         public async Task<TorrentsViewModel> GetTorrentsAsync(SearchAndFilterCriteria criteria, int? pageIndex)
         {
-            return await _httpClient.PostJsonAsync<TorrentsViewModel>(string.Format("api/Torrents/GetTorrents/?pageIndex={0}", pageIndex), criteria);
+            return await _httpClient.PostJsonAsync<TorrentsViewModel>($"api/Torrents/GetTorrents/?pageIndex={pageIndex}", criteria);
         }
 
         public async Task<SearchAndFilterData> GetDataToFilter()
@@ -32,7 +32,7 @@ namespace Blazor.Client.Services
 
         public async Task<TorrentDescriptionView> GetTorrentDescription(int id)
         {
-            return await _httpClient.GetJsonAsync<TorrentDescriptionView>(string.Format("api/Torrents/GetTorrent/?id={0}", id));
+            return await _httpClient.GetJsonAsync<TorrentDescriptionView>($"api/Torrents/GetTorrent/?id={id}");
         }
 
 

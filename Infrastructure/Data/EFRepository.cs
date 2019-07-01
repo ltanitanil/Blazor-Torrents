@@ -12,7 +12,7 @@ namespace Infrastructure.Data
 {
     public class EFRepository<T> : IAsyncRepository<T> where T : BaseEntity
     {
-        protected readonly CatalogContext _eFContext;
+        private readonly CatalogContext _eFContext;
 
         public EFRepository(CatalogContext eFContext)
         {

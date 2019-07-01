@@ -9,7 +9,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Blazor.Server.Controllers.Api
 {
-    public class TorrentsController : BaseController
+    [Route("api/[controller]/[action]")]
+    [ApiController]
+    public class TorrentsController : ControllerBase
     {
         private readonly ITorrentsViewModelService _torrentsViewModelService;
 
