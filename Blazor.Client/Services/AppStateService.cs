@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Blazor.Client.Services
 {
-    public class AppStateService:IAppStateService
+    public class AppStateService : IAppStateService
     {
         private readonly HttpClient _httpClient;
 
@@ -22,7 +22,13 @@ namespace Blazor.Client.Services
 
         public async Task<TorrentsViewModel> GetTorrentsAsync(SearchAndFilterCriteria criteria, int? pageIndex)
         {
-            return await _httpClient.PostJsonAsync<TorrentsViewModel>(string.Format("api/Torrents/GetTorrents/?pageIndex={0}", pageIndex), criteria);
+            if (pageIndex == null)
+                throw new ArgumentNullException("pageIndex");
+
+            if (pageIndex < 0)
+                throw new IndexOutOfRangeException("pageIndex");
+
+            return await _httpClient.PostJsonAsync<TorrentsViewModel>($"api/Torrents/GetTorrents/?pageIndex={pageIndex}", criteria);
         }
 
         public async Task<SearchAndFilterData> GetDataToFilter()
@@ -32,7 +38,7 @@ namespace Blazor.Client.Services
 
         public async Task<TorrentDescriptionView> GetTorrentDescription(int id)
         {
-            return await _httpClient.GetJsonAsync<TorrentDescriptionView>(string.Format("api/Torrents/GetTorrent/?id={0}", id));
+            return await _httpClient.GetJsonAsync<TorrentDescriptionView>($"api/Torrents/GetTorrent/?id={id}");
         }
 
 
