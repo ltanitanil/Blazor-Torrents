@@ -3,14 +3,10 @@ using System;
 
 namespace ApplicationCore.Specifications
 {
-    public class CatalogFilterPaginatedSpecification : BaseSpecification<Torrent>
+    public class CatalogFilterPaginatedSpecification : CatalogFilterSpecification
     {
         public CatalogFilterPaginatedSpecification(int skip, int take, string search, int? forumid, long? sizeFrom, long? sizeTo, DateTimeOffset? dateFrom, DateTimeOffset? dateTo)
-            : base(x => (string.IsNullOrEmpty(search) || x.Title.Contains(search))
-                        && (!forumid.HasValue || x.ForumId == forumid)
-                        && (!sizeFrom.HasValue || x.Size >= sizeFrom.Value)
-                        && (!sizeTo.HasValue || x.Size <= sizeTo.Value)
-                        && ((!dateFrom.HasValue && !dateTo.HasValue) || (dateFrom <= x.RegisteredAt && x.RegisteredAt <= dateTo)))
+            : base(search, forumid, sizeFrom, sizeTo, dateFrom, dateTo)
         {
             ApplyPaging(skip, take);
         }

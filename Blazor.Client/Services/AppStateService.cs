@@ -25,7 +25,7 @@ namespace Blazor.Client.Services
             if (pageIndex == null)
                 throw new ArgumentNullException("pageIndex");
 
-            if (pageIndex <= 0)
+            if (pageIndex < 0)
                 throw new IndexOutOfRangeException("pageIndex");
 
             return await _httpClient.PostJsonAsync<TorrentsViewModel>($"api/Torrents/GetTorrents/?pageIndex={pageIndex}", criteria);
