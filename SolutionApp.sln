@@ -7,11 +7,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApplicationCore", "Applicat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{FFB2B77F-FD93-4B21-A2FA-6678172D4F2B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blazor.Server", "Blazor.Server\Blazor.Server.csproj", "{8ADB101B-5AF4-4C50-8DE5-541318882DEE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazor.Server", "Blazor.Server\Blazor.Server.csproj", "{8ADB101B-5AF4-4C50-8DE5-541318882DEE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blazor.Client", "Blazor.Client\Blazor.Client.csproj", "{766E941F-CD7B-4FD9-8A8F-EEB7F3E18E00}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazor.Client", "Blazor.Client\Blazor.Client.csproj", "{766E941F-CD7B-4FD9-8A8F-EEB7F3E18E00}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blazor.Shared", "Blazor.Shared\Blazor.Shared.csproj", "{FEF9D9C8-3F2C-4BAC-B6BB-6FC761D18587}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazor.Shared", "Blazor.Shared\Blazor.Shared.csproj", "{FEF9D9C8-3F2C-4BAC-B6BB-6FC761D18587}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{9BB90E94-CCF2-4D88-9F09-8D4160D1734E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{CDCC967A-DFCE-4F84-BCC4-2AD4CB47D27C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -42,6 +46,13 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{DDE2D2BB-89A4-4271-9AC1-4EBA2B0E5E17} = {9BB90E94-CCF2-4D88-9F09-8D4160D1734E}
+		{FFB2B77F-FD93-4B21-A2FA-6678172D4F2B} = {9BB90E94-CCF2-4D88-9F09-8D4160D1734E}
+		{8ADB101B-5AF4-4C50-8DE5-541318882DEE} = {9BB90E94-CCF2-4D88-9F09-8D4160D1734E}
+		{766E941F-CD7B-4FD9-8A8F-EEB7F3E18E00} = {9BB90E94-CCF2-4D88-9F09-8D4160D1734E}
+		{FEF9D9C8-3F2C-4BAC-B6BB-6FC761D18587} = {9BB90E94-CCF2-4D88-9F09-8D4160D1734E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {103D22D5-0F3A-4170-9620-7762902986C2}
