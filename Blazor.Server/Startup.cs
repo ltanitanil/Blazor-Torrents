@@ -1,4 +1,5 @@
 using ApplicationCore.Interfaces;
+using Blazor.Server.Filters;
 using Blazor.Server.Interfaces;
 using Blazor.Server.Services;
 using Infrastructure.Data;
@@ -34,7 +35,9 @@ namespace Blazor.Server
             services.AddScoped<ITorrentsViewModelService, CachedTorrentsViewModelService>();
             services.AddScoped<TorrentsViewModelService>();
 
-            services.AddMvc().AddNewtonsoftJson();
+            services.AddMvc(options=>options.Filters.Add<ApiExceptionFilterAttribute>())
+                .AddNewtonsoftJson();
+
             services.AddResponseCompression(opts =>
             {
                 opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
