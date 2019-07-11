@@ -1,4 +1,6 @@
-﻿using Blazor.Shared.ViewModels;
+﻿
+using Blazor.Server.Exceptions;
+using Blazor.Shared.ViewModels;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
@@ -14,6 +16,18 @@ namespace Blazor.Server.Filters
 {
     public class ApiExceptionFilterAttribute : ExceptionFilterAttribute
     {
+        private static readonly Dictionary<ExceptionEvent, IActionResult> exceptionFilter = new Dictionary<ExceptionEvent, IActionResult>()
+        {
+            {
+                ExceptionEvent.IndexOutOfRange,
+                new StatusCodeResult(400)
+            },
+            {
+                ExceptionEvent.NotFound,
+                new StatusCodeResult(404)
+            },
+        };
+
         public override Task OnExceptionAsync(ExceptionContext context)
         {
             HandleException(context);
@@ -26,14 +40,8 @@ namespace Blazor.Server.Filters
             base.OnException(context);
         }
 
-        private static void HandleException(ExceptionContext context)
-        {
-            Exception exception = context.Exception;
-
-            if (exception is NullReferenceException)
-                context.Result = new NotFoundObjectResult(exception.Message);
-            
-        }
+        private static void HandleException(ExceptionContext context) =>
+            context.Result = (context.Exception is ApiTorrentsException exception) ? exceptionFilter[exception.ExceptionEvent] : new StatusCodeResult(500);
 
     }
 }

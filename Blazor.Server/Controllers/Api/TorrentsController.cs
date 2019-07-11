@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Blazor.Server.Exceptions;
 using Blazor.Server.Interfaces;
 using Blazor.Shared.ViewModels.Search;
 using Microsoft.AspNetCore.Http;
@@ -23,15 +24,35 @@ namespace Blazor.Server.Controllers.Api
         [HttpPost]
         public async Task<IActionResult> GetTorrents([FromBody] SearchAndFilterCriteria criteria, int? pageIndex)
         {
-            var torrents = await _torrentsViewModelService.GetTorrents(pageIndex ?? 0, Constants.ITEMS_PER_PAGE, criteria);
-            return Ok(torrents);
+            if (pageIndex < 0)
+                throw new ApiTorrentsException(ExceptionEvent.IndexOutOfRange);
+
+            try
+            {
+                var torrents = await _torrentsViewModelService.GetTorrents(pageIndex ?? 0, Constants.ITEMS_PER_PAGE, criteria);
+                return Ok(torrents);
+            }
+            catch (NullReferenceException)
+            {
+                throw new ApiTorrentsException(ExceptionEvent.NotFound);
+            }
         }
 
         [HttpGet]
         public async Task<IActionResult> GetTorrent(int id)
         {
-            var torrent = await _torrentsViewModelService.GetTorrent(id);
-            return Ok(torrent);
+            if (id < 0)
+                throw new ApiTorrentsException(ExceptionEvent.IndexOutOfRange);
+
+            try
+            {
+                var torrent = await _torrentsViewModelService.GetTorrent(id);
+                return Ok(torrent);
+            }
+            catch(NullReferenceException)
+            {
+                throw new ApiTorrentsException(ExceptionEvent.NotFound);
+            }
         }
 
         [HttpGet]

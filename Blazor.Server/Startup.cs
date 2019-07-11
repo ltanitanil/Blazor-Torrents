@@ -56,6 +56,8 @@ namespace Blazor.Server
                 app.UseBlazorDebugging();
             }
 
+            app.UseStatusCodePages();
+
             app.UseClientSideBlazorFiles<Client.Startup>();
 
             app.UseRouting();
