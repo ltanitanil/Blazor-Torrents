@@ -22,7 +22,7 @@ namespace Blazor.Server.Controllers.Api
         }
 
         [HttpPost]
-        public async Task<IActionResult> GetTorrents([FromBody] SearchAndFilterCriteria criteria, int pageIndex=0)
+        public async Task<IActionResult> GetTorrents(SearchAndFilterCriteria criteria, int pageIndex=0)
         {
             if (pageIndex < 0)
                 throw new ApiTorrentsException(ExceptionEvent.InvalidParameters, "Page can't be negative");
