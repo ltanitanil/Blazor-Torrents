@@ -2,6 +2,7 @@
 using Blazor.Server.Exceptions;
 using Blazor.Shared.ViewModels;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
@@ -16,15 +17,15 @@ namespace Blazor.Server.Filters
 {
     public class ApiExceptionFilterAttribute : ExceptionFilterAttribute
     {
-        private static readonly Dictionary<ExceptionEvent, IActionResult> exceptionFilter = new Dictionary<ExceptionEvent, IActionResult>()
+        private static readonly Dictionary<ExceptionEvent, int> exceptionFilter = new Dictionary<ExceptionEvent, int>()
         {
             {
-                ExceptionEvent.IndexOutOfRange,
-                new StatusCodeResult(400)
+                ExceptionEvent.InvalidParameters,
+                StatusCodes.Status400BadRequest
             },
             {
                 ExceptionEvent.NotFound,
-                new StatusCodeResult(404)
+                StatusCodes.Status404NotFound
             },
         };
 
@@ -40,8 +41,8 @@ namespace Blazor.Server.Filters
             base.OnException(context);
         }
 
-        private static void HandleException(ExceptionContext context) =>
-            context.Result = (context.Exception is ApiTorrentsException exception) ? exceptionFilter[exception.ExceptionEvent] : new StatusCodeResult(500);
+        private static void HandleException(ExceptionContext context) => context.Result = 
+            new ObjectResult(context.Exception.Message) { StatusCode = (context.Exception is ApiTorrentsException exception) ? exceptionFilter[exception.ExceptionEvent] : StatusCodes.Status500InternalServerError };
 
     }
 }

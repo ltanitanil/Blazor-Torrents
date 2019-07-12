@@ -22,19 +22,19 @@ namespace Blazor.Server.Controllers.Api
         }
 
         [HttpPost]
-        public async Task<IActionResult> GetTorrents([FromBody] SearchAndFilterCriteria criteria, int? pageIndex)
+        public async Task<IActionResult> GetTorrents([FromBody] SearchAndFilterCriteria criteria, int pageIndex=0)
         {
             if (pageIndex < 0)
-                throw new ApiTorrentsException(ExceptionEvent.IndexOutOfRange);
+                throw new ApiTorrentsException(ExceptionEvent.InvalidParameters, "Page can't be negative");
 
             try
             {
-                var torrents = await _torrentsViewModelService.GetTorrents(pageIndex ?? 0, Constants.ITEMS_PER_PAGE, criteria);
+                var torrents = await _torrentsViewModelService.GetTorrents(pageIndex, Constants.ITEMS_PER_PAGE, criteria);
                 return Ok(torrents);
             }
             catch (NullReferenceException)
             {
-                throw new ApiTorrentsException(ExceptionEvent.NotFound);
+                throw new ApiTorrentsException(ExceptionEvent.NotFound, "Not found");
             }
         }
 
@@ -42,7 +42,7 @@ namespace Blazor.Server.Controllers.Api
         public async Task<IActionResult> GetTorrent(int id)
         {
             if (id < 0)
-                throw new ApiTorrentsException(ExceptionEvent.IndexOutOfRange);
+                throw new ApiTorrentsException(ExceptionEvent.InvalidParameters, "Id can't be negative");
 
             try
             {
@@ -51,7 +51,7 @@ namespace Blazor.Server.Controllers.Api
             }
             catch(NullReferenceException)
             {
-                throw new ApiTorrentsException(ExceptionEvent.NotFound);
+                throw new ApiTorrentsException(ExceptionEvent.NotFound, $"Torrent(id={id}) not found");
             }
         }
 

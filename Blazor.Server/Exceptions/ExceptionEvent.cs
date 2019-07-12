@@ -7,7 +7,6 @@ namespace Blazor.Server.Exceptions
     public enum ExceptionEvent
     {
         NotFound,
-        IndexOutOfRange,
-
+        InvalidParameters,
     }
 }
