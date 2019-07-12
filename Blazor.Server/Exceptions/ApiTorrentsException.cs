@@ -8,9 +8,8 @@ namespace Blazor.Server.Exceptions
     {
         public ExceptionEvent ExceptionEvent { get; private set; }
 
-        public ApiTorrentsException(ExceptionEvent exception) : base()
+        public ApiTorrentsException(ExceptionEvent exception) : this(exception, null)
         {
-            ExceptionEvent = exception;
         }
 
         public ApiTorrentsException(ExceptionEvent exception, string message):base(message)
