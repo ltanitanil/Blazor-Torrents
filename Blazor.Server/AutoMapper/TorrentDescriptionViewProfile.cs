@@ -13,7 +13,7 @@ namespace Blazor.Server.AutoMapper
     {
         public TorrentDescriptionViewProfile()
         {
-            CreateMap<Torrent, TorrentDescriptionView>().ForMember("Content", opt => opt.MapFrom(x => BBCodeToHTMLConverter.Format(x.Content)));
+            CreateMap<Torrent, TorrentDescriptionView>().ForMember(dist=>dist.Content, opt => opt.MapFrom(x => BBCodeToHTMLConverter.Format(x.Content)));
         }
     }
 }
