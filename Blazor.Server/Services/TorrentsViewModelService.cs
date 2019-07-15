@@ -1,8 +1,8 @@
 ﻿using ApplicationCore.Entities;
 using ApplicationCore.Interfaces;
 using ApplicationCore.Specifications;
+using AutoMapper;
 using Blazor.Server.Exceptions;
-using Blazor.Server.Helpers;
 using Blazor.Server.Interfaces;
 using Blazor.Shared.ViewModels;
 using Blazor.Shared.ViewModels.Search;
@@ -16,12 +16,14 @@ namespace Blazor.Server.Services
 {
     public class TorrentsViewModelService : ITorrentsViewModelService
     {
+        private readonly IMapper _mapper;
         private readonly IAsyncRepository<Torrent> _torrentRepository;
         private readonly IAsyncRepository<Forum> _forumRepository;
 
-        public TorrentsViewModelService(IAsyncRepository<Torrent> torrentRepository,
+        public TorrentsViewModelService(IMapper mapper,IAsyncRepository<Torrent> torrentRepository,
             IAsyncRepository<Forum> forumRepository)
         {
+            _mapper = mapper;
             _torrentRepository = torrentRepository;
             _forumRepository = forumRepository;
         }
@@ -48,13 +50,7 @@ namespace Blazor.Server.Services
 
             return new TorrentsViewModel
             {
-                Torrents = torrentsOnPage.Select(x => new TorrentView
-                {
-                    Id = x.Id,
-                    Title = x.Title,
-                    Size = x.Size,
-                    RegisteredAt = x.RegisteredAt
-                }),
+                Torrents= _mapper.Map<TorrentView[]>(torrentsOnPage),
                 PaginationInfo = new PaginationInfoViewModel(totalTorrents, pageIndex, 10, 5)
             };
 
@@ -64,17 +60,7 @@ namespace Blazor.Server.Services
         {
             var torrent = await _torrentRepository.GetByIdAsync(id) ?? throw new ApiTorrentsException(ExceptionEvent.NotFound, $"Torrent(id={id}) not found");
 
-            return new TorrentDescriptionView
-            {
-                Id = torrent.Id,
-                Title = torrent.Title,
-                RegisteredAt = torrent.RegisteredAt,
-                Size = torrent.Size,
-                Content = BBCodeToHTMLConverter.Format(torrent.Content),
-                DirName = torrent.DirName,
-                Forum = new ForumView { Id = torrent.Forum.Id, Value = torrent.Forum.Value },
-                Files = torrent.Files.Select(x => new FileView { Name = x.Name, Size = x.Size })
-            };
+            return _mapper.Map<TorrentDescriptionView>(torrent);
         }
 
         public async Task<SearchAndFilterData> GetDataToFilter(int forumsCount)
@@ -84,7 +70,7 @@ namespace Blazor.Server.Services
 
             return new SearchAndFilterData
             {
-                Forums = forumsList.Select(x => new ForumView() { Id = x.Id, Value = x.Value }),
+                Forums = _mapper.Map<ForumView[]>(forumsList),
                 TorrentMaxSize = await _torrentRepository.GetMaxValueAsync(x => x.Size)
             };
         }
