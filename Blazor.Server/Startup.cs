@@ -1,4 +1,5 @@
 using ApplicationCore.Interfaces;
+using AutoMapper;
 using Blazor.Server.Filters;
 using Blazor.Server.Interfaces;
 using Blazor.Server.Services;
@@ -22,12 +23,15 @@ namespace Blazor.Server
         {
             Configuration = configuration;
         }
+
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
             string connection = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<CatalogContext>(c => c.UseSqlServer(connection));
+
+            services.AddAutoMapper(typeof(Startup));
 
             services.AddScoped(typeof(IAsyncRepository<>), typeof(EFRepository<>));
 
