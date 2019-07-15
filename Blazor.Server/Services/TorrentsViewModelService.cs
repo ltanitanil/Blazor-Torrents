@@ -1,6 +1,7 @@
 ﻿using ApplicationCore.Entities;
 using ApplicationCore.Interfaces;
 using ApplicationCore.Specifications;
+using Blazor.Server.Exceptions;
 using Blazor.Server.Helpers;
 using Blazor.Server.Interfaces;
 using Blazor.Shared.ViewModels;
@@ -41,12 +42,13 @@ namespace Blazor.Server.Services
                                                                                        criteria.Size.To,
                                                                                        criteria.Date.From,
                                                                                        criteria.Date.To);
-            var torrentsOnPage = await _torrentRepository.ListAsync(filterPaginatedSpecification);
+
+            var torrentsOnPage = await _torrentRepository.ListAsync(filterPaginatedSpecification) ?? throw new ApiTorrentsException(ExceptionEvent.NotFound, "Not found");
             var totalTorrents = await _torrentRepository.CountAsync(filterSpecification);
 
-            var ci = new TorrentsViewModel
+            return new TorrentsViewModel
             {
-                Torrents = torrentsOnPage.Select(x => new TorrentView()
+                Torrents = torrentsOnPage.Select(x => new TorrentView
                 {
                     Id = x.Id,
                     Title = x.Title,
@@ -55,14 +57,14 @@ namespace Blazor.Server.Services
                 }),
                 PaginationInfo = new PaginationInfoViewModel(totalTorrents, pageIndex, 10, 5)
             };
-            return ci;
 
         }
 
         public async Task<TorrentDescriptionView> GetTorrent(int id)
         {
-            var torrent = await _torrentRepository.GetByIdAsync(id);
-            var t = new TorrentDescriptionView()
+            var torrent = await _torrentRepository.GetByIdAsync(id) ?? throw new ApiTorrentsException(ExceptionEvent.NotFound, $"Torrent(id={id}) not found");
+
+            return new TorrentDescriptionView
             {
                 Id = torrent.Id,
                 Title = torrent.Title,
@@ -73,7 +75,6 @@ namespace Blazor.Server.Services
                 Forum = new ForumView { Id = torrent.Forum.Id, Value = torrent.Forum.Value },
                 Files = torrent.Files.Select(x => new FileView { Name = x.Name, Size = x.Size })
             };
-            return t;
         }
 
         public async Task<SearchAndFilterData> GetDataToFilter(int forumsCount)
@@ -81,13 +82,11 @@ namespace Blazor.Server.Services
             var forumsId = await _torrentRepository.GetPopularEntriesAsync(forumsCount, x => x.ForumId);
             var forumsList = await _forumRepository.GetListByIDsAsync(forumsId);
 
-            SearchAndFilterData data = new SearchAndFilterData()
+            return new SearchAndFilterData
             {
                 Forums = forumsList.Select(x => new ForumView() { Id = x.Id, Value = x.Value }),
-                TorrentMaxSize = await _torrentRepository.GetMaxValueAsync(x =>x.Size)
+                TorrentMaxSize = await _torrentRepository.GetMaxValueAsync(x => x.Size)
             };
-
-            return data;
         }
     }
 }

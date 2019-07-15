@@ -1,4 +1,5 @@
 using ApplicationCore.Interfaces;
+using Blazor.Server.Filters;
 using Blazor.Server.Interfaces;
 using Blazor.Server.Services;
 using Infrastructure.Data;
@@ -9,7 +10,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Newtonsoft.Json.Serialization;
 using System.Linq;
 
 namespace Blazor.Server
@@ -34,7 +34,8 @@ namespace Blazor.Server
             services.AddScoped<ITorrentsViewModelService, CachedTorrentsViewModelService>();
             services.AddScoped<TorrentsViewModelService>();
 
-            services.AddMvc().AddNewtonsoftJson();
+            services.AddMvc(options => options.Filters.Add<ApiExceptionFilterAttribute>());
+
             services.AddResponseCompression(opts =>
             {
                 opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(

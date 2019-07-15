@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Blazor.Server.Exceptions;
 using Blazor.Server.Interfaces;
 using Blazor.Shared.ViewModels.Search;
 using Microsoft.AspNetCore.Http;
@@ -21,17 +22,24 @@ namespace Blazor.Server.Controllers.Api
         }
 
         [HttpPost]
-        public async Task<IActionResult> GetTorrents([FromBody] SearchAndFilterCriteria criteria, int? pageIndex)
+        public async Task<IActionResult> GetTorrents(int pageIndex, SearchAndFilterCriteria criteria)
         {
-            var torrents = await _torrentsViewModelService.GetTorrents(pageIndex ?? 0, Constants.ITEMS_PER_PAGE, criteria);
+            if (pageIndex < 0)
+                throw new ApiTorrentsException(ExceptionEvent.InvalidParameters, "Page can't be negative");
+
+            var torrents = await _torrentsViewModelService.GetTorrents(pageIndex, Constants.ITEMS_PER_PAGE, criteria);
             return Ok(torrents);
         }
 
         [HttpGet]
         public async Task<IActionResult> GetTorrent(int id)
         {
+            if (id < 0)
+                throw new ApiTorrentsException(ExceptionEvent.InvalidParameters, "Id can't be negative");
+
             var torrent = await _torrentsViewModelService.GetTorrent(id);
             return Ok(torrent);
+
         }
 
         [HttpGet]
