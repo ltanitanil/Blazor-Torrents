@@ -9,7 +9,7 @@ namespace Blazor.Client
     {
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<IAppStateService,AppStateService>();
+            services.AddScoped<IAppStateService, AppStateService>();
         }
 
         public void Configure(IComponentsApplicationBuilder app)

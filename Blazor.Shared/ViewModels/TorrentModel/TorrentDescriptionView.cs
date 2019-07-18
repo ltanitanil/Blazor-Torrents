@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Blazor.Shared.ViewModels.TorrentModel
 {
-    public class TorrentDescriptionView:TorrentView
+    public class TorrentDescriptionView : TorrentView
     {
         public string Content { get; set; }
         public string DirName { get; set; }

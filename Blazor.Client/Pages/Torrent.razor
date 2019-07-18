@@ -43,7 +43,7 @@ else
     [Parameter] protected int Id { get; set; }
 
     private TorrentDescriptionView TorrentModel { get; set; }
-    
+
     protected override async Task OnInitAsync()
     {
         await LoadTorrentAsync();
