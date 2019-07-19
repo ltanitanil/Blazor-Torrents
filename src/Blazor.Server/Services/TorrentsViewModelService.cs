@@ -20,7 +20,7 @@ namespace Blazor.Server.Services
         private readonly IAsyncRepository<Torrent> _torrentRepository;
         private readonly IAsyncRepository<Forum> _forumRepository;
 
-        public TorrentsViewModelService(IMapper mapper,IAsyncRepository<Torrent> torrentRepository,
+        public TorrentsViewModelService(IMapper mapper, IAsyncRepository<Torrent> torrentRepository,
             IAsyncRepository<Forum> forumRepository)
         {
             _mapper = mapper;
@@ -50,7 +50,7 @@ namespace Blazor.Server.Services
 
             return new TorrentsViewModel
             {
-                Torrents= _mapper.Map<TorrentView[]>(torrentsOnPage),
+                Torrents = _mapper.Map<TorrentView[]>(torrentsOnPage),
                 PaginationInfo = new PaginationInfoViewModel(totalTorrents, pageIndex, 10, 5)
             };
 

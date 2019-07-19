@@ -41,7 +41,7 @@ namespace Blazor.Server.Filters
             base.OnException(context);
         }
 
-        private static void HandleException(ExceptionContext context) => context.Result = 
+        private static void HandleException(ExceptionContext context) => context.Result =
             new ObjectResult(context.Exception.Message) { StatusCode = (context.Exception is ApiTorrentsException exception) ? exceptionFilter[exception.ExceptionEvent] : StatusCodes.Status500InternalServerError };
 
     }

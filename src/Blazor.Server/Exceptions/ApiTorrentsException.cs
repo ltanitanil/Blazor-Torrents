@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Blazor.Server.Exceptions
 {
-    public class ApiTorrentsException: Exception
+    public class ApiTorrentsException : Exception
     {
         public ExceptionEvent ExceptionEvent { get; private set; }
 
@@ -12,7 +12,7 @@ namespace Blazor.Server.Exceptions
         {
         }
 
-        public ApiTorrentsException(ExceptionEvent exception, string message):base(message)
+        public ApiTorrentsException(ExceptionEvent exception, string message) : base(message)
         {
             ExceptionEvent = exception;
         }

@@ -3,19 +3,23 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29006.145
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApplicationCore", "ApplicationCore\ApplicationCore.csproj", "{DDE2D2BB-89A4-4271-9AC1-4EBA2B0E5E17}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{FFB2B77F-FD93-4B21-A2FA-6678172D4F2B}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazor.Server", "Blazor.Server\Blazor.Server.csproj", "{8ADB101B-5AF4-4C50-8DE5-541318882DEE}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazor.Client", "Blazor.Client\Blazor.Client.csproj", "{766E941F-CD7B-4FD9-8A8F-EEB7F3E18E00}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazor.Shared", "Blazor.Shared\Blazor.Shared.csproj", "{FEF9D9C8-3F2C-4BAC-B6BB-6FC761D18587}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{9BB90E94-CCF2-4D88-9F09-8D4160D1734E}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazor.Core", "src\Blazor.Core\Blazor.Core.csproj", "{DDE2D2BB-89A4-4271-9AC1-4EBA2B0E5E17}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazor.Infrastructure", "src\Blazor.Infrastructure\Blazor.Infrastructure.csproj", "{FFB2B77F-FD93-4B21-A2FA-6678172D4F2B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazor.Server", "src\Blazor.Server\Blazor.Server.csproj", "{8ADB101B-5AF4-4C50-8DE5-541318882DEE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazor.Client", "src\Blazor.Client\Blazor.Client.csproj", "{766E941F-CD7B-4FD9-8A8F-EEB7F3E18E00}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazor.Shared", "src\Blazor.Shared\Blazor.Shared.csproj", "{FEF9D9C8-3F2C-4BAC-B6BB-6FC761D18587}"
+EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{CDCC967A-DFCE-4F84-BCC4-2AD4CB47D27C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SolutionApp.xUnitTests", "tests\SolutionApp.xUnitTests\SolutionApp.xUnitTests.csproj", "{0A686D0A-D2E6-417A-87C0-6ACC393D3D9A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SolutionApp.IntegrationTests", "tests\SolutionApp.IntegrationTests\SolutionApp.IntegrationTests.csproj", "{0E12F29A-A02C-40AC-8B95-1D9DAFBF92B3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,6 +47,14 @@ Global
 		{FEF9D9C8-3F2C-4BAC-B6BB-6FC761D18587}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FEF9D9C8-3F2C-4BAC-B6BB-6FC761D18587}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FEF9D9C8-3F2C-4BAC-B6BB-6FC761D18587}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A686D0A-D2E6-417A-87C0-6ACC393D3D9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A686D0A-D2E6-417A-87C0-6ACC393D3D9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A686D0A-D2E6-417A-87C0-6ACC393D3D9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A686D0A-D2E6-417A-87C0-6ACC393D3D9A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E12F29A-A02C-40AC-8B95-1D9DAFBF92B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E12F29A-A02C-40AC-8B95-1D9DAFBF92B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E12F29A-A02C-40AC-8B95-1D9DAFBF92B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E12F29A-A02C-40AC-8B95-1D9DAFBF92B3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -53,6 +65,8 @@ Global
 		{8ADB101B-5AF4-4C50-8DE5-541318882DEE} = {9BB90E94-CCF2-4D88-9F09-8D4160D1734E}
 		{766E941F-CD7B-4FD9-8A8F-EEB7F3E18E00} = {9BB90E94-CCF2-4D88-9F09-8D4160D1734E}
 		{FEF9D9C8-3F2C-4BAC-B6BB-6FC761D18587} = {9BB90E94-CCF2-4D88-9F09-8D4160D1734E}
+		{0A686D0A-D2E6-417A-87C0-6ACC393D3D9A} = {CDCC967A-DFCE-4F84-BCC4-2AD4CB47D27C}
+		{0E12F29A-A02C-40AC-8B95-1D9DAFBF92B3} = {CDCC967A-DFCE-4F84-BCC4-2AD4CB47D27C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {103D22D5-0F3A-4170-9620-7762902986C2}
