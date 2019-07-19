@@ -13,8 +13,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\Blazor.Infrastructure\Blazor.Infrastructure.csproj" />
     <ProjectReference Include="..\..\src\Blazor.Server\Blazor.Server.csproj" />
-    <ProjectReference Include="..\..\src\Infrastructure\Blazor.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
