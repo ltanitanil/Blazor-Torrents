@@ -5,9 +5,9 @@ VisualStudioVersion = 16.0.29006.145
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{9BB90E94-CCF2-4D88-9F09-8D4160D1734E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApplicationCore", "src\ApplicationCore\ApplicationCore.csproj", "{DDE2D2BB-89A4-4271-9AC1-4EBA2B0E5E17}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazor.Core", "src\ApplicationCore\Blazor.Core.csproj", "{DDE2D2BB-89A4-4271-9AC1-4EBA2B0E5E17}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "src\Infrastructure\Infrastructure.csproj", "{FFB2B77F-FD93-4B21-A2FA-6678172D4F2B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazor.Infrastructure", "src\Infrastructure\Blazor.Infrastructure.csproj", "{FFB2B77F-FD93-4B21-A2FA-6678172D4F2B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazor.Server", "src\Blazor.Server\Blazor.Server.csproj", "{8ADB101B-5AF4-4C50-8DE5-541318882DEE}"
 EndProject
@@ -17,9 +17,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazor.Shared", "src\Blazor
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{CDCC967A-DFCE-4F84-BCC4-2AD4CB47D27C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolutionApp.xUnitTests", "tests\SolutionApp.xUnitTests\SolutionApp.xUnitTests.csproj", "{0A686D0A-D2E6-417A-87C0-6ACC393D3D9A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SolutionApp.xUnitTests", "tests\SolutionApp.xUnitTests\SolutionApp.xUnitTests.csproj", "{0A686D0A-D2E6-417A-87C0-6ACC393D3D9A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolutionApp.IntegrationTests", "tests\SolutionApp.IntegrationTests\SolutionApp.IntegrationTests.csproj", "{0E12F29A-A02C-40AC-8B95-1D9DAFBF92B3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SolutionApp.IntegrationTests", "tests\SolutionApp.IntegrationTests\SolutionApp.IntegrationTests.csproj", "{0E12F29A-A02C-40AC-8B95-1D9DAFBF92B3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

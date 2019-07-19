@@ -13,9 +13,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ApplicationCore\ApplicationCore.csproj" />
-    <ProjectReference Include="..\Blazor.Server\Blazor.Server.csproj" />
-    <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
+    <ProjectReference Include="..\..\src\ApplicationCore\Blazor.Core.csproj" />
+    <ProjectReference Include="..\..\src\Blazor.Server\Blazor.Server.csproj" />
+    <ProjectReference Include="..\..\src\Infrastructure\Blazor.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
