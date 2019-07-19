@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Blazor.Server.AutoMapper
 {
-    public class ForumViewProfile:Profile
+    public class ForumViewProfile : Profile
     {
         public ForumViewProfile() => CreateMap<Forum, ForumView>();
     }
