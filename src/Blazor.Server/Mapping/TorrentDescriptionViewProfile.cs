@@ -1,4 +1,4 @@
-﻿using ApplicationCore.Entities;
+﻿using Blazor.Core.Entities;
 using AutoMapper;
 using Blazor.Server.Helpers;
 using Blazor.Shared.ViewModels.TorrentModel;

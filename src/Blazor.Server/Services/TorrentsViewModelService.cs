@@ -1,6 +1,6 @@
-﻿using ApplicationCore.Entities;
-using ApplicationCore.Interfaces;
-using ApplicationCore.Specifications;
+﻿using Blazor.Core.Entities;
+using Blazor.Core.Interfaces;
+using Blazor.Core.Specifications;
 using AutoMapper;
 using Blazor.Server.Exceptions;
 using Blazor.Server.Interfaces;

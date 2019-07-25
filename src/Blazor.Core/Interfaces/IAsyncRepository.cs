@@ -1,11 +1,11 @@
-﻿using ApplicationCore.Entities;
+﻿using Blazor.Core.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ApplicationCore.Interfaces
+namespace Blazor.Core.Interfaces
 {
     public interface IAsyncRepository<T> where T : BaseEntity
     {

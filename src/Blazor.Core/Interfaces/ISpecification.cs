@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Text;
 
-namespace ApplicationCore.Interfaces
+namespace Blazor.Core.Interfaces
 {
     public interface ISpecification<T>
     {

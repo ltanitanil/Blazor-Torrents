@@ -1,7 +1,6 @@
-﻿using ApplicationCore.Entities;
-using System;
+﻿using System;
 
-namespace ApplicationCore.Specifications
+namespace Blazor.Core.Specifications
 {
     public class CatalogFilterPaginatedSpecification : CatalogFilterSpecification
     {

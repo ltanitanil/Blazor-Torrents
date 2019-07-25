@@ -1,11 +1,11 @@
-﻿using ApplicationCore.Entities;
-using ApplicationCore.Interfaces;
+﻿using Blazor.Core.Entities;
+using Blazor.Core.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Infrastructure.Data
+namespace Blazor.Infrastructure.Data
 {
     public class SpecificationEvaluator<T> where T : BaseEntity
     {

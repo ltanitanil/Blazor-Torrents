@@ -1,9 +1,10 @@
-using ApplicationCore.Interfaces;
+using Blazor.Core.Interfaces;
 using AutoMapper;
 using Blazor.Server.Filters;
 using Blazor.Server.Interfaces;
 using Blazor.Server.Services;
-using Infrastructure.Data;
+using Blazor.Infrastructure.Data;
+using Blazor.Infrastructure.Data.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.ResponseCompression;
