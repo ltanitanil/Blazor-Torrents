@@ -5,9 +5,9 @@ using System.Text;
 
 namespace Blazor.Core.Specifications
 {
-    public class CatalogFilterSpecification : BaseSpecification<Torrent>
+    public class TorrentsFilterSpecification : BaseSpecification<Torrent>
     {
-        public CatalogFilterSpecification(string search, int? forumid, long? sizeFrom, long? sizeTo, DateTimeOffset? dateFrom, DateTimeOffset? dateTo)
+        public TorrentsFilterSpecification(string search, int? forumid, long? sizeFrom, long? sizeTo, DateTimeOffset? dateFrom, DateTimeOffset? dateTo)
             : base(x => (string.IsNullOrEmpty(search) || x.Title.Contains(search))
                         && (!forumid.HasValue || x.ForumId == forumid)
                         && (!sizeFrom.HasValue || x.Size >= sizeFrom.Value)
