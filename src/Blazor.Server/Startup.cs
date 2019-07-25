@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Linq;
+using Blazor.Server.Settings;
 
 namespace Blazor.Server
 {
@@ -35,6 +36,7 @@ namespace Blazor.Server
                     c.UseSqlServer(connection);
                     c.UseLazyLoadingProxies();
                 });
+            services.Configure<CacheOptionsSettings>(Configuration.GetSection("CacheSettings"));
 
             services.AddAutoMapper(typeof(Startup));
 
