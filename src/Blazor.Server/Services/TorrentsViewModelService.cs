@@ -17,15 +17,12 @@ namespace Blazor.Server.Services
     public class TorrentsViewModelService : ITorrentsViewModelService
     {
         private readonly IMapper _mapper;
-        private readonly IAsyncRepository<Torrent> _torrentRepository;
-        private readonly IAsyncRepository<Forum> _forumRepository;
+        private readonly ITorrentsRepository _torrentRepository;
 
-        public TorrentsViewModelService(IMapper mapper, IAsyncRepository<Torrent> torrentRepository,
-            IAsyncRepository<Forum> forumRepository)
+        public TorrentsViewModelService(IMapper mapper, ITorrentsRepository torrentRepository)
         {
             _mapper = mapper;
             _torrentRepository = torrentRepository;
-            _forumRepository = forumRepository;
         }
 
         public async Task<TorrentsViewModel> GetTorrents(int pageIndex, int itemsPage, SearchAndFilterCriteria criteria)
@@ -45,7 +42,8 @@ namespace Blazor.Server.Services
                                                                                        criteria.Date.From,
                                                                                        criteria.Date.To);
 
-            var torrentsOnPage = await _torrentRepository.ListAsync(filterPaginatedSpecification) ?? throw new ApiTorrentsException(ExceptionEvent.NotFound, "Not found");
+            var torrentsOnPage = await _torrentRepository.ListAsync(filterPaginatedSpecification)
+                                 ?? throw new ApiTorrentsException(ExceptionEvent.NotFound, "Not found");
             var totalTorrents = await _torrentRepository.CountAsync(filterSpecification);
 
             return new TorrentsViewModel
@@ -58,20 +56,20 @@ namespace Blazor.Server.Services
 
         public async Task<TorrentDescriptionView> GetTorrent(int id)
         {
-            var torrent = await _torrentRepository.GetByIdAsync(id) ?? throw new ApiTorrentsException(ExceptionEvent.NotFound, $"Torrent(id={id}) not found");
+            var torrent = await _torrentRepository.GetByIdAsync(id)
+                          ?? throw new ApiTorrentsException(ExceptionEvent.NotFound, $"Torrent(id={id}) not found");
 
             return _mapper.Map<TorrentDescriptionView>(torrent);
         }
 
         public async Task<SearchAndFilterData> GetDataToFilter(int forumsCount)
         {
-            var forumsId = await _torrentRepository.GetPopularEntriesAsync(forumsCount, x => x.ForumId);
-            var forumsList = await _forumRepository.GetListByIDsAsync(forumsId);
+            var forums = await _torrentRepository.GetPopularForumsAsync(forumsCount);
 
             return new SearchAndFilterData
             {
-                Forums = _mapper.Map<ForumView[]>(forumsList),
-                TorrentMaxSize = await _torrentRepository.GetMaxValueAsync(x => x.Size)
+                Forums = _mapper.Map<ForumView[]>(forums),
+                TorrentMaxSize = await _torrentRepository.GetMaxTorrentSizeAsync()
             };
         }
     }

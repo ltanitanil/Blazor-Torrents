@@ -34,7 +34,7 @@ namespace Blazor.Server
 
             services.AddAutoMapper(typeof(Startup));
 
-            services.AddScoped(typeof(IAsyncRepository<>), typeof(EFRepository<>));
+            services.AddScoped<ITorrentsRepository, TorrentsRepository>();
 
             services.AddScoped<ITorrentsViewModelService, CachedTorrentsViewModelService>();
             services.AddScoped<TorrentsViewModelService>();
