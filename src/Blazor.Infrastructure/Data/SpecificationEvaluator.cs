@@ -11,7 +11,11 @@ namespace Blazor.Infrastructure.Data
     {
         public static IQueryable<T> GetQuery(IQueryable<T> inputQuery, ISpecification<T> specification)
         {
+            if (specification == null)
+                return inputQuery;
+
             var query = inputQuery;
+
             if (specification.Criteria != null)
             {
                 query = query.Where(specification.Criteria);

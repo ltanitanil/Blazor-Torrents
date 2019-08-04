@@ -9,7 +9,7 @@ namespace Blazor.Core.Entities
         public string Name { get; set; }
         public long Size { get; set; }
 
-        //public int TorrentId { get; set; }
+        public int TorrentId { get; set; }
 
     }
 }

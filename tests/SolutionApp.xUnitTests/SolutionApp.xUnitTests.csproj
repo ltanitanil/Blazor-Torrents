@@ -16,6 +16,7 @@
     <ProjectReference Include="..\..\src\Blazor.Core\Blazor.Core.csproj" />
     <ProjectReference Include="..\..\src\Blazor.Infrastructure\Blazor.Infrastructure.csproj" />
     <ProjectReference Include="..\..\src\Blazor.Server\Blazor.Server.csproj" />
+    <ProjectReference Include="..\..\Tests.Shared\Tests.Shared.csproj" />
   </ItemGroup>
 
 </Project>
