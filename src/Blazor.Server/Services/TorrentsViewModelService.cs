@@ -49,7 +49,7 @@ namespace Blazor.Server.Services
             return new TorrentsViewModel
             {
                 Torrents = _mapper.Map<TorrentView[]>(torrentsOnPage),
-                PaginationInfo = new PaginationInfoViewModel(totalTorrents, pageIndex, 10, 5)
+                PaginationInfo = new PaginationInfoViewModel(totalTorrents, pageIndex, itemsPage, 5) // 5 пока оставила как есть(потом вовсе уберу)
             };
 
         }
