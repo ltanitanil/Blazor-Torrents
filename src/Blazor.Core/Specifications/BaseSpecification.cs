@@ -19,7 +19,7 @@ namespace Blazor.Core.Specifications
 
         public int Take { get; private set; }
         public int Skip { get; private set; }
-        public bool IsPagingEnabled { get; private set; } = false;
+        public bool IsPagingEnabled { get; private set; }
 
         protected virtual void ApplyPaging(int skip, int take)
         {
