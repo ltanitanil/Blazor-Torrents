@@ -84,7 +84,7 @@ namespace SolutionApp.xUnitTests.Infrastructure.Repositories
         public async Task ListAsync_SpecificationIsNull_ReturnAllTorrents(ISpecification<Torrent> specification)
         {
             // Arrange
-            const int expectedCount = 5;
+            const int expectedCount = 11;
 
             // Act
             var result = await _torrentsRepository.ListAsync(specification);
@@ -104,7 +104,7 @@ namespace SolutionApp.xUnitTests.Infrastructure.Repositories
         public async Task CountAsync_SpecificationIsNull_ReturnActualCount(ISpecification<Torrent> specification)
         {
             // Arrange
-            const int expectedCount = 5;
+            const int expectedCount = 11;
 
             // Act
             var result = await _torrentsRepository.CountAsync(specification);
@@ -153,10 +153,10 @@ namespace SolutionApp.xUnitTests.Infrastructure.Repositories
         #region GetMaxTorrentSizeAsync()_Tests
 
         [Fact]
-        public async Task GetMaxTorrentSizeAsync_55555_ReturnActualMaximumTorrentSize()
+        public async Task GetMaxTorrentSizeAsync_999999999_ReturnActualMaximumTorrentSize()
         {
             // Arrange
-            const long maxSize = 55555;
+            const long maxSize = 999999999;
 
             // Act
             var result = await _torrentsRepository.GetMaxTorrentSizeAsync();

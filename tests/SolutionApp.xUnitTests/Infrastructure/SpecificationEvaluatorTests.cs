@@ -18,7 +18,7 @@ namespace SolutionApp.xUnitTests.Infrastructure
                 { new CatalogFilterPaginatedSpecification(0,5,null,null,null,null,null,null), 5},
                 { new CatalogFilterPaginatedSpecification(1,5,"Torrent",1,long.MinValue,long.MaxValue,DateTimeOffset.MinValue, DateTimeOffset.MaxValue), 1},
                 { new CatalogFilterSpecification("Torrent",1,long.MinValue,long.MaxValue,DateTimeOffset.MinValue, DateTimeOffset.MaxValue),2},
-                { null, 5 }};
+                { null, 11 }};
 
         [Theory]
         [MemberData(nameof(Data))]
