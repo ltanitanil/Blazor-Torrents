@@ -22,18 +22,22 @@ namespace SolutionApp.xUnitTests.Infrastructure
 
         [Theory]
         [MemberData(nameof(Data))]
-        public void ReturnExpectedNumberOfTorrents(ISpecification<Torrent> specification, int expectedCount)
+        public void GetQuery_SpecificationAndExpectedCount_ReturnExpectedNumberOfTorrents(ISpecification<Torrent> specification, int expectedCount)
         {
+            // Arrange
             var items = InitialEntities.Torrents;
 
-            var result = SpecificationEvaluator<Torrent>.GetQuery(items.AsQueryable(), specification);
+            // Act
+            var torrents = SpecificationEvaluator<Torrent>.GetQuery(items.AsQueryable(), specification);
 
-            Assert.NotNull(result);
-            Assert.True(result.Count() == expectedCount, $"Current count={result.Count()} doesn't match expected count={expectedCount}");
+            // Assert
+            Assert.NotNull(torrents);
+            Assert.True(torrents.Count() == expectedCount, 
+                $"Current count={torrents.Count()} doesn't match expected count={expectedCount}");
         }
 
         [Fact]
-        public void ReturnExceptionIfInputQueryIsNull() =>
+        public void GetQuery_InputQueryIsNull_ReturnException() =>
             Assert.Throws<ArgumentNullException>(() =>
                 SpecificationEvaluator<Torrent>.GetQuery(inputQuery: null, new CatalogFilterPaginatedSpecification(0, 5, null, null, null, null, null, null)));
     }

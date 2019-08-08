@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Blazor.Core.Entities;
 using Blazor.Core.Interfaces;
 using Blazor.Core.Specifications;
 using Blazor.Infrastructure.Data;
@@ -32,12 +33,15 @@ namespace SolutionApp.xUnitTests.Infrastructure.Repositories
         #region GetByIdAsync()_Tests
 
         [Fact]
-        public async Task GetByIdAsync_Return_Existing_Torrent_By_Id()
+        public async Task GetByIdAsync_5_ReturnExistingTorrent()
         {
+            // Arrange
             const int id = 5;
 
+            // Act
             var result = await _torrentsRepository.GetByIdAsync(id);
 
+            // Assert
             Assert.NotNull(result);
             Assert.True(id == result.Id, $"Current id={result.Id} doesn't match expected id={id}");
         }
@@ -45,10 +49,12 @@ namespace SolutionApp.xUnitTests.Infrastructure.Repositories
         [Theory]
         [InlineData(-1)]
         [InlineData(55)]
-        public async Task GetByIdAsync_Return_Null_If_Torrent_Does_Not_Exist(int id)
+        public async Task GetByIdAsync_NonExistingId_ReturnNull(int id)
         {
+            // Act
             var result = await _torrentsRepository.GetByIdAsync(id);
 
+            // Assert
             Assert.Null(result);
         }
 
@@ -57,52 +63,69 @@ namespace SolutionApp.xUnitTests.Infrastructure.Repositories
         #region ListAsync()_Tests
 
         [Fact]
-        public async Task ListAsync_ReturnExistingTorrents()
+        public async Task ListAsync_SpecificationWithTheConditionToTake3_ReturnTorrentsAccordingToTheSpecification()
         {
+            // Arrange
             const int expectedCount = 3;
             var specification =
                 new CatalogFilterPaginatedSpecification(0, expectedCount, null, null, null, null, null, null);
 
+            // Act
             var result = await _torrentsRepository.ListAsync(specification);
 
+            // Assert
             Assert.NotNull(result);
-            Assert.True(result.Count == expectedCount, $"Current count={result.Count} doesn't match expected count={expectedCount}");
+            Assert.True(result.Count == expectedCount, 
+                $"Current count={result.Count} doesn't match expected count={expectedCount}");
         }
 
-        [Fact]
-        public async Task ListAsync_Return_All_Torrents_If_Specification_Is_Null()
+        [Theory]
+        [InlineData(null)]
+        public async Task ListAsync_SpecificationIsNull_ReturnAllTorrents(ISpecification<Torrent> specification)
         {
+            // Arrange
             const int expectedCount = 5;
 
-            var result = await _torrentsRepository.ListAsync(null);
+            // Act
+            var result = await _torrentsRepository.ListAsync(specification);
 
+            // Assert
             Assert.NotNull(result);
-            Assert.True(result.Count == expectedCount, $"Current count={result.Count} doesn't match expected count={expectedCount}");
+            Assert.True(result.Count == expectedCount, 
+                $"Current count={result.Count} doesn't match expected count={expectedCount}");
         }
 
         #endregion
 
         #region CountAsync()_Tests
 
-        [Fact]
-        public async Task CountAsync_Return_Actual_Count_Without_Specification()
+        [Theory]
+        [InlineData(null)]
+        public async Task CountAsync_SpecificationIsNull_ReturnActualCount(ISpecification<Torrent> specification)
         {
+            // Arrange
             const int expectedCount = 5;
 
-            var result = await _torrentsRepository.CountAsync(null);
+            // Act
+            var result = await _torrentsRepository.CountAsync(specification);
 
-            Assert.True(result == expectedCount, $"Current count={result} doesn't match expected count={expectedCount}");
+            // Assert
+            Assert.True(result == expectedCount, 
+                $"Current count={result} doesn't match expected count={expectedCount}");
         }
 
         [Fact]
-        public async Task CountAsync_Return_Actual_Count_With_Specification()
+        public async Task CountAsync_SpecificationWithTheConditionToTake2_ReturnActualCount()
         {
+            // Arrange
             const int expectedCount = 2;
             var spec =
                 new CatalogFilterPaginatedSpecification(0, expectedCount, null, null, null, null, null, null);
 
+            // Act
             var result = await _torrentsRepository.CountAsync(spec);
 
+            // Assert
             Assert.True(result == expectedCount, $"Current count={result} doesn't match expected count={expectedCount}");
         }
 
@@ -111,14 +134,18 @@ namespace SolutionApp.xUnitTests.Infrastructure.Repositories
         #region GetPopularForumsAsync()_Tests
 
         [Fact]
-        public async Task GetPopularForumsAsync_Return_Popular_Forums_in_the_Requested_Quantity()
+        public async Task GetPopularForumsAsync_3_ReturnTheCorrectNumberOfPopularForums()
         {
+            // Arrange
             const int expectedCount = 3;
 
+            // Act
             var result = await _torrentsRepository.GetPopularForumsAsync(expectedCount);
 
+            // Assert
             Assert.NotNull(result);
-            Assert.True(expectedCount == result.Count, $"Current count={result.Count} doesn't match expected count={expectedCount}");
+            Assert.True(expectedCount == result.Count, 
+                $"Current count={result.Count} doesn't match expected count={expectedCount}");
         }
 
         #endregion GetPopularForumsAsync
@@ -126,12 +153,15 @@ namespace SolutionApp.xUnitTests.Infrastructure.Repositories
         #region GetMaxTorrentSizeAsync()_Tests
 
         [Fact]
-        public async Task GetMaxTorrentSizeAsync_Return_Valid_Maximum_Torrent_Size()
+        public async Task GetMaxTorrentSizeAsync_55555_ReturnActualMaximumTorrentSize()
         {
+            // Arrange
             const long maxSize = 55555;
 
+            // Act
             var result = await _torrentsRepository.GetMaxTorrentSizeAsync();
 
+            // Assert
             Assert.Equal(maxSize, result);
         }
 

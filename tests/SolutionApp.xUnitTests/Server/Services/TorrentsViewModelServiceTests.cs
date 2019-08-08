@@ -33,23 +33,29 @@ namespace SolutionApp.xUnitTests.Server.Services
 
         #region GetTorrent(int id)_Tests
         [Fact]
-        public async Task GetTorrent_Return_Existing_Torrent_By_Id()
+        public async Task GetTorrent_3_ReturnExpectedTorrent()
         {
+            // Arrange
             const int id = 3;
 
+            // Act
             var result = await _torrentsService.GetTorrent(id);
 
+            // Assert
             Assert.NotNull(result);
             Assert.True(result.Id == id, $"Current id ={result.Id} doesn't match expected id={id})");
         }
 
         [Fact]
-        public async Task GetTorrent_Return_Exception_If_Id_Does_Not_Exist()
+        public async Task GetTorrent_NonExistingId_ReturnException()
         {
+            // Arrange
             const int id = -1;
 
+            // Act
             var exception = await Assert.ThrowsAsync<ApiTorrentsException>(async () => await _torrentsService.GetTorrent(id));
 
+            // Assert
             Assert.Equal(ExceptionEvent.NotFound, exception.ExceptionEvent);
             Assert.Equal($"Torrent(id={id}) not found", exception.Message);
         }
@@ -65,10 +71,12 @@ namespace SolutionApp.xUnitTests.Server.Services
 
         [Theory]
         [MemberData(nameof(DataForGetTorrents))]
-        public async Task GetTorrents_Return_Existing_Torrents(int pageIndex, int itemsPage, SearchAndFilterCriteria criteria, int expectedCount)
+        public async Task GetTorrents_DataForGetTorrents_ReturnExistingTorrents(int pageIndex, int itemsPage, SearchAndFilterCriteria criteria, int expectedCount)
         {
+            // Act
             var result = await _torrentsService.GetTorrents(pageIndex, itemsPage, criteria);
 
+            // Assert
             Assert.NotNull(result);
             Assert.NotNull(result.Torrents);
             Assert.NotNull(result.PaginationInfo);
@@ -77,11 +85,13 @@ namespace SolutionApp.xUnitTests.Server.Services
         }
 
         [Fact]
-        public async Task GetTorrents_Return_Exception_If_if_The_Received_TorrentList_Is_Null()
+        public async Task GetTorrents_NonExistingParameters_ReturnExceptionIfTheReceivedTorrentListIsNull()
         {
+            // Arrange & Act
             var exception = await Assert.ThrowsAsync<ApiTorrentsException>(async () =>
                 await _torrentsService.GetTorrents(100, 100, new SearchAndFilterCriteria()));
 
+            // Assert
             Assert.Equal(ExceptionEvent.NotFound, exception.ExceptionEvent);
             Assert.Equal($"Not found", exception.Message);
         }
@@ -91,12 +101,15 @@ namespace SolutionApp.xUnitTests.Server.Services
         #region GetDataToFilter(int count)_Tests
 
         [Fact]
-        public async Task GetDataToFilter_Return_The_Requested_Number_Of_Forums()
+        public async Task GetDataToFilter_2_ReturnTheRequestedNumberOfForums()
         {
+            // Arrange
             const int forumsCount = 2;
 
+            // Act
             var result = await _torrentsService.GetDataToFilter(forumsCount);
 
+            // Assert
             Assert.NotNull(result);
             Assert.NotNull(result.Forums);
             Assert.True(result.Forums.Count() == forumsCount, $"Current count={result.Forums.Count()} doesn't match expected count={forumsCount})");

@@ -17,12 +17,15 @@ namespace SolutionApp.xUnitTests.Core
 
         [Theory]
         [MemberData(nameof(Data))]
-        public void ReturnValidCatalogFilterPaginatedSpecification(string search, int? forumId, long? sizeFrom, long? sizeTo, DateTimeOffset? dateFrom, DateTimeOffset? dateTo)
+        public void CatalogFilterSpecification_SpecificationParameters_ReturnValidSpecification(string search, 
+            int? forumId, long? sizeFrom, long? sizeTo, DateTimeOffset? dateFrom, DateTimeOffset? dateTo)
         {
-            var result = new CatalogFilterSpecification(search, forumId, sizeFrom, sizeTo, dateFrom, dateTo);
+            // Act
+            var specification = new CatalogFilterSpecification(search, forumId, sizeFrom, sizeTo, dateFrom, dateTo);
 
-            Assert.NotNull(result.Criteria);
-            Assert.False(result.IsPagingEnabled);
+            // Assert
+            Assert.NotNull(specification.Criteria);
+            Assert.False(specification.IsPagingEnabled);
         }
     }
 }

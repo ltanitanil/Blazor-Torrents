@@ -22,7 +22,7 @@ namespace SolutionApp.IntegrationTests.Server
 
         [Theory]
         [InlineData(1)]
-        public async Task GetTorrent_ReturnTheRequestedTorrent(int id)
+        public async Task GetTorrent_1_ReturnTheRequestedTorrent(int id)
         {
             //Act
             var torrent = await _client.GetJsonAsync<TorrentDescriptionView>($"api/Torrents/GetTorrent/?id={id}");
@@ -37,7 +37,7 @@ namespace SolutionApp.IntegrationTests.Server
 
         [Theory]
         [InlineData(2222222)]
-        public async Task GetTorrent_ReturnNotFound(int id)
+        public async Task GetTorrent_NonExistingId_ReturnNotFound(int id)
         {
             //Act
             var exception = await Assert.ThrowsAsync<HttpRequestException>(async () =>
@@ -50,11 +50,11 @@ namespace SolutionApp.IntegrationTests.Server
 
         [Theory]
         [InlineData(-20)]
-        public async Task GetTorrent_ReturnBadRequest(int badId)
+        public async Task GetTorrent_InvalidId_ReturnBadRequest(int invalidId)
         {
             //Act
             var exception = await Assert.ThrowsAsync<HttpRequestException>(async () =>
-                await _client.GetJsonAsync<TorrentDescriptionView>($"api/Torrents/GetTorrent/?id={badId}"));
+                await _client.GetJsonAsync<TorrentDescriptionView>($"api/Torrents/GetTorrent/?id={invalidId}"));
 
             //Assert
             Assert.True("Response status code does not indicate success: 400 (Bad Request)." == exception.Message,
@@ -68,7 +68,7 @@ namespace SolutionApp.IntegrationTests.Server
         [Theory]
         [InlineData(0, 10)]
         [InlineData(1, 1)]
-        public async Task GetTorrents_ReturnTheRequestedTorrentPage(int pageIndex, int expectedCount)
+        public async Task GetTorrents_ValidParameters_ReturnTheRequestedTorrentPage(int pageIndex, int expectedCount)
         {
             //Arrange
             var criteria = new SearchAndFilterCriteria();
@@ -88,7 +88,7 @@ namespace SolutionApp.IntegrationTests.Server
 
         [Theory]
         [InlineData(-20, null)]
-        public async Task GetTorrents_ReturnBadRequest(int pageIndex, SearchAndFilterCriteria criteria)
+        public async Task GetTorrents_InvalidParameters_ReturnBadRequest(int pageIndex, SearchAndFilterCriteria criteria)
         {
             //Act
             var exception = await Assert.ThrowsAsync<HttpRequestException>(async () =>

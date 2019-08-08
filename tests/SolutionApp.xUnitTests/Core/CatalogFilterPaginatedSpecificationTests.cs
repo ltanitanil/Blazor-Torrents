@@ -17,14 +17,19 @@ namespace SolutionApp.xUnitTests.Core
 
         [Theory]
         [MemberData(nameof(Data))]
-        public void ReturnValidCatalogFilterPaginatedSpecification(int skip, int take, string search, int? forumId, long? sizeFrom, long? sizeTo, DateTimeOffset? dateFrom, DateTimeOffset? dateTo)
+        public void CatalogFilterPaginatedSpecification_SpecificationParameters_ReturnValidSpecification(int skip, 
+            int take, string search, int? forumId, long? sizeFrom, long? sizeTo, DateTimeOffset? dateFrom, DateTimeOffset? dateTo)
         {
-            var result = new CatalogFilterPaginatedSpecification(skip, take, search, forumId, sizeFrom, sizeTo, dateFrom, dateTo);
+            // Act
+            var specification = new CatalogFilterPaginatedSpecification(skip, take, search, forumId, sizeFrom, sizeTo, dateFrom, dateTo);
 
-            Assert.NotNull(result.Criteria);
-            Assert.True(result.IsPagingEnabled);
-            Assert.True(result.Skip == skip, $"Expected skip={skip} doesn't match the actual skip={result.Skip}");
-            Assert.True(result.Take == take, $"Expected take={take} doesn't match the actual take={result.Take}");
+            // Assert
+            Assert.NotNull(specification.Criteria);
+            Assert.True(specification.IsPagingEnabled);
+            Assert.True(specification.Skip == skip,
+                $"Expected skip={skip} doesn't match the actual skip={specification.Skip}");
+            Assert.True(specification.Take == take,
+                $"Expected take={take} doesn't match the actual take={specification.Take}");
         }
     }
 }
