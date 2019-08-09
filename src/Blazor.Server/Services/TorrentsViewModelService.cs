@@ -30,13 +30,13 @@ namespace Blazor.Server.Services
 
         public async Task<TorrentsViewModel> GetTorrents(int pageIndex, int itemsPage, SearchAndFilterCriteria criteria)
         {
-            var filterSpecification = new TorrentsFilterSpecification(criteria.SearchText,
+            var filterSpecification = new CatalogFilterSpecification(criteria.SearchText,
                                                                      criteria.SelectedForumId,
                                                                      criteria.Size.From,
                                                                      criteria.Size.To,
                                                                      criteria.Date.From,
                                                                      criteria.Date.To);
-            var filterPaginatedSpecification = new TorrentsFilterPaginatedSpecification(itemsPage * pageIndex,
+            var filterPaginatedSpecification = new CatalogFilterPaginatedSpecification(itemsPage * pageIndex,
                                                                                        itemsPage,
                                                                                        criteria.SearchText,
                                                                                        criteria.SelectedForumId,
