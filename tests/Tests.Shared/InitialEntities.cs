@@ -1,4 +1,4 @@
-﻿using Blazor.BusinessLayer.Entities;
+﻿using Blazor.Server.BusinessLayer.Entities;
 using System;
 using System.Collections.Generic;
 

@@ -15,16 +15,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Server\Blazor.BusinessLayer\Blazor.BusinessLayer.csproj" />
-    <ProjectReference Include="..\..\src\Server\Blazor.DataAccessLayer\Blazor.DataAccessLayer.csproj" />
+    <ProjectReference Include="..\..\src\Server\Blazor.Server.BusinessLayer\Blazor.Server.BusinessLayer.csproj" />
+    <ProjectReference Include="..\..\src\Server\Blazor.Server.DataAccessLayer\Blazor.Server.DataAccessLayer.csproj" />
     <ProjectReference Include="..\..\src\Server\Blazor.Server.WebApi\Blazor.Server.WebApi.csproj" />
     <ProjectReference Include="..\Tests.Shared\Tests.Shared.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="Blazor.Shared.Models">
-      <HintPath>..\..\src\Shared\Blazor.Shared\bin\Debug\netstandard2.0\Blazor.Shared.Models.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
 </Project>

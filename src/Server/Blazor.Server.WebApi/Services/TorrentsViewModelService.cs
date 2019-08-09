@@ -3,8 +3,8 @@ using Blazor.Shared.ViewModels;
 using Blazor.Shared.ViewModels.Search;
 using Blazor.Shared.ViewModels.TorrentModel;
 using System.Threading.Tasks;
-using Blazor.BusinessLayer.Interfaces;
-using Blazor.BusinessLayer.Specifications;
+using Blazor.Server.BusinessLayer.Interfaces;
+using Blazor.Server.BusinessLayer.Specifications;
 using Blazor.Server.WebApi.Exceptions;
 using Blazor.Server.WebApi.Interfaces;
 

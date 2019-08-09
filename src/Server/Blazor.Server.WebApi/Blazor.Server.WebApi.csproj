@@ -14,9 +14,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Client\Blazor.Client\Blazor.Client.csproj" />
-    <ProjectReference Include="..\..\Shared\Blazor.Shared\Blazor.Shared.Models.csproj" />
-    <ProjectReference Include="..\Blazor.BusinessLayer\Blazor.BusinessLayer.csproj" />
-    <ProjectReference Include="..\Blazor.DataAccessLayer\Blazor.DataAccessLayer.csproj" />
+    <ProjectReference Include="..\..\Shared\Blazor.Shared.Models\Blazor.Shared.Models.csproj" />
+    <ProjectReference Include="..\Blazor.Server.BusinessLayer\Blazor.Server.BusinessLayer.csproj" />
+    <ProjectReference Include="..\Blazor.Server.DataAccessLayer\Blazor.Server.DataAccessLayer.csproj" />
   </ItemGroup>
 
 </Project>

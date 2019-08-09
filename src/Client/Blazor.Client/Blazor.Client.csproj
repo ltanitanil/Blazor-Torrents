@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Shared\Blazor.Shared\Blazor.Shared.Models.csproj" />
+    <ProjectReference Include="..\..\Shared\Blazor.Shared.Models\Blazor.Shared.Models.csproj" />
   </ItemGroup>
 
 </Project>

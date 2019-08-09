@@ -11,9 +11,9 @@ using Blazor.Server.WebApi.Filters;
 using Blazor.Server.WebApi.Interfaces;
 using Blazor.Server.WebApi.Services;
 using Blazor.Server.WebApi.Settings;
-using Blazor.DataAccessLayer.Data;
-using Blazor.BusinessLayer.Interfaces;
-using Blazor.DataAccessLayer.Data.Repositories;
+using Blazor.Server.BusinessLayer.Interfaces;
+using Blazor.Server.DataAccessLayer.Data;
+using Blazor.Server.DataAccessLayer.Data.Repositories;
 
 namespace Blazor.Server.WebApi
 {

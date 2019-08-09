@@ -1,10 +1,10 @@
-﻿using Blazor.DataAccessLayer.Data;
+﻿using Blazor.Server.DataAccessLayer.Data;
 using Blazor.Server.WebApi;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using SolutionApp.IntegrationTests.Helpers;
+using SolutionApp.IntegrationTests.Blazor.Server.WebApi.Helpers;
 
 namespace SolutionApp.IntegrationTests
 {
