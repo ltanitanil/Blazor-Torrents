@@ -11,7 +11,6 @@ using Blazor.Shared.ViewModels.Search;
 using Blazor.Shared.ViewModels.TorrentModel;
 using Castle.Core.Internal;
 using Moq;
-using Microsoft.AspNetCore.Components;
 using Tests.Shared;
 using Xunit;
 

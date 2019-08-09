@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Server\Blazor.Core\Blazor.BusinessLayer.csproj" />
+    <ProjectReference Include="..\..\src\Server\Blazor.BusinessLayer\Blazor.BusinessLayer.csproj" />
   </ItemGroup>
 
 </Project>

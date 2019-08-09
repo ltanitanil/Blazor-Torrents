@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="8.1.1" />
     <PackageReference Include="EntityFrameworkCoreMock.Moq" Version="1.0.0.25" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.0.1" />
     <PackageReference Include="xunit" Version="2.4.0" />
@@ -14,10 +15,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Server\Blazor.Core\Blazor.BusinessLayer.csproj" />
-    <ProjectReference Include="..\..\src\Server\Blazor.Infrastructure\Blazor.DataAccessLayer.csproj" />
-    <ProjectReference Include="..\..\src\Server\Blazor.Server\Blazor.Server.WebApi.csproj" />
+    <ProjectReference Include="..\..\src\Server\Blazor.BusinessLayer\Blazor.BusinessLayer.csproj" />
+    <ProjectReference Include="..\..\src\Server\Blazor.DataAccessLayer\Blazor.DataAccessLayer.csproj" />
+    <ProjectReference Include="..\..\src\Server\Blazor.Server.WebApi\Blazor.Server.WebApi.csproj" />
     <ProjectReference Include="..\Tests.Shared\Tests.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Blazor.Shared.Models">
+      <HintPath>..\..\src\Shared\Blazor.Shared\bin\Debug\netstandard2.0\Blazor.Shared.Models.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

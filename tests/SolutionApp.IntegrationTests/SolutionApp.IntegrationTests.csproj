@@ -21,10 +21,17 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Server\Blazor.Infrastructure\Blazor.DataAccessLayer.csproj" />
-    <ProjectReference Include="..\..\src\Server\Blazor.Server\Blazor.Server.WebApi.csproj" />
+    <ProjectReference Include="..\..\src\Server\Blazor.BusinessLayer\Blazor.BusinessLayer.csproj" />
+    <ProjectReference Include="..\..\src\Server\Blazor.DataAccessLayer\Blazor.DataAccessLayer.csproj" />
+    <ProjectReference Include="..\..\src\Server\Blazor.Server.WebApi\Blazor.Server.WebApi.csproj" />
     <ProjectReference Include="..\..\src\Shared\Blazor.Shared\Blazor.Shared.Models.csproj" />
     <ProjectReference Include="..\Tests.Shared\Tests.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Microsoft.AspNetCore.Components">
+      <HintPath>..\..\..\..\..\..\..\Program Files\dotnet\packs\Microsoft.AspNetCore.App.Ref\3.0.0-preview6.19307.2\ref\netcoreapp3.0\Microsoft.AspNetCore.Components.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>
