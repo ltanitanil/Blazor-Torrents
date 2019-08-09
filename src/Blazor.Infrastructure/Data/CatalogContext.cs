@@ -8,17 +8,12 @@ namespace Blazor.Infrastructure.Data
 {
     public class CatalogContext : DbContext
     {
-        public DbSet<Torrent> Torrents { get; set; }
-        public DbSet<Forum> Forums { get; set; }
-        public DbSet<File> Files { get; set; }
+        public virtual DbSet<Torrent> Torrents { get; set; }
+        public virtual DbSet<Forum> Forums { get; set; }
+        public virtual DbSet<File> Files { get; set; }
 
         public CatalogContext(DbContextOptions<CatalogContext> options) : base(options)
         {
-        }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseLazyLoadingProxies();
         }
 
     }

@@ -19,9 +19,9 @@ namespace Blazor.Shared.ViewModels
         {
             var totalPages = (int)Math.Ceiling((decimal)totalItems / (decimal)pageSize);
 
-            if (currentPage < 1)
+            if (currentPage < 0)
             {
-                currentPage = 1;
+                currentPage = 0;
             }
             else if (currentPage > totalPages)
             {

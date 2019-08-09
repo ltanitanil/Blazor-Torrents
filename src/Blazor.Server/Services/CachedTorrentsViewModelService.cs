@@ -4,9 +4,10 @@ using Blazor.Shared.ViewModels.Search;
 using Blazor.Shared.ViewModels.TorrentModel;
 using Microsoft.Extensions.Caching.Memory;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+using Blazor.Server.Settings;
+using Microsoft.Extensions.Options;
+using Blazor.Server.Extensions;
 
 namespace Blazor.Server.Services
 {
@@ -14,52 +15,37 @@ namespace Blazor.Server.Services
     {
         private readonly IMemoryCache _cache;
         private readonly TorrentsViewModelService _torrentViewModelService;
-        private static readonly string _torrentKeyTemplate = "torrent-{0}";
-        private static readonly string _torrentsKeyTemplate = "torrents-{0}-{1}-{2}-{3}-{4}-{5}-{6}-{7}";
-        private static readonly string _popularForumsKeyTemplate = "popularForums-{0}";
-        private static readonly TimeSpan _defaultCacheDuration = TimeSpan.FromSeconds(30);
+        private readonly MemoryCacheEntryOptions _cacheEntryOptions;
 
-        public CachedTorrentsViewModelService(IMemoryCache cache, TorrentsViewModelService torrentViewModelService)
+        public CachedTorrentsViewModelService(IOptions<CacheOptionsSettings> cacheOptions, IMemoryCache cache, TorrentsViewModelService torrentViewModelService)
         {
             _cache = cache;
             _torrentViewModelService = torrentViewModelService;
+            _cacheEntryOptions = new MemoryCacheEntryOptions { SlidingExpiration = cacheOptions.Value?.SlidingExpiration };
         }
 
         public async Task<TorrentDescriptionView> GetTorrent(int id)
         {
-            string cacheKey = String.Format(_torrentKeyTemplate, id);
-            return await _cache.GetOrCreateAsync(cacheKey, async entry =>
-            {
-                entry.SlidingExpiration = _defaultCacheDuration;
-                return await _torrentViewModelService.GetTorrent(id);
-            });
+            var cacheKey = $"torrent-{id}";
+
+            return await _cache.GetOrCreateAsync(cacheKey,
+                () => _torrentViewModelService.GetTorrent(id), _cacheEntryOptions);
         }
 
         public async Task<TorrentsViewModel> GetTorrents(int pageIndex, int itemsPage, SearchAndFilterCriteria criteria)
         {
-            string cacheKey = string.Format(_torrentsKeyTemplate, pageIndex,
-                                                      itemsPage,
-                                                      criteria.SearchText,
-                                                      criteria.SelectedForumId,
-                                                      criteria.Size.From,
-                                                      criteria.Size.To,
-                                                      criteria.Date.From,
-                                                      criteria.Date.To);
-            return await _cache.GetOrCreateAsync(cacheKey, async entry =>
-            {
-                entry.SlidingExpiration = _defaultCacheDuration;
-                return await _torrentViewModelService.GetTorrents(pageIndex, itemsPage, criteria);
-            });
+            var cacheKey =
+                $"torrents-{pageIndex}-{itemsPage}-{criteria.SearchText}-{criteria.SelectedForumId}-{criteria.Size.From}-{criteria.Size.To}-{criteria.Date.From}-{criteria.Date.To}";
+
+            return await _cache.GetOrCreateAsync(cacheKey,
+                () => _torrentViewModelService.GetTorrents(pageIndex, itemsPage, criteria), _cacheEntryOptions);
         }
 
         public async Task<SearchAndFilterData> GetDataToFilter(int forumsCount)
         {
-            string cacheKey = String.Format(_popularForumsKeyTemplate, forumsCount);
-            return await _cache.GetOrCreateAsync(cacheKey, async entry =>
-            {
-                entry.SlidingExpiration = _defaultCacheDuration;
-                return await _torrentViewModelService.GetDataToFilter(forumsCount);
-            });
+            var cacheKey = $"popularForums-{forumsCount}";
+
+            return await _cache.GetOrCreateAsync(cacheKey, () => _torrentViewModelService.GetDataToFilter(forumsCount), _cacheEntryOptions);
         }
 
     }

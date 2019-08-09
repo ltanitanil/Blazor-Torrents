@@ -11,16 +11,16 @@ namespace Blazor.Infrastructure.Data.Repositories
 {
     public class EFRepository<T> : IAsyncRepository<T> where T : BaseEntity
     {
-        private readonly CatalogContext _eFContext;
+        protected readonly CatalogContext _eFContext;
 
         public EFRepository(CatalogContext eFContext)
         {
             _eFContext = eFContext;
         }
 
-        public Task<int> CountAsync(ISpecification<T> specification)
+        public async Task<int> CountAsync(ISpecification<T> specification)
         {
-            return ApplySpecification(specification).CountAsync();
+            return await ApplySpecification(specification).CountAsync();
         }
 
         public async Task<T> GetByIdAsync(int id)
@@ -36,25 +36,6 @@ namespace Blazor.Infrastructure.Data.Repositories
         public IQueryable<T> ApplySpecification(ISpecification<T> spec)
         {
             return SpecificationEvaluator<T>.GetQuery(_eFContext.Set<T>().AsQueryable(), spec);
-        }
-
-        public async Task<IReadOnlyList<int>> GetPopularEntriesAsync(int count, Expression<Func<T, int>> expression)
-        {
-            return await _eFContext.Set<T>().GroupBy(expression)
-                                            .OrderByDescending(x => x.Count())
-                                            .Take(count)
-                                            .Select(x => x.Key)
-                                            .ToListAsync();
-        }
-
-        public async Task<IReadOnlyList<T>> GetListByIDsAsync(IReadOnlyList<int> iDs)
-        {
-            return await _eFContext.Set<T>().Where(x => iDs.Any(z => z == x.Id)).ToListAsync();
-        }
-
-        public async Task<long> GetMaxValueAsync(Expression<Func<T, long>> expression)
-        {
-            return await _eFContext.Set<T>().MaxAsync(expression);
         }
     }
 }

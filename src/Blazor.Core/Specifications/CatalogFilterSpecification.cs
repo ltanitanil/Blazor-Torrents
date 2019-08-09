@@ -7,12 +7,13 @@ namespace Blazor.Core.Specifications
 {
     public class CatalogFilterSpecification : BaseSpecification<Torrent>
     {
-        public CatalogFilterSpecification(string search, int? forumid, long? sizeFrom, long? sizeTo, DateTimeOffset? dateFrom, DateTimeOffset? dateTo)
+        public CatalogFilterSpecification(string search, int? forumId, long? sizeFrom, long? sizeTo, DateTimeOffset? dateFrom, DateTimeOffset? dateTo)
             : base(x => (string.IsNullOrEmpty(search) || x.Title.Contains(search))
-                        && (!forumid.HasValue || x.ForumId == forumid)
-                        && (!sizeFrom.HasValue || x.Size >= sizeFrom.Value)
-                        && (!sizeTo.HasValue || x.Size <= sizeTo.Value)
-                        && ((!dateFrom.HasValue && !dateTo.HasValue) || (dateFrom <= x.RegisteredAt && x.RegisteredAt <= dateTo)))
+                        && (!forumId.HasValue || x.ForumId == forumId)
+                        && (!sizeFrom.HasValue || x.Size >= sizeFrom)
+                        && (!sizeTo.HasValue || x.Size <= sizeTo)
+                        && (!dateFrom.HasValue || x.RegisteredAt >= dateFrom)
+                        && (!dateTo.HasValue || x.RegisteredAt <= dateTo))
         {
         }
     }

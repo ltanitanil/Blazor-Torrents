@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Linq;
+using Blazor.Server.Settings;
 
 namespace Blazor.Server
 {
@@ -29,12 +30,17 @@ namespace Blazor.Server
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            string connection = Configuration.GetConnectionString("DefaultConnection");
-            services.AddDbContext<CatalogContext>(c => c.UseSqlServer(connection));
+            var connection = Configuration.GetConnectionString("DefaultConnection");
+            services.AddDbContext<CatalogContext>(c =>
+                {
+                    c.UseSqlServer(connection);
+                    c.UseLazyLoadingProxies();
+                });
+            services.Configure<CacheOptionsSettings>(Configuration.GetSection("CacheSettings"));
 
             services.AddAutoMapper(typeof(Startup));
 
-            services.AddScoped(typeof(IAsyncRepository<>), typeof(EFRepository<>));
+            services.AddScoped<ITorrentsRepository, TorrentsRepository>();
 
             services.AddScoped<ITorrentsViewModelService, CachedTorrentsViewModelService>();
             services.AddScoped<TorrentsViewModelService>();
