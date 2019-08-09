@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\Blazor.Core\Blazor.Core.csproj" />
+    <ProjectReference Include="..\..\src\Blazor.Core\Blazor.Core.csproj" />
   </ItemGroup>
 
 </Project>
