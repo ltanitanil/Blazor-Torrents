@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Blazor.Core.Entities
+namespace Blazor.BusinessLayer.Entities
 {
     public class File : BaseEntity
     {

@@ -1,18 +1,14 @@
-﻿using Blazor.Core.Entities;
-using Blazor.Core.Interfaces;
-using Blazor.Core.Specifications;
-using AutoMapper;
-using Blazor.Server.Exceptions;
-using Blazor.Server.Interfaces;
+﻿using AutoMapper;
 using Blazor.Shared.ViewModels;
 using Blazor.Shared.ViewModels.Search;
 using Blazor.Shared.ViewModels.TorrentModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+using Blazor.BusinessLayer.Interfaces;
+using Blazor.BusinessLayer.Specifications;
+using Blazor.Server.WebApi.Exceptions;
+using Blazor.Server.WebApi.Interfaces;
 
-namespace Blazor.Server.Services
+namespace Blazor.Server.WebApi.Services
 {
     public class TorrentsViewModelService : ITorrentsViewModelService
     {

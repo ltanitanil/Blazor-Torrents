@@ -21,8 +21,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Blazor.Infrastructure\Blazor.Infrastructure.csproj" />
-    <ProjectReference Include="..\..\src\Blazor.Server\Blazor.Server.csproj" />
+    <ProjectReference Include="..\..\src\Server\Blazor.Infrastructure\Blazor.DataAccessLayer.csproj" />
+    <ProjectReference Include="..\..\src\Server\Blazor.Server\Blazor.Server.WebApi.csproj" />
+    <ProjectReference Include="..\..\src\Shared\Blazor.Shared\Blazor.Shared.Models.csproj" />
     <ProjectReference Include="..\Tests.Shared\Tests.Shared.csproj" />
   </ItemGroup>
 

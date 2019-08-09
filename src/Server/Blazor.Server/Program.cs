@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 
-namespace Blazor.Server
+namespace Blazor.Server.WebApi
 {
     public class Program
     {

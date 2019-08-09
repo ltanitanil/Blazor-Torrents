@@ -1,18 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
-using Blazor.Core.Entities;
-using Blazor.Core.Interfaces;
-using Blazor.Server.Exceptions;
-using Blazor.Server.Interfaces;
-using Blazor.Server.Services;
+using Blazor.BusinessLayer.Entities;
+using Blazor.BusinessLayer.Interfaces;
+using Blazor.Server.WebApi.Exceptions;
+using Blazor.Server.WebApi.Interfaces;
+using Blazor.Server.WebApi.Services;
 using Blazor.Shared.ViewModels.Search;
 using Blazor.Shared.ViewModels.TorrentModel;
 using Castle.Core.Internal;
 using Moq;
+using Microsoft.AspNetCore.Components;
 using Tests.Shared;
 using Xunit;
 

@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Blazor.Core.Specifications;
+using Blazor.BusinessLayer.Specifications;
 using Xunit;
 
 namespace SolutionApp.xUnitTests.Core

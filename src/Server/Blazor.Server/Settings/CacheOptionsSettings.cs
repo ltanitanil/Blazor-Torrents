@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Blazor.Server.Settings
+namespace Blazor.Server.WebApi.Settings
 {
     public class CacheOptionsSettings
     {

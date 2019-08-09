@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using Blazor.Infrastructure.Data;
+using Blazor.DataAccessLayer.Data;
 using Tests.Shared;
+
 
 namespace SolutionApp.IntegrationTests.Helpers
 {

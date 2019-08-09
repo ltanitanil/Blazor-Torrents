@@ -1,8 +1,8 @@
-﻿using Blazor.Core.Entities;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Blazor.BusinessLayer.Entities;
 
-namespace Blazor.Core.Interfaces
+namespace Blazor.BusinessLayer.Interfaces
 {
     public interface ITorrentsRepository : IAsyncRepository<Torrent>
     {

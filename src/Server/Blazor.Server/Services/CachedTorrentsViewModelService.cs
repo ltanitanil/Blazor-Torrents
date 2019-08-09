@@ -1,15 +1,14 @@
-﻿using Blazor.Server.Interfaces;
-using Blazor.Shared.ViewModels;
+﻿using Blazor.Shared.ViewModels;
 using Blazor.Shared.ViewModels.Search;
 using Blazor.Shared.ViewModels.TorrentModel;
 using Microsoft.Extensions.Caching.Memory;
-using System;
 using System.Threading.Tasks;
-using Blazor.Server.Settings;
+using Blazor.Server.WebApi.Interfaces;
+using Blazor.Server.WebApi.Settings;
 using Microsoft.Extensions.Options;
-using Blazor.Server.Extensions;
+using Blazor.Server.WebApi.Extensions;
 
-namespace Blazor.Server.Services
+namespace Blazor.Server.WebApi.Services
 {
     public class CachedTorrentsViewModelService : ITorrentsViewModelService
     {

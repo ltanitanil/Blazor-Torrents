@@ -1,11 +1,11 @@
 ﻿using System;
 
-namespace Blazor.Core.Specifications
+namespace Blazor.BusinessLayer.Specifications
 {
     public class CatalogFilterPaginatedSpecification : CatalogFilterSpecification
     {
-        public CatalogFilterPaginatedSpecification(int skip, int take, string search, int? forumid, long? sizeFrom, long? sizeTo, DateTimeOffset? dateFrom, DateTimeOffset? dateTo)
-            : base(search, forumid, sizeFrom, sizeTo, dateFrom, dateTo)
+        public CatalogFilterPaginatedSpecification(int skip, int take, string search, int? forumId, long? sizeFrom, long? sizeTo, DateTimeOffset? dateFrom, DateTimeOffset? dateTo)
+            : base(search, forumId, sizeFrom, sizeTo, dateFrom, dateTo)
         {
             ApplyPaging(skip, take);
         }

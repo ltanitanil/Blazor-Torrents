@@ -1,8 +1,8 @@
-﻿using Blazor.Core.Interfaces;
-using System;
+﻿using System;
 using System.Linq.Expressions;
+using Blazor.BusinessLayer.Interfaces;
 
-namespace Blazor.Core.Specifications
+namespace Blazor.BusinessLayer.Specifications
 {
     public class BaseSpecification<T> : ISpecification<T>
     {

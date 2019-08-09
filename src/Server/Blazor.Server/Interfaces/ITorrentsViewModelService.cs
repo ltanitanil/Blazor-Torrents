@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Blazor.Server.Interfaces
+namespace Blazor.Server.WebApi.Interfaces
 {
     public interface ITorrentsViewModelService
     {

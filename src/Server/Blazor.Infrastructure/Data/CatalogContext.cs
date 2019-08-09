@@ -1,10 +1,7 @@
-﻿using Blazor.Core.Entities;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Microsoft.EntityFrameworkCore;
+using Blazor.BusinessLayer.Entities;
 
-namespace Blazor.Infrastructure.Data
+namespace Blazor.DataAccessLayer.Data
 {
     public class CatalogContext : DbContext
     {

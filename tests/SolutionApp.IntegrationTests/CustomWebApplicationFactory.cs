@@ -1,5 +1,5 @@
-﻿using Blazor.Infrastructure.Data;
-using Blazor.Server;
+﻿using Blazor.DataAccessLayer.Data;
+using Blazor.Server.WebApi;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;

@@ -1,7 +1,6 @@
-﻿using Blazor.Core.Entities;
+﻿using Blazor.BusinessLayer.Entities;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Tests.Shared
 {

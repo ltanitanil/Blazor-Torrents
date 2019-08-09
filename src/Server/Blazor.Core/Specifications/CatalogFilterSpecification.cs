@@ -1,9 +1,7 @@
-﻿using Blazor.Core.Entities;
+﻿using Blazor.BusinessLayer.Entities;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Blazor.Core.Specifications
+namespace Blazor.BusinessLayer.Specifications
 {
     public class CatalogFilterSpecification : BaseSpecification<Torrent>
     {

@@ -1,10 +1,4 @@
-using Blazor.Core.Interfaces;
 using AutoMapper;
-using Blazor.Server.Filters;
-using Blazor.Server.Interfaces;
-using Blazor.Server.Services;
-using Blazor.Infrastructure.Data;
-using Blazor.Infrastructure.Data.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.ResponseCompression;
@@ -13,9 +7,15 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Linq;
-using Blazor.Server.Settings;
+using Blazor.Server.WebApi.Filters;
+using Blazor.Server.WebApi.Interfaces;
+using Blazor.Server.WebApi.Services;
+using Blazor.Server.WebApi.Settings;
+using Blazor.DataAccessLayer.Data;
+using Blazor.BusinessLayer.Interfaces;
+using Blazor.DataAccessLayer.Data.Repositories;
 
-namespace Blazor.Server
+namespace Blazor.Server.WebApi
 {
     public class Startup
     {

@@ -1,8 +1,8 @@
-﻿using System.Linq;
+﻿using Blazor.Shared.ViewModels.Search;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Blazor.Shared.ViewModels;
-using Blazor.Shared.ViewModels.Search;
 using Blazor.Shared.ViewModels.TorrentModel;
 using Microsoft.AspNetCore.Components;
 using Xunit;

@@ -1,11 +1,11 @@
-﻿using Blazor.Core.Entities;
-using Blazor.Core.Interfaces;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Blazor.BusinessLayer.Entities;
+using Blazor.BusinessLayer.Interfaces;
 
-namespace Blazor.Infrastructure.Data.Repositories
+namespace Blazor.DataAccessLayer.Data.Repositories
 {
     public class TorrentsRepository : EFRepository<Torrent>, ITorrentsRepository
     {

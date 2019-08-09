@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Blazor.Core.Entities;
-using Blazor.Core.Interfaces;
-using Blazor.Core.Specifications;
-using Blazor.Infrastructure.Data;
+using Blazor.BusinessLayer.Entities;
+using Blazor.BusinessLayer.Interfaces;
+using Blazor.BusinessLayer.Specifications;
+using Blazor.DataAccessLayer.Data;
 using Tests.Shared;
 using Xunit;
 

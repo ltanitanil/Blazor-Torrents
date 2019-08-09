@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Blazor.Server.Exceptions;
-using Blazor.Server.Interfaces;
+﻿using System.Threading.Tasks;
+using Blazor.Server.WebApi.Exceptions;
+using Blazor.Server.WebApi.Interfaces;
 using Blazor.Shared.ViewModels.Search;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Blazor.Server.Controllers.Api
+namespace Blazor.Server.WebApi.Controllers.Api
 {
     [Route("api/[controller]/[action]")]
     [ApiController]

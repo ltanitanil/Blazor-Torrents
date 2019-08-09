@@ -1,19 +1,11 @@
-﻿
-using Blazor.Server.Exceptions;
-using Blazor.Shared.ViewModels;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
+using Blazor.Server.WebApi.Exceptions;
 
-namespace Blazor.Server.Filters
+namespace Blazor.Server.WebApi.Filters
 {
     public class ApiExceptionFilterAttribute : ExceptionFilterAttribute
     {

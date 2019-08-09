@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Blazor.Server.Exceptions
+namespace Blazor.Server.WebApi.Exceptions
 {
     public class ApiTorrentsException : Exception
     {

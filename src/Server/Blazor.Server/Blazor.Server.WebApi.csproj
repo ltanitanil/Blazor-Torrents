@@ -13,10 +13,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Blazor.Client\Blazor.Client.csproj" />
-    <ProjectReference Include="..\Blazor.Core\Blazor.Core.csproj" />
-    <ProjectReference Include="..\Blazor.Infrastructure\Blazor.Infrastructure.csproj" />
-    <ProjectReference Include="..\Blazor.Shared\Blazor.Shared.csproj" />
+    <ProjectReference Include="..\..\Client\Blazor.Client\Blazor.Client.csproj" />
+    <ProjectReference Include="..\..\Shared\Blazor.Shared\Blazor.Shared.Models.csproj" />
+    <ProjectReference Include="..\Blazor.Core\Blazor.BusinessLayer.csproj" />
+    <ProjectReference Include="..\Blazor.Infrastructure\Blazor.DataAccessLayer.csproj" />
   </ItemGroup>
 
 </Project>

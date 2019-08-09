@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace Blazor.Server.Helpers
+namespace Blazor.Server.WebApi.Helpers
 {
     public class BBCodeToHTMLConverter
     {

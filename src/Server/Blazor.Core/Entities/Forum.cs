@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Blazor.BusinessLayer.Entities;
 
-namespace Blazor.Core.Entities
+namespace Blazor.BusinessLayer.Entities
 {
     public class Forum : BaseEntity
     {

@@ -1,8 +1,8 @@
-﻿using Blazor.Core.Entities;
-using AutoMapper;
+﻿using AutoMapper;
 using Blazor.Shared.ViewModels.TorrentModel;
+using Blazor.BusinessLayer.Entities;
 
-namespace Blazor.Server.AutoMapper
+namespace Blazor.Server.WebApi.AutoMapper
 {
     public class FileViewProfile : Profile
     {
