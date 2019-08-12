@@ -21,10 +21,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Blazor.Server.BusinessLayer\Blazor.Server.BusinessLayer.csproj" />
-    <ProjectReference Include="..\Blazor.Server.DataAccessLayer\Blazor.Server.DataAccessLayer.csproj" />
-    <ProjectReference Include="..\Blazor.Server.WebApi\Blazor.Server.WebApi.csproj" />
-    <ProjectReference Include="..\Blazor.Shared.Models\Blazor.Shared.Models.csproj" />
+    <ProjectReference Include="..\..\src\Blazor.Server.BusinessLayer\Blazor.Server.BusinessLayer.csproj" />
+    <ProjectReference Include="..\..\src\Blazor.Server.DataAccessLayer\Blazor.Server.DataAccessLayer.csproj" />
+    <ProjectReference Include="..\..\src\Blazor.Server.WebApi\Blazor.Server.WebApi.csproj" />
+    <ProjectReference Include="..\..\src\Blazor.Shared.Models\Blazor.Shared.Models.csproj" />
     <ProjectReference Include="..\Blazor.Tests.Shared\Blazor.Tests.Shared.csproj" />
   </ItemGroup>
 
