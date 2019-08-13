@@ -2,20 +2,21 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Blazor.Server.BusinessLayer.Entities;
-using Blazor.Server.BusinessLayer.Interfaces;
+using Blazor.Server.DataAccessLayer.Data.Context;
+using Blazor.Server.DataAccessLayer.Data.Entities;
+
 
 namespace Blazor.Server.DataAccessLayer.Data.Repositories
 {
     public class TorrentsRepository : EFRepository<Torrent>, ITorrentsRepository
     {
-        public TorrentsRepository(CatalogContext catalogContext) : base(catalogContext)
+        public TorrentsRepository(TorrentsContext catalogContext) : base(catalogContext)
         {
         }
 
         public async Task<IReadOnlyList<Forum>> GetPopularForumsAsync(int count)
         {
-            return await _eFContext.Torrents
+            return await _dbSet
                 .GroupBy(x => x.ForumId, (key, items) => new { Key = key, Count = items.Count() })
                 .OrderByDescending(x => x.Count)
                 .Take(count)
@@ -24,6 +25,6 @@ namespace Blazor.Server.DataAccessLayer.Data.Repositories
         }
 
         public async Task<long> GetMaxTorrentSizeAsync() =>
-            await _eFContext.Torrents.MaxAsync(x => x.Size);
+            await _dbSet.MaxAsync(x => x.Size);
     }
 }

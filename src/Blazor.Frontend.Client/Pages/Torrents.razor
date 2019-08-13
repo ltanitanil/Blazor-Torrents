@@ -1,6 +1,6 @@
 ﻿@page "/"
 @page "/torrents"
-@inject IAppStateService state
+@inject ITorrentsService state
 
 
 <SearchAndFilterPanel GetTorrentsList=@LoadTorrentsAsync GetData=@state.GetDataToFilter Criteria=@Criteria />

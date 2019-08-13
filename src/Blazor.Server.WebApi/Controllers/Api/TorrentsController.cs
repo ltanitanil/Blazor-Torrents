@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Blazor.Server.WebApi.Exceptions;
-using Blazor.Server.WebApi.Interfaces;
+using Blazor.Server.WebApi.Services.TorrentsService;
 using Blazor.Shared.ViewModels.Search;
 using Microsoft.AspNetCore.Mvc;
 

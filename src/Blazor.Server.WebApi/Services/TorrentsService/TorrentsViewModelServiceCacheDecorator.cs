@@ -3,20 +3,19 @@ using Blazor.Shared.ViewModels.Search;
 using Blazor.Shared.ViewModels.TorrentModel;
 using Microsoft.Extensions.Caching.Memory;
 using System.Threading.Tasks;
-using Blazor.Server.WebApi.Interfaces;
 using Blazor.Server.WebApi.Settings;
 using Microsoft.Extensions.Options;
 using Blazor.Server.WebApi.Extensions;
 
-namespace Blazor.Server.WebApi.Services
+namespace Blazor.Server.WebApi.Services.TorrentsService
 {
-    public class CachedTorrentsViewModelService : ITorrentsViewModelService
+    public class TorrentsViewModelServiceCacheDecorator : ITorrentsViewModelService
     {
         private readonly IMemoryCache _cache;
         private readonly TorrentsViewModelService _torrentViewModelService;
         private readonly MemoryCacheEntryOptions _cacheEntryOptions;
 
-        public CachedTorrentsViewModelService(IOptions<CacheOptionsSettings> cacheOptions, IMemoryCache cache, TorrentsViewModelService torrentViewModelService)
+        public TorrentsViewModelServiceCacheDecorator(IOptions<CacheOptionsSettings> cacheOptions, IMemoryCache cache, TorrentsViewModelService torrentViewModelService)
         {
             _cache = cache;
             _torrentViewModelService = torrentViewModelService;

@@ -6,9 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Blazor.Frontend.Client.Interfaces
+namespace Blazor.Frontend.Client.Services.TorrentsService
 {
-    public interface IAppStateService
+    public interface ITorrentsService
     {
         Task<TorrentsViewModel> GetTorrentsAsync(SearchAndFilterCriteria criteria, int? pageIndex);
         Task<SearchAndFilterData> GetDataToFilter();

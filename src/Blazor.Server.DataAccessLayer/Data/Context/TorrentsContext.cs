@@ -1,15 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Blazor.Server.BusinessLayer.Entities;
+using Blazor.Server.DataAccessLayer.Data.Entities;
 
-namespace Blazor.Server.DataAccessLayer.Data
+namespace Blazor.Server.DataAccessLayer.Data.Context
 {
-    public class CatalogContext : DbContext
+    public class TorrentsContext : DbContext
     {
         public virtual DbSet<Torrent> Torrents { get; set; }
         public virtual DbSet<Forum> Forums { get; set; }
         public virtual DbSet<File> Files { get; set; }
 
-        public CatalogContext(DbContextOptions<CatalogContext> options) : base(options)
+        public TorrentsContext(DbContextOptions<TorrentsContext> options) : base(options)
         {
         }
 

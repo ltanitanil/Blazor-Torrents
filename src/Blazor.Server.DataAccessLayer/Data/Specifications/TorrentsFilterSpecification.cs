@@ -1,11 +1,11 @@
 ﻿using System;
-using Blazor.Server.BusinessLayer.Entities;
+using Blazor.Server.DataAccessLayer.Data.Entities;
 
-namespace Blazor.Server.BusinessLayer.Specifications
+namespace Blazor.Server.DataAccessLayer.Data.Specifications
 {
-    public class CatalogFilterSpecification : BaseSpecification<Torrent>
+    public class TorrentsFilterSpecification : BaseSpecification<Torrent>
     {
-        public CatalogFilterSpecification(string search, int? forumId, long? sizeFrom, long? sizeTo, DateTimeOffset? dateFrom, DateTimeOffset? dateTo)
+        public TorrentsFilterSpecification(string search, int? forumId, long? sizeFrom, long? sizeTo, DateTimeOffset? dateFrom, DateTimeOffset? dateTo)
             : base(x => (string.IsNullOrEmpty(search) || x.Title.Contains(search))
                         && (!forumId.HasValue || x.ForumId == forumId)
                         && (!sizeFrom.HasValue || x.Size >= sizeFrom)

@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Blazor.Server.BusinessLayer.Entities;
+using Blazor.Server.DataAccessLayer.Data.Entities;
+using Blazor.Server.DataAccessLayer.Data.Specifications;
 
-namespace Blazor.Server.BusinessLayer.Interfaces
+namespace Blazor.Server.DataAccessLayer.Data.Repositories
 {
-    public interface IAsyncRepository<T> where T : BaseEntity
+    public interface IEFRepository<T> where T : BaseEntity
     {
         Task<T> GetByIdAsync(int id);
         Task<IReadOnlyList<T>> ListAsync(ISpecification<T> specification);

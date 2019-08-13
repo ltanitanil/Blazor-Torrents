@@ -1,6 +1,7 @@
 ﻿using System.Linq;
-using Blazor.Server.BusinessLayer.Entities;
-using Blazor.Server.BusinessLayer.Interfaces;
+using Blazor.Server.DataAccessLayer.Data.Entities;
+using Blazor.Server.DataAccessLayer.Data.Specifications;
+using Microsoft.EntityFrameworkCore;
 
 namespace Blazor.Server.DataAccessLayer.Data
 {

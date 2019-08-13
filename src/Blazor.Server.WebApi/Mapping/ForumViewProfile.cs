@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Blazor.Server.BusinessLayer.Entities;
+using Blazor.Server.DataAccessLayer.Data.Entities;
 
 namespace Blazor.Server.WebApi.AutoMapper
 {

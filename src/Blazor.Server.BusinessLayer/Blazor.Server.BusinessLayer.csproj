@@ -4,4 +4,8 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Blazor.Server.DataAccessLayer\Blazor.Server.DataAccessLayer.csproj" />
+  </ItemGroup>
+
 </Project>

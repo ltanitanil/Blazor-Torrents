@@ -7,12 +7,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Linq;
+using Blazor.Server.BusinessLayer.Services.TorrentsService;
+using Blazor.Server.DataAccessLayer.Data.Context;
 using Blazor.Server.WebApi.Filters;
-using Blazor.Server.WebApi.Interfaces;
-using Blazor.Server.WebApi.Services;
+using Blazor.Server.WebApi.Services.TorrentsService;
 using Blazor.Server.WebApi.Settings;
-using Blazor.Server.BusinessLayer.Interfaces;
-using Blazor.Server.DataAccessLayer.Data;
 using Blazor.Server.DataAccessLayer.Data.Repositories;
 
 namespace Blazor.Server.WebApi
@@ -31,7 +30,7 @@ namespace Blazor.Server.WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             var connection = Configuration.GetConnectionString("DefaultConnection");
-            services.AddDbContext<CatalogContext>(c =>
+            services.AddDbContext<TorrentsContext>(c =>
                 {
                     c.UseSqlServer(connection);
                     c.UseLazyLoadingProxies();
@@ -41,8 +40,8 @@ namespace Blazor.Server.WebApi
             services.AddAutoMapper(typeof(Startup));
 
             services.AddScoped<ITorrentsRepository, TorrentsRepository>();
-
-            services.AddScoped<ITorrentsViewModelService, CachedTorrentsViewModelService>();
+            services.AddScoped<ITorrentsService,TorrentsService>();
+            services.AddScoped<ITorrentsViewModelService, TorrentsViewModelServiceCacheDecorator>();
             services.AddScoped<TorrentsViewModelService>();
 
             services.AddMvc(options => options.Filters.Add<ApiExceptionFilterAttribute>());

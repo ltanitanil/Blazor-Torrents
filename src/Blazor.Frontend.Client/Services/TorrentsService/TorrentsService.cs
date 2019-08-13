@@ -1,18 +1,17 @@
-﻿using Blazor.Frontend.Client.Interfaces;
-using Blazor.Shared.ViewModels;
+﻿using Blazor.Shared.ViewModels;
 using Blazor.Shared.ViewModels.Search;
 using Blazor.Shared.ViewModels.TorrentModel;
 using Microsoft.AspNetCore.Components;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace Blazor.Frontend.Client.Services
+namespace Blazor.Frontend.Client.Services.TorrentsService
 {
-    public class AppStateService : IAppStateService
+    public class TorrentsService : ITorrentsService
     {
         private readonly HttpClient _httpClient;
 
-        public AppStateService(HttpClient httpClient)
+        public TorrentsService(HttpClient httpClient)
         {
             _httpClient = httpClient;
         }

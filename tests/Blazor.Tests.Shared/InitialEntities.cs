@@ -1,8 +1,8 @@
-﻿using Blazor.Server.BusinessLayer.Entities;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using Blazor.Server.DataAccessLayer.Data.Entities;
 
-namespace Blazor.Tests.Shared
+namespace Blazor.Tests.Helpers
 {
     public class InitialEntities
     {

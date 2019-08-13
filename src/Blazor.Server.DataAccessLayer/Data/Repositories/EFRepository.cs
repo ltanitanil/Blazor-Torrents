@@ -2,18 +2,21 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Blazor.Server.BusinessLayer.Entities;
-using Blazor.Server.BusinessLayer.Interfaces;
+using Blazor.Server.DataAccessLayer.Data.Context;
+using Blazor.Server.DataAccessLayer.Data.Entities;
+using Blazor.Server.DataAccessLayer.Data.Specifications;
 
 namespace Blazor.Server.DataAccessLayer.Data.Repositories
 {
-    public class EFRepository<T> : IAsyncRepository<T> where T : BaseEntity
+    public class EFRepository<T> : IEFRepository<T> where T : BaseEntity
     {
-        protected readonly CatalogContext _eFContext;
+        protected readonly TorrentsContext _eFContext;
+        protected readonly DbSet<T> _dbSet;
 
-        public EFRepository(CatalogContext eFContext)
+        public EFRepository(TorrentsContext eFContext)
         {
             _eFContext = eFContext;
+            _dbSet = _eFContext.Set<T>();
         }
 
         public async Task<int> CountAsync(ISpecification<T> specification)
@@ -23,7 +26,7 @@ namespace Blazor.Server.DataAccessLayer.Data.Repositories
 
         public async Task<T> GetByIdAsync(int id)
         {
-            return await _eFContext.Set<T>().FindAsync(id);
+            return await _dbSet.FindAsync(id);
         }
 
         public async Task<IReadOnlyList<T>> ListAsync(ISpecification<T> specification)
@@ -33,7 +36,8 @@ namespace Blazor.Server.DataAccessLayer.Data.Repositories
 
         public IQueryable<T> ApplySpecification(ISpecification<T> spec)
         {
-            return SpecificationEvaluator<T>.GetQuery(_eFContext.Set<T>().AsQueryable(), spec);
+            return SpecificationEvaluator<T>.GetQuery(_dbSet.AsQueryable(), spec);
         }
+
     }
 }
