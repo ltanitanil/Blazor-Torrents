@@ -1,7 +1,6 @@
 ﻿using System.Threading.Tasks;
 using AutoMapper;
 using Blazor.Server.BusinessLayer.Services.TorrentsService;
-using Blazor.Server.WebApi.Exceptions;
 using Blazor.Shared.ViewModels;
 using Blazor.Shared.ViewModels.Search;
 using Blazor.Shared.ViewModels.TorrentModel;
@@ -25,9 +24,6 @@ namespace Blazor.Server.WebApi.Controllers.Api
         [HttpPost]
         public async Task<TorrentsViewModel> GetTorrents(int pageIndex, SearchAndFilterCriteria criteria)
         {
-            if (pageIndex < 0)
-                throw new ApiTorrentsException(ExceptionEvent.InvalidParameters, "Page can't be negative");
-
             var itemsPerPage = Constants.ITEMS_PER_PAGE;
 
             var (torrents, count) = await _torrentsService.GetTorrentsAndCount(pageIndex, itemsPerPage, criteria.SearchText, criteria.SelectedForumId,
@@ -35,24 +31,14 @@ namespace Blazor.Server.WebApi.Controllers.Api
 
             return new TorrentsViewModel
             {
-                Torrents = _mapper.Map<TorrentView[]>(torrents 
-                                                      ?? throw new ApiTorrentsException(ExceptionEvent.NotFound, $"Torrents not found")),
+                Torrents = _mapper.Map<TorrentView[]>(torrents),
                 PaginationInfo = new PaginationInfoViewModel(count, pageIndex, itemsPerPage, 5)
-
             };
         }
 
         [HttpGet]
-        public async Task<TorrentDescriptionView> GetTorrent(int id)
-        {
-            if (id < 0)
-                throw new ApiTorrentsException(ExceptionEvent.InvalidParameters, "Id can't be negative");
-
-            var torrent = await _torrentsService.GetTorrent(id)
-                          ?? throw new ApiTorrentsException(ExceptionEvent.NotFound, $"Torrent(id={id}) not found"); 
-
-            return _mapper.Map<TorrentDescriptionView>(torrent);
-        }
+        public async Task<TorrentDescriptionView> GetTorrent(int id) =>
+            _mapper.Map<TorrentDescriptionView>(await _torrentsService.GetTorrent(id));
 
         [HttpGet]
         public async Task<SearchAndFilterData> GetDataToFilter()

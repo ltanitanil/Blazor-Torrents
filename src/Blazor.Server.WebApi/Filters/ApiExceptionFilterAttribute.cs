@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Blazor.Server.WebApi.Exceptions;
+using Blazor.Server.BusinessLayer.Exceptions;
 
 namespace Blazor.Server.WebApi.Filters
 {
@@ -33,8 +33,10 @@ namespace Blazor.Server.WebApi.Filters
             base.OnException(context);
         }
 
-        private static void HandleException(ExceptionContext context) => context.Result =
-            new ObjectResult(context.Exception.Message) { StatusCode = (context.Exception is ApiTorrentsException exception) ? exceptionFilter[exception.ExceptionEvent] : StatusCodes.Status500InternalServerError };
-
+        private static void HandleException(ExceptionContext context)
+        {
+            context.Result = new ObjectResult(context.Exception.Message) { StatusCode = (context.Exception is AppException exception) 
+                ? exceptionFilter[exception.ExceptionEvent] : StatusCodes.Status500InternalServerError };
+        }
     }
 }
