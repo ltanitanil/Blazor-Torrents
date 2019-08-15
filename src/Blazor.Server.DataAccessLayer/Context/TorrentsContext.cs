@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Blazor.Server.DataAccessLayer.Data.Entities;
+using Blazor.Server.DataAccessLayer.Entities;
 
-namespace Blazor.Server.DataAccessLayer.Data.Context
+namespace Blazor.Server.DataAccessLayer.Context
 {
     public class TorrentsContext : DbContext
     {

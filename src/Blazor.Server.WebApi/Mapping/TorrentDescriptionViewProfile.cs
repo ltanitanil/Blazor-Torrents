@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Blazor.Shared.ViewModels.TorrentModel;
-using Blazor.Server.DataAccessLayer.Data.Entities;
+using Blazor.Server.DataAccessLayer.Entities;
 
 namespace Blazor.Server.WebApi.AutoMapper
 {

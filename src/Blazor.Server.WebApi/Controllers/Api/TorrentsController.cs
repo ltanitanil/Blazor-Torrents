@@ -30,14 +30,14 @@ namespace Blazor.Server.WebApi.Controllers.Api
 
             var itemsPerPage = Constants.ITEMS_PER_PAGE;
 
-            var torrentsAndCount = await _torrentsService.GetTorrentsAndCount(pageIndex, itemsPerPage, criteria.SearchText, criteria.SelectedForumId,
+            var (torrents, count) = await _torrentsService.GetTorrentsAndCount(pageIndex, itemsPerPage, criteria.SearchText, criteria.SelectedForumId,
                 criteria.Size.From, criteria.Size.To, criteria.Date.From, criteria.Date.To);
 
             return new TorrentsViewModel
             {
-                Torrents = _mapper.Map<TorrentView[]>(torrentsAndCount.Item1 
+                Torrents = _mapper.Map<TorrentView[]>(torrents 
                                                       ?? throw new ApiTorrentsException(ExceptionEvent.NotFound, $"Torrents not found")),
-                PaginationInfo = new PaginationInfoViewModel(torrentsAndCount.Item2, pageIndex, itemsPerPage, 5)
+                PaginationInfo = new PaginationInfoViewModel(count, pageIndex, itemsPerPage, 5)
 
             };
         }
@@ -57,10 +57,10 @@ namespace Blazor.Server.WebApi.Controllers.Api
         [HttpGet]
         public async Task<SearchAndFilterData> GetDataToFilter()
         {
-            var dataToFilter = await _torrentsService.GetDataToFilter(Constants.FORUMS_PER_PAGE);
+            var (forums, maxTorrentSize) = await _torrentsService.GetDataToFilter(Constants.FORUMS_PER_PAGE);
 
-            return new SearchAndFilterData { Forums = _mapper.Map<ForumView[]>(dataToFilter.Item1),
-                                             TorrentMaxSize = dataToFilter.Item2}; 
+            return new SearchAndFilterData { Forums = _mapper.Map<ForumView[]>(forums),
+                                             TorrentMaxSize = maxTorrentSize};
         }
     }
 }

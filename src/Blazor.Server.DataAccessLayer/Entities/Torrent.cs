@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Blazor.Server.DataAccessLayer.Data.Entities
+namespace Blazor.Server.DataAccessLayer.Entities
 {
     public class Torrent : BaseEntity
     {
@@ -15,9 +15,9 @@ namespace Blazor.Server.DataAccessLayer.Data.Entities
         public string DirName { get; set; }
 
         public int ForumId { get; set; }
-        public virtual Forum Forum { get; set; }
+        public Forum Forum { get; set; }
 
-        public virtual ICollection<File> Files { get; set; }
+        public ICollection<File> Files { get; set; }
 
         public Torrent()
         {
