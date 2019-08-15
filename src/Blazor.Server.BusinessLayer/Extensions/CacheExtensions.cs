@@ -2,7 +2,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace Blazor.Server.WebApi.Extensions
+namespace Blazor.Server.BusinessLayer.Extensions
 {
     public static class CacheExtensions
     {

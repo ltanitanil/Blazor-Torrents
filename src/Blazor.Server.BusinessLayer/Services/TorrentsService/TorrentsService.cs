@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Blazor.Server.BusinessLayer.Helpers;
 using Blazor.Server.DataAccessLayer.Data.Entities;
 using Blazor.Server.DataAccessLayer.Data.Repositories;
 using Blazor.Server.DataAccessLayer.Data.Specifications;
@@ -17,26 +19,30 @@ namespace Blazor.Server.BusinessLayer.Services.TorrentsService
             _torrentsRepository = torrentsRepository;
         }
 
-        public async Task<(IReadOnlyList<Forum>, long)> GetDataToFilter(int forumsCount) =>
-            (await _torrentsRepository.GetPopularForumsAsync(forumsCount),
-                await _torrentsRepository.GetMaxTorrentSizeAsync());
-
-        public async Task<Torrent> GetTorrent(int id) => await _torrentsRepository.GetByIdAsync(id);
-
-        public async Task<IReadOnlyList<Torrent>> GetTorrents(int skip, int take, string search, int? forumId, 
-            long? sizeFrom, long? sizeTo, DateTimeOffset? dateFrom, DateTimeOffset? dateTo)
+        public async Task<(IReadOnlyList<Forum>, long)> GetDataToFilter(int forumsCount)
         {
-            var specification = new TorrentsFilterPaginatedSpecification(skip, take, search, forumId, sizeFrom, sizeTo, dateFrom, dateTo);
-
-            return await _torrentsRepository.ListAsync(specification);
+            return (await _torrentsRepository.GetPopularForumsAsync(forumsCount),
+                await _torrentsRepository.GetMaxTorrentSizeAsync());
         }
 
-        public async Task<int> GetTorrentsCount(string search, int? forumId, long? sizeFrom, long? sizeTo, 
-            DateTimeOffset? dateFrom, DateTimeOffset? dateTo)
+        public async Task<Torrent> GetTorrent(int id)
         {
-            var specification = new TorrentsFilterSpecification(search, forumId, sizeFrom, sizeTo, dateFrom, dateTo);
+            var torrent = await _torrentsRepository.GetByIdAsync(id);
+            torrent.Content=BBCodeToHtmlConverter.Format(torrent.Content);
+            return torrent;
+        } 
 
-            return await _torrentsRepository.CountAsync(specification);
+        public async Task<(IReadOnlyList<Torrent>,int)> GetTorrentsAndCount(int pageIndex, int itemsPage, string search, int? forumId, 
+            long? sizeFrom, long? sizeTo, DateTimeOffset? dateFrom, DateTimeOffset? dateTo)
+        {
+            var filterPaginatedSpecification = new TorrentsFilterPaginatedSpecification(pageIndex*itemsPage, itemsPage, 
+                                                   search, forumId, sizeFrom, sizeTo, dateFrom, dateTo);
+            var filterSpecification = new TorrentsFilterSpecification(search, forumId, sizeFrom, sizeTo, dateFrom, dateTo);
+
+            var torrents = await _torrentsRepository.ListAsync(filterPaginatedSpecification);
+            var count = await _torrentsRepository.CountAsync(filterSpecification);
+
+            return (torrents,count);
         }
     }
 }

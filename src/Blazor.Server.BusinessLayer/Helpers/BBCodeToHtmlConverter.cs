@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
-namespace Blazor.Server.WebApi.Helpers
+namespace Blazor.Server.BusinessLayer.Helpers
 {
-    public class BBCodeToHTMLConverter
+    public class BBCodeToHtmlConverter
     {
         #region Helper Classes
         interface IHtmlFormatter
@@ -65,7 +64,7 @@ namespace Blazor.Server.WebApi.Helpers
         #region BBCode
         static List<IHtmlFormatter> _formatters;
 
-        static BBCodeToHTMLConverter()
+        static BBCodeToHtmlConverter()
         {
             var sListFormat = "<ol class=\"bbcode-list\" style=\"list-style:{0};\">$1</ol>";
 

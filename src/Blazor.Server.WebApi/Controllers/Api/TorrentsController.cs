@@ -1,7 +1,10 @@
 ﻿using System.Threading.Tasks;
+using AutoMapper;
+using Blazor.Server.BusinessLayer.Services.TorrentsService;
 using Blazor.Server.WebApi.Exceptions;
-using Blazor.Server.WebApi.Services.TorrentsService;
+using Blazor.Shared.ViewModels;
 using Blazor.Shared.ViewModels.Search;
+using Blazor.Shared.ViewModels.TorrentModel;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Blazor.Server.WebApi.Controllers.Api
@@ -10,39 +13,54 @@ namespace Blazor.Server.WebApi.Controllers.Api
     [ApiController]
     public class TorrentsController : ControllerBase
     {
-        private readonly ITorrentsViewModelService _torrentsViewModelService;
+        private readonly IMapper _mapper;
+        private readonly ITorrentsService _torrentsService;
 
-        public TorrentsController(ITorrentsViewModelService torrentsViewModelService)
+        public TorrentsController(IMapper mapper, ITorrentsService torrentsViewModelService)
         {
-            _torrentsViewModelService = torrentsViewModelService;
+            _mapper = mapper;
+            _torrentsService = torrentsViewModelService;
         }
 
         [HttpPost]
-        public async Task<IActionResult> GetTorrents(int pageIndex, SearchAndFilterCriteria criteria)
+        public async Task<TorrentsViewModel> GetTorrents(int pageIndex, SearchAndFilterCriteria criteria)
         {
             if (pageIndex < 0)
                 throw new ApiTorrentsException(ExceptionEvent.InvalidParameters, "Page can't be negative");
 
-            var torrents = await _torrentsViewModelService.GetTorrents(pageIndex, Constants.ITEMS_PER_PAGE, criteria);
-            return Ok(torrents);
+            var itemsPerPage = Constants.ITEMS_PER_PAGE;
+
+            var torrentsAndCount = await _torrentsService.GetTorrentsAndCount(pageIndex, itemsPerPage, criteria.SearchText, criteria.SelectedForumId,
+                criteria.Size.From, criteria.Size.To, criteria.Date.From, criteria.Date.To);
+
+            return new TorrentsViewModel
+            {
+                Torrents = _mapper.Map<TorrentView[]>(torrentsAndCount.Item1 
+                                                      ?? throw new ApiTorrentsException(ExceptionEvent.NotFound, $"Torrents not found")),
+                PaginationInfo = new PaginationInfoViewModel(torrentsAndCount.Item2, pageIndex, itemsPerPage, 5)
+
+            };
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetTorrent(int id)
+        public async Task<TorrentDescriptionView> GetTorrent(int id)
         {
             if (id < 0)
                 throw new ApiTorrentsException(ExceptionEvent.InvalidParameters, "Id can't be negative");
 
-            var torrent = await _torrentsViewModelService.GetTorrent(id);
-            return Ok(torrent);
+            var torrent = await _torrentsService.GetTorrent(id)
+                          ?? throw new ApiTorrentsException(ExceptionEvent.NotFound, $"Torrent(id={id}) not found"); 
 
+            return _mapper.Map<TorrentDescriptionView>(torrent);
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetDataToFilter()
+        public async Task<SearchAndFilterData> GetDataToFilter()
         {
-            var popularForums = await _torrentsViewModelService.GetDataToFilter(Constants.FORUMS_PER_PAGE);
-            return Ok(popularForums);
+            var dataToFilter = await _torrentsService.GetDataToFilter(Constants.FORUMS_PER_PAGE);
+
+            return new SearchAndFilterData { Forums = _mapper.Map<ForumView[]>(dataToFilter.Item1),
+                                             TorrentMaxSize = dataToFilter.Item2}; 
         }
     }
 }
