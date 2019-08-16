@@ -1,0 +1,44 @@
+﻿@page "/"
+@page "/torrents"
+@inject ITorrentsService state
+
+
+<SearchAndFilterPanel GetTorrentsList=@LoadTorrentsAsync GetData=@state.GetDataToFilter Criteria=@Criteria />
+@if (TorrentsModel != null)
+{
+    @if (TorrentsModel.Torrents.Any())
+    {
+        <div class="torrents-model">
+            <TorrentsList TorrentsModel=@TorrentsModel.Torrents />
+            <Pagination PaginationModel=@TorrentsModel.PaginationInfo GetTorrentsList=@LoadTorrentsAsync />
+        </div>
+    }
+    else
+    {
+        <div class="not-found">Список пуст...</div>
+    }
+}
+else
+{
+    <Loader />
+}
+
+
+@code{
+    private TorrentsViewModel TorrentsModel { get; set; }
+    private SearchAndFilterCriteria Criteria { get; set; } = new SearchAndFilterCriteria();
+
+    protected override async Task OnInitAsync()
+    {
+        await LoadTorrentsAsync();
+    }
+
+    private async Task LoadTorrentsAsync(int page = 0)
+    {
+        TorrentsModel = null;
+        StateHasChanged();
+        TorrentsModel = await state.GetTorrentsAsync(Criteria, page);
+        StateHasChanged();
+    }
+
+}
