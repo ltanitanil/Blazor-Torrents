@@ -32,7 +32,12 @@ namespace Blazor.Server.WebApi.Controllers.Api
             return new TorrentsViewModel
             {
                 Torrents = _mapper.Map<TorrentView[]>(torrents),
-                PaginationInfo = new PaginationInfoViewModel(count, pageIndex, itemsPerPage, 5)
+                PaginationInfo = new PaginationInfoViewModel
+                {
+                    TotalItems = count,
+                    CurrentPage = pageIndex,
+                    PageSize = itemsPerPage
+                }
             };
         }
 
@@ -45,8 +50,11 @@ namespace Blazor.Server.WebApi.Controllers.Api
         {
             var (forums, maxTorrentSize) = await _torrentsService.GetDataToFilter(Constants.FORUMS_PER_PAGE);
 
-            return new SearchAndFilterData { Forums = _mapper.Map<ForumView[]>(forums),
-                                             TorrentMaxSize = maxTorrentSize};
+            return new SearchAndFilterData
+            {
+                Forums = _mapper.Map<ForumView[]>(forums),
+                TorrentMaxSize = maxTorrentSize
+            };
         }
     }
 }
