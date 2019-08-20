@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Blazor.Server.BusinessLayer.Exceptions;
+using Microsoft.Extensions.Logging;
 
 namespace Blazor.Server.WebApi.Filters
 {
@@ -21,6 +22,13 @@ namespace Blazor.Server.WebApi.Filters
             },
         };
 
+        private readonly ILogger<ApiExceptionFilterAttribute> _logger;
+
+        public ApiExceptionFilterAttribute(ILogger<ApiExceptionFilterAttribute> logger)
+        {
+            _logger = logger;
+        }
+
         public override Task OnExceptionAsync(ExceptionContext context)
         {
             HandleException(context);
@@ -33,10 +41,16 @@ namespace Blazor.Server.WebApi.Filters
             base.OnException(context);
         }
 
-        private static void HandleException(ExceptionContext context)
+        private void HandleException(ExceptionContext context)
         {
-            context.Result = new ObjectResult(context.Exception.Message) { StatusCode = (context.Exception is AppException exception) 
-                ? exceptionFilter[exception.ExceptionEvent] : StatusCodes.Status500InternalServerError };
+            context.Result = new ObjectResult(context.Exception.Message)
+            {
+                StatusCode = (context.Exception is AppException exception)
+                                ? exceptionFilter[exception.ExceptionEvent]
+                                : StatusCodes.Status500InternalServerError
+            };
+
+            _logger.LogError(context.Exception, context.Exception.Message);
         }
     }
 }
