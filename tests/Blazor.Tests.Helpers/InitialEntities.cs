@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using Blazor.Server.DataAccessLayer.Data.Entities;
+using System.Linq;
+using System.Threading.Tasks;
+using Blazor.Server.DataAccessLayer.Entities;
 
 namespace Blazor.Tests.Helpers
 {
-    public class InitialEntities
+    public static class InitialEntities
     {
         public static readonly IEnumerable<Forum> Forums;
         public static readonly IEnumerable<Torrent> Torrents;

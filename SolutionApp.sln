@@ -21,7 +21,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazor.Tests.UnitTests", "t
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazor.Tests.IntegrationTests", "tests\Blazor.Tests.IntegrationTests\Blazor.Tests.IntegrationTests.csproj", "{0E12F29A-A02C-40AC-8B95-1D9DAFBF92B3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazor.Tests.Helpers", "tests\Blazor.Tests.Shared\Blazor.Tests.Helpers.csproj", "{F93F5FC3-5CD9-46BF-8874-D16EC469CE8E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazor.Tests.Helpers", "tests\Blazor.Tests.Helpers\Blazor.Tests.Helpers.csproj", "{F93F5FC3-5CD9-46BF-8874-D16EC469CE8E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Server", "Server", "{FC71F2DA-B66D-4FC2-AD4E-E8DA80153D89}"
 EndProject

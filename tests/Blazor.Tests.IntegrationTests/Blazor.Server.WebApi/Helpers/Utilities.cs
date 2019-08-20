@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using Blazor.Server.DataAccessLayer.Data;
-using Blazor.Tests.Shared;
+﻿using System.Threading.Tasks;
+using Blazor.Server.DataAccessLayer.Context;
+using Blazor.Tests.Helpers;
 
 
 namespace Blazor.Tests.IntegrationTests.Blazor.Server.WebApi.Helpers
 {
     public class Utilities
     {
-        public static async Task InitializeDbForTests(CatalogContext context)
+        public static async Task InitializeDbForTests(TorrentsContext context)
         {
             await context.Forums.AddRangeAsync(InitialEntities.Forums);
             await context.Torrents.AddRangeAsync(InitialEntities.Torrents);

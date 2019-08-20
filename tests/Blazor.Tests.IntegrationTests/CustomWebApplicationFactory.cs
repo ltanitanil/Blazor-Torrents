@@ -1,4 +1,4 @@
-﻿using Blazor.Server.DataAccessLayer.Data;
+﻿using Blazor.Server.DataAccessLayer.Context;
 using Blazor.Server.WebApi;
 using Blazor.Tests.IntegrationTests.Blazor.Server.WebApi.Helpers;
 using Microsoft.AspNetCore.Hosting;
@@ -15,19 +15,17 @@ namespace Blazor.Tests.IntegrationTests
             builder.ConfigureServices(services =>
             {
                 var provider = services.AddEntityFrameworkInMemoryDatabase()
-                                       .AddEntityFrameworkProxies()
-                                       .BuildServiceProvider();
+                    .BuildServiceProvider();
 
-                services.AddDbContext<CatalogContext>((options) =>
+                services.AddEntityFrameworkInMemoryDatabase().AddDbContext<TorrentsContext>((options) =>
                     {
                         options.UseInMemoryDatabase("InMemoryDbForTesting");
-                        options.UseLazyLoadingProxies();
                         options.UseInternalServiceProvider(provider);
                     });
 
                 using var scope = services.BuildServiceProvider().CreateScope();
 
-                var db = scope.ServiceProvider.GetRequiredService<CatalogContext>();
+                var db = scope.ServiceProvider.GetRequiredService<TorrentsContext>();
 
                 if (db.Database.EnsureCreated())
                     Utilities.InitializeDbForTests(db).Wait(); // Seed the database with test data.
