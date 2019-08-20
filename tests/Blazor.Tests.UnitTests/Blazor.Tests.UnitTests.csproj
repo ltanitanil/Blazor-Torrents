@@ -19,7 +19,12 @@
     <ProjectReference Include="..\..\src\Blazor.Server.DataAccessLayer\Blazor.Server.DataAccessLayer.csproj" />
     <ProjectReference Include="..\..\src\Blazor.Server.WebApi\Blazor.Server.WebApi.csproj" />
     <ProjectReference Include="..\..\src\Blazor.Shared.Models\Blazor.Shared.Models.csproj" />
-    <ProjectReference Include="..\Blazor.Tests.Shared\Blazor.Tests.Helpers.csproj" />
+    <ProjectReference Include="..\Blazor.Tests.Helpers\Blazor.Tests.Helpers.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Blazor.Server.DataAccessLayer\Repositories\" />
+    <Folder Include="Blazor.Server.WebApi\" />
   </ItemGroup>
 
 </Project>
