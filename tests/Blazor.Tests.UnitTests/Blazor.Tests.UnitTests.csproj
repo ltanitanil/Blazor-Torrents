@@ -7,6 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Blazor.Server.DataAccessLayer\**" />
+    <Compile Remove="Blazor.Server.WebApi\**" />
+    <EmbeddedResource Remove="Blazor.Server.DataAccessLayer\**" />
+    <EmbeddedResource Remove="Blazor.Server.WebApi\**" />
+    <None Remove="Blazor.Server.DataAccessLayer\**" />
+    <None Remove="Blazor.Server.WebApi\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="8.1.1" />
     <PackageReference Include="EntityFrameworkCoreMock.Moq" Version="1.0.0.25" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.0.1" />
@@ -20,11 +29,6 @@
     <ProjectReference Include="..\..\src\Blazor.Server.WebApi\Blazor.Server.WebApi.csproj" />
     <ProjectReference Include="..\..\src\Blazor.Shared.Models\Blazor.Shared.Models.csproj" />
     <ProjectReference Include="..\Blazor.Tests.Helpers\Blazor.Tests.Helpers.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Blazor.Server.DataAccessLayer\Repositories\" />
-    <Folder Include="Blazor.Server.WebApi\" />
   </ItemGroup>
 
 </Project>
