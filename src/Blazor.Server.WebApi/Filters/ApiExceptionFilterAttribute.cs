@@ -22,7 +22,7 @@ namespace Blazor.Server.WebApi.Filters
             },
         };
 
-        private ILogger<ApiExceptionFilterAttribute> _logger;
+        private readonly ILogger<ApiExceptionFilterAttribute> _logger;
 
         public ApiExceptionFilterAttribute(ILogger<ApiExceptionFilterAttribute> logger)
         {
