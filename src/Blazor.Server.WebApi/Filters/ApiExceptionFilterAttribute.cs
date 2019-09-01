@@ -20,6 +20,14 @@ namespace Blazor.Server.WebApi.Filters
                 ExceptionEvent.NotFound,
                 StatusCodes.Status404NotFound
             },
+            {
+                ExceptionEvent.RegistrationFailed,
+                StatusCodes.Status400BadRequest
+            },
+            {
+                ExceptionEvent.LoginFailed,
+                StatusCodes.Status400BadRequest
+            }
         };
 
         private readonly ILogger<ApiExceptionFilterAttribute> _logger;
