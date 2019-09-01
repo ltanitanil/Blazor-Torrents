@@ -35,16 +35,16 @@
 }
 else
 {
-    <Blazor.Client.Shared.Loader />
+    <Loader />
 }
 
 
 @code{
-    [Parameter] protected int Id { get; set; }
+    [Parameter] public int Id { get; set; }
 
     private TorrentDescriptionView TorrentModel { get; set; }
 
-    protected override async Task OnInitAsync()
+    protected override async Task OnInitializedAsync()
     {
         await LoadTorrentAsync();
     }

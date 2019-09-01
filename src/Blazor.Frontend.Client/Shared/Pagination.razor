@@ -18,13 +18,13 @@
 </div>
 
 @code{
-    [Parameter] PaginationInfoViewModel PaginationModel { get; set; }
-    [Parameter] Func<int, Task> GetTorrentsList { get; set; }
+    [Parameter] public PaginationInfoViewModel PaginationModel { get; set; }
+    [Parameter] public Func<int, Task> GetTorrentsList { get; set; }
 
     private IEnumerable<int> pages;
     private int maxPages = 5;
 
-    protected override void OnInit()
+    protected override void OnInitialized()
     {
         pages = GetPages(PaginationModel);
     }
