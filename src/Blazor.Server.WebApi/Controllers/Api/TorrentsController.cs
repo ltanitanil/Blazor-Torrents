@@ -11,21 +11,17 @@ namespace Blazor.Server.WebApi.Controllers.Api
 {
     public class TorrentsController : BaseApiController
     {
-        private readonly IMapper _mapper;
         private readonly ITorrentsService _torrentsService;
 
-        public TorrentsController(IMapper mapper, ITorrentsService torrentsViewModelService)
+        public TorrentsController(IMapper mapper, ITorrentsService torrentsViewModelService) : base(mapper)
         {
-            _mapper = mapper;
             _torrentsService = torrentsViewModelService;
         }
 
         [HttpPost]
         public async Task<TorrentsViewModel> GetTorrents(int pageIndex, SearchAndFilterCriteria criteria)
         {
-            const int itemsPerPage = Constants.ITEMS_PER_PAGE;
-
-            var (torrents, count) = await _torrentsService.GetTorrentsAndCount(pageIndex, itemsPerPage, criteria.SearchText, criteria.SelectedForumId,
+            var (torrents, count) = await _torrentsService.GetTorrentsAndCount(pageIndex, Constants.ITEMS_PER_PAGE, criteria.SearchText, criteria.SelectedForumId,
                 criteria.Size.From, criteria.Size.To, criteria.Date.From, criteria.Date.To);
 
             return new TorrentsViewModel
@@ -35,7 +31,7 @@ namespace Blazor.Server.WebApi.Controllers.Api
                 {
                     TotalItems = count,
                     CurrentPage = pageIndex,
-                    PageSize = itemsPerPage
+                    PageSize = Constants.ITEMS_PER_PAGE
                 }
             };
         }

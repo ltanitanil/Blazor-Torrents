@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
+using Blazor.Server.BusinessLayer.Entities;
 using Blazor.Server.BusinessLayer.Exceptions;
 using Blazor.Server.BusinessLayer.Services.JwtTokenService;
 using Blazor.Server.DataAccessLayer.Entities;
@@ -16,7 +18,9 @@ namespace Blazor.Server.BusinessLayer.Services.AccountService
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IJwtTokenService _tokenService;
 
-        public AccountService(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager, IJwtTokenService tokenService)
+        public AccountService(SignInManager<ApplicationUser> signInManager, 
+            UserManager<ApplicationUser> userManager,
+            IJwtTokenService tokenService)
         {
             _signInManager = signInManager;
             _userManager = userManager;
@@ -33,28 +37,21 @@ namespace Blazor.Server.BusinessLayer.Services.AccountService
             var user = await _signInManager.UserManager.FindByEmailAsync(email);
             var roles = await _signInManager.UserManager.GetRolesAsync(user);
 
-            return _tokenService.BuildToken(user, roles);;
+            return _tokenService.BuildToken(user, roles);
         }
 
-        public async Task Register(string email, string password, DateTime dateOfBirth, string gender, string aboutUser)
+        public async Task Register(RegistrationModel registerModel)
         {
-            var genderEnum = gender switch
-            {
-                "male" => Gender.Male,
-                "female" => Gender.Female,
-                _ => throw new AppException(ExceptionEvent.InvalidParameters, "\"Gender\" must be \"male\" or \"female\"")
-            };
-
             var newUser = new ApplicationUser
             {
-                UserName = email,
-                Email = email,
-                DateOfBirth = dateOfBirth,
-                Gender = genderEnum,
-                AboutUser = aboutUser
+                UserName = registerModel.Email,
+                Email = registerModel.Email,
+                DateOfBirth = registerModel.DateOfBirth,
+                Gender = registerModel.Gender,
+                AboutUser = registerModel.AboutUser
             };
 
-            var createResult = await _userManager.CreateAsync(newUser, password);
+            var createResult = await _userManager.CreateAsync(newUser, registerModel.Password);
             if (!createResult.Succeeded)
                 throw new AppException(ExceptionEvent.RegistrationFailed, string.Join("\n", createResult.Errors.Select(x => x.Code)));
 

@@ -30,6 +30,8 @@ namespace Blazor.Shared.Models.ViewModels.Account
         public DateTime DateOfBirth { get; set; }
 
         [Required]
+        [RegularExpression("^(?:male|Male|female|Female)$",
+            ErrorMessage = "Пол может быть указан только как мужской или женский.")]
         public string Gender { get; set; }
 
         [StringLength(200, ErrorMessage = "Максимальная длина описания не может превышать 200 символов.")]
