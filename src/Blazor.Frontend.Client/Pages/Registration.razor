@@ -1,0 +1,90 @@
+﻿@page "/Registration"
+
+@inject IAuthService AuthService
+@inject IUriHelper UriHelper
+@inject IModalService Modal
+
+
+<div class="register-container">
+    <div class="register-container-card">
+        <div class="register-container-card-h">
+            <h1>Регистрация</h1>
+            <h1>аккаунта</h1>
+        </div>
+        @if (ShowErrors)
+        {
+            <div class="alert alert-danger" role="alert">
+                <p>@registerResult.Error</p>
+            </div>
+        }
+        <div class="card-myform">
+            <EditForm Model="registerModel" OnValidSubmit="HandleRegistration">
+                <DataAnnotationsValidator />
+                <ValidationSummary />
+                <div class="form-group">
+                    <label for="email">Почтовый адрес:</label>
+                    <InputText Id="email" Class="form-control" @bind-Value="registerModel.Email" />
+                    <ValidationMessage For="@(() => registerModel.Email)" />
+                </div>
+                <div class="form-group">
+                    <label for="password">Пароль:</label>
+                    <InputText Id="password" Class="form-control" @bind-Value="registerModel.Password" />
+                    <ValidationMessage For="@(() => registerModel.Password)" />
+                </div>
+                <div class="form-group">
+                    <label for="password">Повторите пароль:</label>
+                    <InputText Id="password" Class="form-control" @bind-Value="registerModel.ConfirmPassword" />
+                    <ValidationMessage For="@(() => registerModel.ConfirmPassword)" />
+                </div>
+                <div class="form-group">
+                    <label for="description">Пол:</label>
+                    <InputSelect Id="gender" Class="form-control" @bind-Value="registerModel.Gender">
+                        <option value="">Выберите</option>
+                        <option value="male">Мужской</option>
+                        <option value="female">Женский</option>
+                    </InputSelect>
+                    <ValidationMessage For="@(() => registerModel.Gender)" />
+                </div>
+                <div class="form-group">
+                    <label for="date">Дата рождения:</label>
+                    <InputDate Id="password" Class="form-control" @bind-Value="registerModel.DateOfBirth" />
+                    <ValidationMessage For="@(() => registerModel.DateOfBirth)" />
+                </div>
+                <div class="form-group">
+                    <label for="description">Обо мне: (необязательно)</label>
+                    <InputTextArea Id="information" Class="form-control" @bind-Value="registerModel.AboutUser" />
+                    <ValidationMessage For="@(() => registerModel.AboutUser)" />
+                </div>
+                <div class="form-group-flex">
+                    <button type="submit" class="btn btn-primary">Создать аккаунт</button>
+                    <a href="/" class="card-myform-a">Отмена</a>
+                </div>
+            </EditForm>
+
+        </div>
+    </div>
+</div>
+@code {
+    private RegistrationViewModel registerModel = new RegistrationViewModel();
+    private ResponseModel registerResult;
+    private bool ShowErrors;
+
+    private async Task HandleRegistration()
+    {
+        registerResult = await AuthService.Register(registerModel);
+
+        if (registerResult.Successful)
+        {
+            Modal.Show("ФОРМА ВХОДА", typeof(Login));
+            UriHelper.NavigateTo("/");
+        }
+        else
+        {
+            ShowErrors = true;
+            StateHasChanged();
+        }
+
+    }
+
+}
+

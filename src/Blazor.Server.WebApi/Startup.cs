@@ -19,6 +19,9 @@ using Blazor.Server.DataAccessLayer.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using System.Text.Json;
+using Microsoft.AspNetCore.Mvc.Formatters;
+
 
 namespace Blazor.Server.WebApi
 {
@@ -35,7 +38,7 @@ namespace Blazor.Server.WebApi
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<TorrentsContext>(c => 
+            services.AddDbContext<TorrentsContext>(c =>
                 c.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddDbContext<IdentityContext>(optionsAction: options =>
@@ -62,14 +65,19 @@ namespace Blazor.Server.WebApi
             services.Configure<TokenManagerSettings>(Configuration.GetSection("JWTSettings"));
 
             services.AddAutoMapper(typeof(Startup));
-            
+
             services.AddScoped<IJwtTokenService, JwtTokenService>();
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<ITorrentsRepository, TorrentsRepository>();
             services.AddScoped<ITorrentsService, TorrentsServiceCacheDecorator>();
             services.AddScoped<TorrentsService>();
 
-            services.AddMvc(options => options.Filters.Add<ApiExceptionFilterAttribute>());
+            services.AddMvc(options =>
+                {
+                    options.Filters.Add<ApiExceptionFilterAttribute>();
+                    options.OutputFormatters.RemoveType<StringOutputFormatter>();
+                }
+                );
 
             services.AddResponseCompression(opts =>
             {
