@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using AutoMapper;
 using Blazor.Server.BusinessLayer.Entities;
 using Blazor.Server.BusinessLayer.Exceptions;
 using Blazor.Server.BusinessLayer.Services.JwtTokenService;
