@@ -38,12 +38,13 @@
                 </div>
                 <div class="form-group">
                     <label for="description">Пол:</label>
-                    <InputSelect Id="gender" Class="form-control" @bind-Value="registerModel.Gender">
-                        <option value="">Выберите</option>
-                        <option value="male">Мужской</option>
-                        <option value="female">Женский</option>
-                    </InputSelect>
-                    <ValidationMessage For="@(() => registerModel.Gender)" />
+                    <div>
+                        <MatRadioGroup @bind-value="registerModel.Gender">
+                            <MatRadioButton Value="male" Label="Мужской"></MatRadioButton>
+                            <MatRadioButton Value="female" Label="Женский"></MatRadioButton>
+                        </MatRadioGroup>
+                        <ValidationMessage For="@(() => registerModel.Gender)" />
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="date">Дата рождения:</label>
