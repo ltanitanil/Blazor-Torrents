@@ -15,7 +15,7 @@
 
 
 @code{
-    [Parameter] IEnumerable<TorrentView> TorrentsModel { get; set; }
+    [Parameter] public IEnumerable<TorrentView> TorrentsModel { get; set; }
 
     private string GetPath(int id)
     {

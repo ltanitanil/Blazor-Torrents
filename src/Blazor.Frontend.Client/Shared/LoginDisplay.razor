@@ -1,0 +1,32 @@
+﻿@inject IModalService Modal
+@inject IAuthService AuthService
+
+
+<div class="LoginDisplay-item">
+    <a href="/">WWW.MyTORRENTS.COM</a>
+</div>
+<AuthorizeView>
+    <Authorized>
+        Hello, @context.User.Identity.Name!
+        <button @onclick="Logout" style="background-color: #1f8a50;border: none;">Log out</button>
+    </Authorized>
+    <NotAuthorized>
+        <div class="LoginDisplay-item">
+            <button @onclick="@(ShowModal)" class="btn btn-primary" style="background-color: #1f8a50;border: none;">
+                <img src="/images/Login.png" />ВОЙТИ
+            </button>
+        </div>
+    </NotAuthorized>
+</AuthorizeView>
+
+@code{
+    void ShowModal()
+    {
+        Modal.Show("ФОРМА ВХОДА", typeof(Login));
+    }
+
+    void Logout()
+    {
+        AuthService.Logout();
+    }
+}

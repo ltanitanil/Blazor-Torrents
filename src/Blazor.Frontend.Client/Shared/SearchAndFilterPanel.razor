@@ -31,9 +31,9 @@
                             </select>
                         </lable>
                     </div>
-                    <div class="filters-items">
+                    @*<div class="filters-items">
                         <EjsDateRangePicker id='daterangepicker' min='@minDate' max='@maxDate' Change=@((e) => DateChange(e.Value))> </EjsDateRangePicker>
-                    </div>
+                    </div>*@
                     <div class="filters-items">
                         <div class="filters-items-size">
                             <label class="label-size">Размер торрентов:</label>
@@ -59,9 +59,9 @@
 </div>
 
 @code{
-    [Parameter] Func<Task<SearchAndFilterData>> GetData { get; set; }
-    [Parameter] protected SearchAndFilterCriteria Criteria { get; set; }
-    [Parameter] Func<int, Task> GetTorrentsList { get; set; }
+    [Parameter] public Func<Task<SearchAndFilterData>> GetData { get; set; }
+    [Parameter] public SearchAndFilterCriteria Criteria { get; set; }
+    [Parameter] public Func<int, Task> GetTorrentsList { get; set; }
 
     private SearchAndFilterData Data { get; set; }
     private bool FilterSwitch { get; set; }
@@ -70,7 +70,7 @@
     public DateTime minDate { get; set; } = new DateTime(2005, 5, 1);
     public DateTime maxDate { get; set; } = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
 
-    protected override async Task OnInitAsync()
+    protected override async Task OnInitializedAsync()
     {
         Data = await GetData();
     }

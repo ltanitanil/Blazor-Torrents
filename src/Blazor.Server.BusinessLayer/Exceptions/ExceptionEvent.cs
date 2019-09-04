@@ -8,5 +8,7 @@ namespace Blazor.Server.BusinessLayer.Exceptions
     {
         NotFound,
         InvalidParameters,
+        LoginFailed,
+        RegistrationFailed
     }
 }

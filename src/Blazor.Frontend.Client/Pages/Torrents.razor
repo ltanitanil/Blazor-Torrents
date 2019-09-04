@@ -28,7 +28,7 @@ else
     private TorrentsViewModel TorrentsModel { get; set; }
     private SearchAndFilterCriteria Criteria { get; set; } = new SearchAndFilterCriteria();
 
-    protected override async Task OnInitAsync()
+    protected override async Task OnInitializedAsync()
     {
         await LoadTorrentsAsync();
     }

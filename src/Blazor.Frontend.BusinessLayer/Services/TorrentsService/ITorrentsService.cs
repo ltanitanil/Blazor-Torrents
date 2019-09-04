@@ -1,12 +1,12 @@
-﻿using Blazor.Shared.ViewModels;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Threading.Tasks;
+using Blazor.Shared.ViewModels;
 using Blazor.Shared.ViewModels.Search;
 using Blazor.Shared.ViewModels.TorrentModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace Blazor.Frontend.Client.Services.TorrentsService
+namespace Blazor.Frontend.BusinessLayer.Services.TorrentsService
 {
     public interface ITorrentsService
     {

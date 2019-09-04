@@ -1,0 +1,57 @@
+﻿@inject IAuthService AuthService
+@inject IModalService ModalService
+
+
+@if (ShowErrors)
+{
+    <div class="alert alert-danger" role="alert">
+        <p>@loginResult.Error</p>
+    </div>
+}
+
+<div class="card-myform">
+    <EditForm Model="loginModel" OnValidSubmit="HandleLogin">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <div class="form-group">
+            <InputText Id="email" Class="form-control" @bind-Value="loginModel.Email" placeholder="Почтовый адрес" />
+            <ValidationMessage For="@(() => loginModel.Email)" />
+        </div>
+        <div class="form-group">
+            <InputText Id="password" type="password" Class="form-control" @bind-Value="loginModel.Password" placeholder="Пароль" />
+            <ValidationMessage For="@(() => loginModel.Password)" />
+        </div>
+        <div class="form-button">
+            <button type="submit" class="btn btn-primary" @onclick="HandleLogin">ВОЙТИ</button>
+        </div>
+    </EditForm>
+    <div class="card-myform-ref">
+        <a href="/Registration" @onclick="(_=>CloseModal())">Создать аккаунт</a>
+    </div>
+</div>
+
+
+@code {
+    private LoginViewModel loginModel = new LoginViewModel();
+    private ResponseModel loginResult;
+    private bool ShowErrors;
+
+    public async void HandleLogin()
+    {
+        loginResult = await AuthService.Login(loginModel);
+
+        if (loginResult.Successful)
+            CloseModal();
+        else
+        {
+            ShowErrors = true;
+            StateHasChanged();
+        }
+    }
+
+    private void CloseModal()
+    {
+        ModalService.Close(ModalResult.Cancel());
+    }
+}
