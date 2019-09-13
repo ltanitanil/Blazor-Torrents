@@ -31,7 +31,7 @@
 
     private IEnumerable<int> GetPages(PaginationInfoViewModel paginationModel)
     {
-        var totalPages = (int)Math.Ceiling((decimal)paginationModel.TotalItems / (decimal)paginationModel.PageSize);
+        var totalPages = (int)Math.Ceiling((decimal)paginationModel.TotalItems / (decimal)paginationModel.PageSize)-1;
 
         int startPage, endPage;
         if (totalPages <= maxPages)
