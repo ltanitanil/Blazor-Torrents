@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Blazor.Shared.ViewModels.TorrentModel
+namespace Blazor.Shared.Models.ViewModels.TorrentModel
 {
     public class ForumView
     {

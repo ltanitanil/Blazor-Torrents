@@ -9,6 +9,7 @@ using Microsoft.Extensions.Hosting;
 using System.Linq;
 using System.Text;
 using Blazor.Server.BusinessLayer.Services.AccountService;
+using Blazor.Server.BusinessLayer.Services.BlobContainerService;
 using Blazor.Server.BusinessLayer.Services.JwtTokenService;
 using Blazor.Server.BusinessLayer.Services.TorrentsService;
 using Blazor.Server.BusinessLayer.Settings;
@@ -19,8 +20,8 @@ using Blazor.Server.DataAccessLayer.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using System.Text.Json;
 using Microsoft.AspNetCore.Mvc.Formatters;
+
 
 
 namespace Blazor.Server.WebApi
@@ -44,6 +45,7 @@ namespace Blazor.Server.WebApi
             services.AddDbContext<IdentityContext>(optionsAction: options =>
                 options.UseSqlServer(Configuration.GetConnectionString("IdentityConnection")));
 
+
             services.AddDefaultIdentity<ApplicationUser>()
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<IdentityContext>();
@@ -63,9 +65,11 @@ namespace Blazor.Server.WebApi
 
             services.Configure<CacheOptionsSettings>(Configuration.GetSection("CacheSettings"));
             services.Configure<TokenManagerSettings>(Configuration.GetSection("JWTSettings"));
+            services.Configure<BlobContainerSettings>(Configuration.GetSection("BlobContainerSettings"));
 
             services.AddAutoMapper(typeof(Startup));
 
+            services.AddSingleton<IBlobContainerService, BlobContainerService>();
             services.AddScoped<IJwtTokenService, JwtTokenService>();
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<ITorrentsRepository, TorrentsRepository>();

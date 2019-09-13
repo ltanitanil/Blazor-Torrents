@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Blazor.Shared.Models.ViewModels.TorrentModel
+namespace Blazor.Server.BusinessLayer.Entities
 {
-    public class FileView
+    public class FileModel
     {
         public string Name { get; set; }
+        public string Link { get; set; }
         public long Size { get; set; }
+
     }
 }

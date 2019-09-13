@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Blazor.Shared.Models.ViewModels.Account
+namespace Blazor.Shared.Models.ViewModels
 {
     public class ResponseModel
     {

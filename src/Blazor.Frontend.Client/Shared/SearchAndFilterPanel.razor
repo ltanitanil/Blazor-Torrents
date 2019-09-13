@@ -38,8 +38,8 @@
                         <div class="filters-items-size">
                             <label class="label-size">Размер торрентов:</label>
                             <div style="padding:10px;">
-                                <input type="number" @bind=@Criteria.Size.From placeholder="0" />
-                                <input type="number" @bind=@Criteria.Size.To placeholder=@Data.TorrentMaxSize />
+                                <input type="number" @bind="Criteria.Size.From" placeholder="0" />
+                                <input type="number" @bind="Criteria.Size.To" placeholder=@Data.TorrentMaxSize />
                             </div>
                         </div>
                     </div>
@@ -101,7 +101,7 @@
         await GetTorrentsList(0);
     }
 
-    private protected void ForumsClicked(UIChangeEventArgs forumEvent)
+    private protected void ForumsClicked(ChangeEventArgs forumEvent)
     {
         Criteria.SelectedForumId = Int32.TryParse(forumEvent.Value.ToString(), out var tempVal) ? tempVal : (int?)null;
     }

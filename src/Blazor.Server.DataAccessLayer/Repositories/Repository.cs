@@ -21,6 +21,13 @@ namespace Blazor.Server.DataAccessLayer.Repositories
             _dbSet = context.Set<TEntity>();
         }
 
+        public async Task<TEntity> AddAsync(TEntity entity)
+        {
+            var result = await _dbSet.AddAsync(entity);
+            await _context.SaveChangesAsync();
+            return result.Entity;
+        }
+
         public async Task<long> MaxAsync(Expression<Func<TEntity, long>> expression) =>
                     await _dbSet.AsNoTracking().MaxAsync(expression);
 

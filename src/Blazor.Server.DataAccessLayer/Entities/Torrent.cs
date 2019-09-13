@@ -13,7 +13,7 @@ namespace Blazor.Server.DataAccessLayer.Entities
         public int? TrackerId { get; set; }
         public string Content { get; set; }
         public string DirName { get; set; }
-
+        public string UserName { get; set; }
         public int ForumId { get; set; }
         public Forum Forum { get; set; }
 

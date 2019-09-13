@@ -2,24 +2,41 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
 using System.Threading.Tasks;
 using Blazor.Server.BusinessLayer.Exceptions;
 using Blazor.Server.BusinessLayer.Helpers;
+using Blazor.Server.BusinessLayer.Services.BlobContainerService;
 using Blazor.Server.DataAccessLayer.Repositories;
 using Blazor.Server.DataAccessLayer.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http;
 
 namespace Blazor.Server.BusinessLayer.Services.TorrentsService
 {
     public class TorrentsService : ITorrentsService
     {
         private readonly ITorrentsRepository _torrentsRepository;
+        private readonly IBlobContainerService _blobContainer;
 
-        public TorrentsService(ITorrentsRepository torrentsRepository)
+        public TorrentsService(ITorrentsRepository torrentsRepository, IBlobContainerService blobContainer)
         {
             _torrentsRepository = torrentsRepository;
+            _blobContainer = blobContainer;
+        }
+
+        public async Task UploadTorrent(Torrent torrent, IEnumerable<IFormFile> files, string userName)
+        {
+            if (!files.Any())
+                throw new AppException(ExceptionEvent.InvalidParameters, "List of files can't be empty");
+
+            var fileLinksList = await _blobContainer.UploadFiles(files);
+
+            torrent.Files = fileLinksList.Select(x =>
+                new File {Name = x.Name, Link = x.Link, Size = x.Size}).ToList();
+            torrent.UserName = userName;
+            torrent.Size = fileLinksList.Sum(x => x.Size);
+
+            await _torrentsRepository.AddAsync(torrent);
         }
 
         public async Task<(IReadOnlyList<Forum>, long)> GetDataToFilter(int forumsCount)

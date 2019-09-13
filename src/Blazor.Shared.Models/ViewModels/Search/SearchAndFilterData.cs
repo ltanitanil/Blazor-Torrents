@@ -1,7 +1,5 @@
-﻿using Blazor.Shared.ViewModels.TorrentModel;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
+using Blazor.Shared.Models.ViewModels.TorrentModel;
 
 namespace Blazor.Shared.ViewModels.Search
 {

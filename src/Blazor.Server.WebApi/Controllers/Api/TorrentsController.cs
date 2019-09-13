@@ -1,11 +1,15 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using AutoMapper;
 using Blazor.Server.BusinessLayer.Services.TorrentsService;
 using Blazor.Shared.ViewModels;
 using Blazor.Shared.ViewModels.Search;
-using Blazor.Shared.ViewModels.TorrentModel;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
+using Blazor.Server.DataAccessLayer.Entities;
+using Blazor.Shared.Models.ViewModels.TorrentModel;
 
 namespace Blazor.Server.WebApi.Controllers.Api
 {
@@ -35,6 +39,7 @@ namespace Blazor.Server.WebApi.Controllers.Api
                 }
             };
         }
+
         [Authorize]
         [HttpGet]
         public async Task<TorrentDescriptionView> GetTorrent(int id) =>
@@ -51,5 +56,11 @@ namespace Blazor.Server.WebApi.Controllers.Api
                 TorrentMaxSize = maxTorrentSize
             };
         }
+
+        [Authorize(Roles = "User")]
+        [HttpPost]
+        public async Task UploadTorrent([FromForm]string json, IEnumerable<IFormFile> files) =>
+            await _torrentsService.UploadTorrent(_mapper.Map<Torrent>(JsonSerializer.Deserialize<TorrentUploadViewModel>(json)), 
+                files, User.Identity.Name);
     }
 }

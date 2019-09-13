@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using Blazor.Shared.Models.ViewModels;
+using Blazor.Shared.Models.ViewModels.TorrentModel;
 using Blazor.Shared.ViewModels;
 using Blazor.Shared.ViewModels.Search;
-using Blazor.Shared.ViewModels.TorrentModel;
+using Microsoft.AspNetCore.Components;
 
 namespace Blazor.Frontend.BusinessLayer.Services.TorrentsService
 {
@@ -13,5 +12,6 @@ namespace Blazor.Frontend.BusinessLayer.Services.TorrentsService
         Task<TorrentsViewModel> GetTorrentsAsync(SearchAndFilterCriteria criteria, int? pageIndex);
         Task<SearchAndFilterData> GetDataToFilter();
         Task<TorrentDescriptionView> GetTorrentDescription(int id);
+        Task<ResponseModel> UploadTorrent(TorrentUploadViewModel torrent, ElementReference filesRef);
     }
 }

@@ -6,6 +6,7 @@ using Blazor.Server.BusinessLayer.Settings;
 using Blazor.Server.DataAccessLayer.Entities;
 using Microsoft.Extensions.Options;
 using Blazor.Server.BusinessLayer.Extensions;
+using Microsoft.AspNetCore.Http;
 
 namespace Blazor.Server.BusinessLayer.Services.TorrentsService
 {
@@ -52,5 +53,7 @@ namespace Blazor.Server.BusinessLayer.Services.TorrentsService
             return await _cache.GetOrCreateAsync(cacheKey, () => _torrentsService.GetDataToFilter(forumsCount), _cacheEntryOptions);
         }
 
+        public async Task UploadTorrent(Torrent torrent, IEnumerable<IFormFile> files, string userName)
+            => await _torrentsService.UploadTorrent(torrent, files, userName);
     }
 }

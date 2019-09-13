@@ -10,6 +10,7 @@ namespace Blazor.Server.DataAccessLayer.Repositories
 {
     public interface IRepository<TEntity> where TEntity : BaseEntity
     {
+        Task<TEntity> AddAsync(TEntity entity);
         IQueryable<TEntity> GetAll(Expression<Func<TEntity, bool>> filter = null,
             List<Expression<Func<TEntity, object>>> includes = null);
         Task<TEntity> SingleAsync(Expression<Func<TEntity, bool>> expression,
