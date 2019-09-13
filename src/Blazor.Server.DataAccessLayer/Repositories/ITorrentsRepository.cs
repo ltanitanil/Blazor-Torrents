@@ -8,6 +8,6 @@ namespace Blazor.Server.DataAccessLayer.Repositories
 {
     public interface ITorrentsRepository : IRepository<Torrent>
     {
-        Task<IReadOnlyList<Forum>> GetPopularForumsAsync(int count);
+        Task<IReadOnlyList<Subcategory>> GetPopularSubcategoriesAsync(int count);
     }
 }

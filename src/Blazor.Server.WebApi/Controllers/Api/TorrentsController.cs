@@ -25,7 +25,7 @@ namespace Blazor.Server.WebApi.Controllers.Api
         [HttpPost]
         public async Task<TorrentsViewModel> GetTorrents(int pageIndex, SearchAndFilterCriteria criteria)
         {
-            var (torrents, count) = await _torrentsService.GetTorrentsAndCount(pageIndex, Constants.ITEMS_PER_PAGE, criteria.SearchText, criteria.SelectedForumId,
+            var (torrents, count) = await _torrentsService.GetTorrentsAndCount(pageIndex, Constants.ITEMS_PER_PAGE, criteria.SearchText, criteria.SubcategoryId,
                 criteria.Size.From, criteria.Size.To, criteria.Date.From, criteria.Date.To);
 
             return new TorrentsViewModel
@@ -52,7 +52,7 @@ namespace Blazor.Server.WebApi.Controllers.Api
 
             return new SearchAndFilterData
             {
-                Forums = _mapper.Map<ForumView[]>(forums),
+                Subcategory = _mapper.Map<SubcategoryView[]>(forums),
                 TorrentMaxSize = maxTorrentSize
             };
         }

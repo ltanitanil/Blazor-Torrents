@@ -10,9 +10,9 @@ namespace Blazor.Server.BusinessLayer.Services.TorrentsService
 {
     public interface ITorrentsService
     {
-        Task<(IReadOnlyList<Torrent>,int)> GetTorrentsAndCount(int pageIndex, int itemsPage, string search, int? forumId, long? sizeFrom, long? sizeTo, DateTimeOffset? dateFrom, DateTimeOffset? dateTo);
+        Task<(IReadOnlyList<Torrent>,int)> GetTorrentsAndCount(int pageIndex, int itemsPage, string search, int? subcategoryId, long? sizeFrom, long? sizeTo, DateTimeOffset? dateFrom, DateTimeOffset? dateTo);
         Task<Torrent> GetTorrent(int id);
-        Task<(IReadOnlyList<Forum>, long)> GetDataToFilter(int forumsCount);
+        Task<(IReadOnlyList<Subcategory>, long)> GetDataToFilter(int forumsCount);
         Task UploadTorrent(Torrent torrent,IEnumerable<IFormFile> files,string userName);
     }
 }

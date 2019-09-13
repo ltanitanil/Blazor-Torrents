@@ -7,7 +7,7 @@ namespace Blazor.Shared.ViewModels.Search
 {
     public class SearchAndFilterCriteria
     {
-        public int? SelectedForumId { get; set; }
+        public int? SubcategoryId { get; set; }
         public string SearchText { get; set; }
         public Range<long?> Size { get; set; }
         public Range<DateTimeOffset?> Date { get; set; }
