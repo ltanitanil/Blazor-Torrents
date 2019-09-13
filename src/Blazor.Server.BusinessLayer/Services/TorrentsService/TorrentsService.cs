@@ -32,19 +32,19 @@ namespace Blazor.Server.BusinessLayer.Services.TorrentsService
             var fileLinksList = await _blobContainer.UploadFiles(files);
 
             torrent.Files = fileLinksList.Select(x =>
-                new File {Name = x.Name, Link = x.Link, Size = x.Size}).ToList();
+                new File { Name = x.Name, Link = x.Link, Size = x.Size }).ToList();
             torrent.UserName = userName;
             torrent.Size = fileLinksList.Sum(x => x.Size);
 
             await _torrentsRepository.AddAsync(torrent);
         }
 
-        public async Task<(IReadOnlyList<Forum>, long)> GetDataToFilter(int forumsCount)
+        public async Task<(IReadOnlyList<Subcategory>, long)> GetDataToFilter(int forumsCount)
         {
             if (forumsCount < 0)
                 throw new AppException(ExceptionEvent.InvalidParameters, "forumsCount can't be negative");
 
-            return (await _torrentsRepository.GetPopularForumsAsync(forumsCount),
+            return (await _torrentsRepository.GetPopularSubcategoriesAsync(forumsCount),
                 await _torrentsRepository.MaxAsync(x => x.Size));
         }
 
@@ -57,7 +57,7 @@ namespace Blazor.Server.BusinessLayer.Services.TorrentsService
                               includeProperties: new List<Expression<Func<Torrent, object>>>
                               {
                                   x => x.Files,
-                                  x => x.Forum,
+                                  x => x.Subcategory,
                               }) ?? throw new AppException(ExceptionEvent.NotFound, $"Torrent(id={id}) not found");
 
             torrent.Content = BBCodeToHtmlConverter.Format(torrent.Content);
@@ -66,7 +66,7 @@ namespace Blazor.Server.BusinessLayer.Services.TorrentsService
         }
 
         public async Task<(IReadOnlyList<Torrent>, int)> GetTorrentsAndCount(int pageIndex, int itemsPerPageCount, string search,
-            int? forumId, long? sizeFrom, long? sizeTo, DateTimeOffset? dateFrom, DateTimeOffset? dateTo)
+            int? subcategoryId, long? sizeFrom, long? sizeTo, DateTimeOffset? dateFrom, DateTimeOffset? dateTo)
         {
             if (pageIndex < 0)
                 throw new AppException(ExceptionEvent.InvalidParameters, "Page can't be negative");
@@ -74,7 +74,7 @@ namespace Blazor.Server.BusinessLayer.Services.TorrentsService
                 throw new AppException(ExceptionEvent.InvalidParameters, "Number of elements per page can't be negative");
 
             Expression<Func<Torrent, bool>> filter = x => (string.IsNullOrEmpty(search) || x.Title.Contains(search))
-                                                          && (!forumId.HasValue || x.ForumId == forumId)
+                                                          && (!subcategoryId.HasValue || x.SubcategoryId == subcategoryId)
                                                           && (!sizeFrom.HasValue || x.Size >= sizeFrom)
                                                           && (!sizeTo.HasValue || x.Size <= sizeTo)
                                                           && (!dateFrom.HasValue || x.RegisteredAt >= dateFrom)

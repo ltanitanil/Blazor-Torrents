@@ -6,6 +6,6 @@ namespace Blazor.Server.WebApi.AutoMapper
 {
     public class ForumViewProfile : Profile
     {
-        public ForumViewProfile() => CreateMap<Forum, ForumView>();
+        public ForumViewProfile() => CreateMap<Subcategory, SubcategoryView>();
     }
 }

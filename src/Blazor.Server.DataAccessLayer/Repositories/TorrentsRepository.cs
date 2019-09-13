@@ -14,13 +14,13 @@ namespace Blazor.Server.DataAccessLayer.Repositories
     {
         public TorrentsRepository(TorrentsContext context) : base(context) { }
 
-        public async Task<IReadOnlyList<Forum>> GetPopularForumsAsync(int count)
+        public async Task<IReadOnlyList<Subcategory>> GetPopularSubcategoriesAsync(int count)
         {
             return await _dbSet
-                .GroupBy(x => x.ForumId, (key, items) => new { Key = key, Count = items.Count() })
+                .GroupBy(x => x.SubcategoryId, (key, items) => new { Key = key, Count = items.Count() })
                 .OrderByDescending(x => x.Count)
                 .Take(count)
-                .Join(_context.Forums, (t) => t.Key, (f) => f.Id, (t, f) => f)
+                .Join(_context.Subcategories, (t) => t.Key, (f) => f.Id, (t, f) => f)
                 .ToListAsync();
         }
 

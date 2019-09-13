@@ -11,7 +11,7 @@
             <div class="torrent-model-flex-item">
                 <div><a href="/" style=""><i class="fas fa-chevron-circle-left"></i>На главную</a></div>
                 <div class="torrent-model-flex-item-flex">
-                    <div class="torrent-model-flex-item-flex-forum">@TorrentModel.Forum.Value</div>
+                    <div class="torrent-model-flex-item-flex-forum">@TorrentModel.Subcategory.Title</div>
                     <div class="torrent-model-flex-item-flex-date">@TorrentModel.RegisteredAt.Date.ToShortDateString()</div>
                 </div>
                 <div class="torrent-model-flex-item-flex-content">@((MarkupString)TorrentModel.Content)</div>

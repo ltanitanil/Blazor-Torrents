@@ -8,7 +8,7 @@ namespace Blazor.Shared.Models.ViewModels.TorrentModel
     {
         public string Content { get; set; }
         public string DirName { get; set; }
-        public ForumView Forum { get; set; }
+        public SubcategoryView Subcategory { get; set; }
         public IEnumerable<FileView> Files { get; set; }
     }
 }

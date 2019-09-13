@@ -22,8 +22,8 @@ namespace Blazor.Shared.Models.ViewModels.TorrentModel
         public string DirName { get; set; }
 
         [Required]
-        [Display(Name = "ForumId")]
-        public int ForumId { get; set; }
+        [Display(Name = "SubcategoryId")]
+        public int SubcategoryId { get; set; }
     }
 }
 

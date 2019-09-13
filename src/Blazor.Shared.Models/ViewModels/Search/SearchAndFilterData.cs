@@ -5,7 +5,7 @@ namespace Blazor.Shared.ViewModels.Search
 {
     public class SearchAndFilterData
     {
-        public IEnumerable<ForumView> Forums { get; set; }
+        public IEnumerable<SubcategoryView> Subcategory { get; set; }
         public long TorrentMaxSize { get; set; }
     }
 }

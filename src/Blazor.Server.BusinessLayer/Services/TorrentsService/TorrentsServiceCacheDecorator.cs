@@ -46,7 +46,7 @@ namespace Blazor.Server.BusinessLayer.Services.TorrentsService
                 _cacheEntryOptions);
         }
 
-        public async Task<(IReadOnlyList<Forum>, long)> GetDataToFilter(int forumsCount)
+        public async Task<(IReadOnlyList<Subcategory>, long)> GetDataToFilter(int forumsCount)
         {
             var cacheKey = $"popularForums-{forumsCount}";
 
