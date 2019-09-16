@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
-using Blazor.Server.DataAccessLayer.Context;
+using Blazor.Server.DataAccessLayer.Context.Torrents;
 using Blazor.Server.DataAccessLayer.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,8 +11,8 @@ namespace Blazor.Server.DataAccessLayer.Repositories
 {
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : BaseEntity
     {
-        protected readonly TorrentsContext _context;
-        protected readonly DbSet<TEntity> _dbSet;
+        private readonly TorrentsContext _context;
+        private readonly DbSet<TEntity> _dbSet;
 
         public Repository(TorrentsContext context)
         {

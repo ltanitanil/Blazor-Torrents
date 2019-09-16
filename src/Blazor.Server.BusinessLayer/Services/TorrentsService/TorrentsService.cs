@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Blazor.Server.BusinessLayer.Exceptions;
 using Blazor.Server.BusinessLayer.Helpers;
 using Blazor.Server.BusinessLayer.Services.BlobContainerService;
-using Blazor.Server.DataAccessLayer.Repositories;
+using Blazor.Server.DataAccessLayer.Context.Torrents;
 using Blazor.Server.DataAccessLayer.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
@@ -15,12 +15,13 @@ namespace Blazor.Server.BusinessLayer.Services.TorrentsService
 {
     public class TorrentsService : ITorrentsService
     {
-        private readonly ITorrentsRepository _torrentsRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IBlobContainerService _blobContainer;
 
-        public TorrentsService(ITorrentsRepository torrentsRepository, IBlobContainerService blobContainer)
+        public TorrentsService(IBlobContainerService blobContainer,
+            IUnitOfWork unitOfWork)
         {
-            _torrentsRepository = torrentsRepository;
+            _unitOfWork = unitOfWork;
             _blobContainer = blobContainer;
         }
 
@@ -36,7 +37,7 @@ namespace Blazor.Server.BusinessLayer.Services.TorrentsService
             torrent.UserName = userName;
             torrent.Size = fileLinksList.Sum(x => x.Size);
 
-            await _torrentsRepository.AddAsync(torrent);
+            await _unitOfWork.Torrents.AddAsync(torrent);
         }
 
         public async Task<(IReadOnlyList<Subcategory>, long)> GetDataToFilter(int forumsCount)
@@ -44,8 +45,13 @@ namespace Blazor.Server.BusinessLayer.Services.TorrentsService
             if (forumsCount < 0)
                 throw new AppException(ExceptionEvent.InvalidParameters, "forumsCount can't be negative");
 
-            return (await _torrentsRepository.GetPopularSubcategoriesAsync(forumsCount),
-                await _torrentsRepository.MaxAsync(x => x.Size));
+            return (await _unitOfWork.Torrents.GetAll()
+                        .GroupBy(x => x.SubcategoryId, (key, items) => new { Key = key, Count = items.Count() })
+                        .OrderByDescending(x => x.Count)
+                        .Take(forumsCount)
+                        .Join(_unitOfWork.Subcategories.GetAll(), (t) => t.Key, (f) => f.Id, (t, f) => f)
+                        .ToListAsync(),
+                    await _unitOfWork.Torrents.MaxAsync(x => x.Size));
         }
 
         public async Task<Torrent> GetTorrent(int id)
@@ -53,7 +59,7 @@ namespace Blazor.Server.BusinessLayer.Services.TorrentsService
             if (id < 0)
                 throw new AppException(ExceptionEvent.InvalidParameters, "Id can't be negative");
 
-            var torrent = await _torrentsRepository.SingleAsync(expression: x => x.Id.Equals(id),
+            var torrent = await _unitOfWork.Torrents.SingleAsync(expression: x => x.Id.Equals(id),
                               includeProperties: new List<Expression<Func<Torrent, object>>>
                               {
                                   x => x.Files,
@@ -80,7 +86,7 @@ namespace Blazor.Server.BusinessLayer.Services.TorrentsService
                                                           && (!dateFrom.HasValue || x.RegisteredAt >= dateFrom)
                                                           && (!dateTo.HasValue || x.RegisteredAt <= dateTo);
 
-            var torrents = await _torrentsRepository.GetAll(filter)
+            var torrents = await _unitOfWork.Torrents.GetAll(filter)
                 .Skip(pageIndex * itemsPerPageCount)
                 .Take(itemsPerPageCount)
                 .ToListAsync();
@@ -88,7 +94,7 @@ namespace Blazor.Server.BusinessLayer.Services.TorrentsService
             if (!torrents.Any())
                 throw new AppException(ExceptionEvent.NotFound, "Torrents not found");
 
-            var count = await _torrentsRepository.GetAll(filter).CountAsync();
+            var count = await _unitOfWork.Torrents.GetAll(filter).CountAsync();
 
             return (torrents, count);
         }

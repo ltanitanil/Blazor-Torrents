@@ -13,7 +13,8 @@ using Blazor.Server.BusinessLayer.Services.BlobContainerService;
 using Blazor.Server.BusinessLayer.Services.JwtTokenService;
 using Blazor.Server.BusinessLayer.Services.TorrentsService;
 using Blazor.Server.BusinessLayer.Settings;
-using Blazor.Server.DataAccessLayer.Context;
+using Blazor.Server.DataAccessLayer.Context.Identity;
+using Blazor.Server.DataAccessLayer.Context.Torrents;
 using Blazor.Server.DataAccessLayer.Entities;
 using Blazor.Server.WebApi.Filters;
 using Blazor.Server.DataAccessLayer.Repositories;
@@ -69,12 +70,14 @@ namespace Blazor.Server.WebApi
 
             services.AddAutoMapper(typeof(Startup));
 
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddSingleton<IBlobContainerService, BlobContainerService>();
             services.AddScoped<IJwtTokenService, JwtTokenService>();
             services.AddScoped<IAccountService, AccountService>();
-            services.AddScoped<ITorrentsRepository, TorrentsRepository>();
             services.AddScoped<ITorrentsService, TorrentsServiceCacheDecorator>();
             services.AddScoped<TorrentsService>();
+
 
             services.AddMvc(options =>
                 {
