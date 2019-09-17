@@ -1,4 +1,5 @@
-﻿using Blazor.Shared.ViewModels;
+﻿using System.Collections.Generic;
+using Blazor.Shared.ViewModels;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,6 +28,9 @@ namespace Blazor.Frontend.BusinessLayer.Services.TorrentsService
 
         public async Task<SearchAndFilterData> GetDataToFilter() =>
             await _httpClient.GetJsonAsync<SearchAndFilterData>("api/Torrents/GetDataToFilter");
+
+        public async Task<IReadOnlyList<CategoryView>> GetCategoriesWithSubcategories() =>
+            await _httpClient.GetJsonAsync<IReadOnlyList<CategoryView>>("api/Torrents/GetCategoriesWithSubcategories");
 
         public async Task<TorrentDescriptionView> GetTorrentDescription(int id) =>
             await _httpClient.GetJsonAsync<TorrentDescriptionView>($"api/Torrents/GetTorrent/?id={id}");

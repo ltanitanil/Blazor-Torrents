@@ -1,57 +1,102 @@
 ﻿@page "/TorrentUpload"
 @attribute [Authorize]
 
-@inject ITorrentsService state
+@inject ITorrentsService torrentsService
 @inject NavigationManager UriHelper
 
 
-<h3>TorrentUpload</h3>
-@if (ShowErrors)
-{
-    <div class="alert alert-danger" role="alert">
-        <p>@response.Error</p>
-    </div>
-}
+<div class="register-container">
+    <div class="register-container-card">
+        <div class="register-container-card-h">
+            <h1>Добавление</h1>
+            <h1>торрента</h1>
+        </div>
+        @if (ShowErrors)
+        {
+            <div class="alert alert-danger" role="alert">
+                <p>@response.Error</p>
+            </div>
+        }
+        <EditForm Model=@newTorrent OnValidSubmit=@UploadTorrent>
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+            <div class="form-group">
+                <label for="title">Название: </label>
+                <InputText Id="title" Class="form-control" @bind-Value="newTorrent.Title" />
+                <ValidationMessage For="@(() => newTorrent.Title)" />
+            </div>
+            <div class="form-group">
+                <label for="content">Описание: </label>
+                <InputTextArea Id="content" Class="form-control" @bind-Value="newTorrent.Content" />
+                <ValidationMessage For="@(() => newTorrent.Content)" />
+            </div>
+            <div class="form-group">
+                <label for="dirNam">Название директории: </label>
+                <InputText Id="dirNam" Class="form-control" @bind-Value="newTorrent.DirName" />
+                <ValidationMessage For="@(() => newTorrent.DirName)" />
+            </div>
+            @if (categories != null)
+            {
+                <div class="form-group">
+                    <label data-title="Категория" class="filter-label">
+                        <select @onchange=@CategoriesClicked class="filter-select">
+                            <option></option>
+                            @foreach (var category in categories)
+                            {
+                                <option value=@category.Id>@category.Title</option>
+                            }
+                        </select>
+                    </label>
+                </div>
+                <div class="form-group">
+                    @if (subcategories != null)
+                    {
+                        <label data-title="Подкатегория" class="filter-label">
+                            <select @onchange=@SubCategoriesClicked class="filter-select">
+                                <option></option>
+                                @foreach (var subcategory in subcategories)
+                                {
+                                    <option value=@subcategory.Id>@subcategory.Title</option>
+                                }
+                            </select>
+                        </label>
+                        <ValidationMessage For="@(() => newTorrent.SubcategoryId)" />
+                    }
+                </div>
+            }
+            else
+            {
+                <Loader />
+            }
+            <div>
+                <input type="file" name="files" @ref=inputTypeFileElement multiple />
+            </div>
 
-<EditForm Model=@newTorrent OnValidSubmit=@UploadTorrent>
-    <DataAnnotationsValidator />
-    <ValidationSummary />
-    <div class="form-group">
-        <label for="title">Название: </label>
-        <InputText Id="title" Class="form-control" @bind-Value="newTorrent.Title" />
-        <ValidationMessage For="@(() => newTorrent.Title)" />
+            <button>Сохранить</button>
+        </EditForm>
     </div>
-    <div class="form-group">
-        <label for="content">Описание: </label>
-        <InputTextArea Id="content" Class="form-control" @bind-Value="newTorrent.Content" />
-        <ValidationMessage For="@(() => newTorrent.Content)" />
-    </div>
-    <div class="form-group">
-        <label for="dirNam">Название директории: </label>
-        <InputText Id="dirNam" Class="form-control" @bind-Value="newTorrent.DirName" />
-        <ValidationMessage For="@(() => newTorrent.DirName)" />
-    </div>
-    <div class="form-group">
-        <label for="forumId">Номур форума: </label>
-        <InputNumber Id="forumId" Class="form-control" @bind-Value="newTorrent.SubcategoryId" />
-        <ValidationMessage For="@(() => newTorrent.SubcategoryId)" />
-    </div>
-    <div>
-        <input type="file" name="files" @ref=inputTypeFileElement multiple />
-    </div>
-
-    <button>Сохранить</button>
-</EditForm>
-
+</div>
 @code {
+    private bool ShowErrors;
     ElementReference inputTypeFileElement;
     TorrentUploadViewModel newTorrent = new TorrentUploadViewModel();
+
+    IReadOnlyList<CategoryView> categories;
+    int? SelectedCategoryId;
+    IEnumerable<SubcategoryView> subcategories;
+    
     ResponseModel response;
-    private bool ShowErrors;
+    
+
+    protected override async Task OnInitializedAsync()
+    {
+        categories = await torrentsService.GetCategoriesWithSubcategories();
+        StateHasChanged();
+    }
 
     public async Task UploadTorrent()
     {
-        response = await state.UploadTorrent(newTorrent, inputTypeFileElement);
+        response = await torrentsService.UploadTorrent(newTorrent, inputTypeFileElement);
 
         if (response.Successful)
         {
@@ -62,6 +107,20 @@
             ShowErrors = true;
             StateHasChanged();
         }
+    }
+
+    private protected void CategoriesClicked(ChangeEventArgs categoryIdEvent)
+    {
+        SelectedCategoryId = Int32.TryParse(categoryIdEvent.Value.ToString(), out var tempVal) ? tempVal : (int?)null;
+        subcategories = categories.First(x => SelectedCategoryId == null ? true : x.Id == SelectedCategoryId).Subcategories;
+
+        StateHasChanged();
+    }
+
+    private protected void SubCategoriesClicked(ChangeEventArgs categoryIdEvent)
+    {
+        Int32.TryParse(categoryIdEvent.Value.ToString(), out var tempVal);
+        newTorrent.SubcategoryId = tempVal;
     }
 
 }
