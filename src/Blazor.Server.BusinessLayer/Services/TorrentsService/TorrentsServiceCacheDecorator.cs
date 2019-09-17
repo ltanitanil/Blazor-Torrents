@@ -55,5 +55,12 @@ namespace Blazor.Server.BusinessLayer.Services.TorrentsService
 
         public async Task UploadTorrent(Torrent torrent, IEnumerable<IFormFile> files, string userName)
             => await _torrentsService.UploadTorrent(torrent, files, userName);
+
+        public async Task<IReadOnlyList<Category>> GetCategoriesWithSubcategories()
+        {
+            var cacheKey = $"categories";
+
+            return await _cache.GetOrCreateAsync(cacheKey, () => _torrentsService.GetCategoriesWithSubcategories(), _cacheEntryOptions);
+        }
     }
 }

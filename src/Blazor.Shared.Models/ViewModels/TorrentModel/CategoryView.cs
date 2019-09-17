@@ -8,5 +8,12 @@ namespace Blazor.Shared.Models.ViewModels.TorrentModel
     {
         public int Id { get; set; }
         public string Title { get; set; }
+
+        public IEnumerable<SubcategoryView> Subcategories { get; set; }
+
+        public CategoryView()
+        {
+            Subcategories= new HashSet<SubcategoryView>();
+        }
     }
 }

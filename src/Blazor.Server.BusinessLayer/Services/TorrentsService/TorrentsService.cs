@@ -54,6 +54,11 @@ namespace Blazor.Server.BusinessLayer.Services.TorrentsService
                     await _unitOfWork.Torrents.MaxAsync(x => x.Size));
         }
 
+        public async Task<IReadOnlyList<Category>> GetCategoriesWithSubcategories() =>
+            await _unitOfWork.Categories.GetAll(
+                includes: new List<Expression<Func<Category, object>>>
+                    {x => x.Subcategories}).ToListAsync() ?? throw new AppException(ExceptionEvent.NotFound);
+
         public async Task<Torrent> GetTorrent(int id)
         {
             if (id < 0)

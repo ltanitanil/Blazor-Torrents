@@ -48,14 +48,18 @@ namespace Blazor.Server.WebApi.Controllers.Api
         [HttpGet]
         public async Task<SearchAndFilterData> GetDataToFilter()
         {
-            var (forums, maxTorrentSize) = await _torrentsService.GetDataToFilter(Constants.FORUMS_PER_PAGE);
+            var (subcategories, maxTorrentSize) = await _torrentsService.GetDataToFilter(Constants.FORUMS_PER_PAGE);
 
             return new SearchAndFilterData
             {
-                Subcategory = _mapper.Map<SubcategoryView[]>(forums),
+                Subcategory = _mapper.Map<SubcategoryView[]>(subcategories),
                 TorrentMaxSize = maxTorrentSize
             };
         }
+
+        [HttpGet]
+        public async Task<IReadOnlyList<CategoryView>> GetCategoriesWithSubcategories() => 
+            _mapper.Map<CategoryView[]>(await _torrentsService.GetCategoriesWithSubcategories());
 
         [Authorize(Roles = "User")]
         [HttpPost]

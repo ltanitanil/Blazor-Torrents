@@ -7,5 +7,6 @@ namespace Blazor.Server.DataAccessLayer.Entities
     public class Subcategory : BaseEntity
     {
         public string Title { get; set; }
+        public int CategoryId { get; set; }
     }
 }
