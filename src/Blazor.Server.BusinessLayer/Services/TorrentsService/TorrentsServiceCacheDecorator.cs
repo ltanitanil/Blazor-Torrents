@@ -58,7 +58,7 @@ namespace Blazor.Server.BusinessLayer.Services.TorrentsService
 
         public async Task<IReadOnlyList<Category>> GetCategoriesWithSubcategories()
         {
-            var cacheKey = $"categories";
+            var cacheKey = "categories";
 
             return await _cache.GetOrCreateAsync(cacheKey, () => _torrentsService.GetCategoriesWithSubcategories(), _cacheEntryOptions);
         }

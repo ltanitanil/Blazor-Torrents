@@ -55,7 +55,7 @@ namespace Blazor.Server.BusinessLayer.Services.TorrentsService
                 new List<Expression<Func<Torrent, object>>> { x => x.Files });
 
             if (torrent.UserName != userName)
-                throw new AppException(ExceptionEvent.NoRights, "Only the creator of the torrent has the right to remove.");
+                throw new AppException(ExceptionEvent.AccessDenied, "Only the creator of the torrent has the right to remove.");
 
             await _unitOfWork.Torrents.RemoveAsync(torrent);
 

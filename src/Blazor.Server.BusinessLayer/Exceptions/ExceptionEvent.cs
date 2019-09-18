@@ -11,6 +11,6 @@ namespace Blazor.Server.BusinessLayer.Exceptions
         LoginFailed,
         RegistrationFailed,
         UploadFailed,
-        NoRights
+        AccessDenied
     }
 }
