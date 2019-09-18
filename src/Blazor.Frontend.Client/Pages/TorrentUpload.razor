@@ -30,11 +30,6 @@
                 <InputTextArea Id="content" Class="form-control" @bind-Value="newTorrent.Content" />
                 <ValidationMessage For="@(() => newTorrent.Content)" />
             </div>
-            <div class="form-group">
-                <label for="dirNam">Название директории: </label>
-                <InputText Id="dirNam" Class="form-control" @bind-Value="newTorrent.DirName" />
-                <ValidationMessage For="@(() => newTorrent.DirName)" />
-            </div>
             @if (categories != null)
             {
                 <div class="form-group">

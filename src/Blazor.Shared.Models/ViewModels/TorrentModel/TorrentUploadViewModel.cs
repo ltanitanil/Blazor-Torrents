@@ -17,10 +17,6 @@ namespace Blazor.Shared.Models.ViewModels.TorrentModel
         [Display(Name = "Content")]
         public string Content { get; set; }
 
-        [StringLength(256, ErrorMessage = "Название директории не может быть более 256 символов.")]
-        [Display(Name = "DirName")]
-        public string DirName { get; set; }
-
         [Required]
         [Display(Name = "SubcategoryId")]
         [Range(1, Int32.MaxValue, ErrorMessage = "Выберите действительную подкатегорию.")]

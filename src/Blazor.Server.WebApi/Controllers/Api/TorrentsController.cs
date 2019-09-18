@@ -66,5 +66,17 @@ namespace Blazor.Server.WebApi.Controllers.Api
         public async Task UploadTorrent([FromForm]string json, IEnumerable<IFormFile> files) =>
             await _torrentsService.UploadTorrent(_mapper.Map<Torrent>(JsonSerializer.Deserialize<TorrentUploadViewModel>(json)), 
                 files, User.Identity.Name);
+
+        [Authorize(Roles = "User")]
+        [HttpDelete("{id}")]
+        public async Task DeleteTorrent(int id)
+            => await _torrentsService.DeleteTorrent(id, User.Identity.Name);
+
+        [Authorize(Roles = "User")]
+        [HttpGet("{directoryName}/{fileName}")]
+        public IActionResult DownloadTorrent(string directoryName, string fileName)
+        {
+            return Redirect(_torrentsService.GetLinkToDownloadFile(directoryName, fileName));
+        }
     }
 }

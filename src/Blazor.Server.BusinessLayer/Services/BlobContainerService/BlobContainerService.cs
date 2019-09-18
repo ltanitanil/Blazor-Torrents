@@ -1,6 +1,7 @@
 ﻿using Microsoft.WindowsAzure.Storage.Blob;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,17 +28,52 @@ namespace Blazor.Server.BusinessLayer.Services.BlobContainerService
                                                 .GetContainerReference(blobContainerSettings.ContainerName);
         }
 
-        public async Task<IReadOnlyList<FileModel>> UploadFiles(IEnumerable<IFormFile> files) =>
-            await Task.WhenAll(files.Select(async file =>
+
+        public async Task<string> UploadFileToDirectoryAsync(string directoryName, string blobName, Stream fileStream)
+        {
+            var blob = GetCloudBlockBlob(directoryName, blobName);
+            await blob.UploadFromStreamAsync(fileStream);
+
+            return blob.Uri.AbsolutePath;
+        }
+
+        public async Task<bool> DeleteFileFromDirectoryAsync(string directoryName, string blobName)
+        {
+            if (string.IsNullOrWhiteSpace(directoryName))
+                throw new AppException(ExceptionEvent.InvalidParameters);
+            if (string.IsNullOrWhiteSpace(blobName))
+                throw new AppException(ExceptionEvent.InvalidParameters);
+
+            return await GetCloudBlockBlob(directoryName, blobName)
+                .DeleteIfExistsAsync();
+        }
+
+        public string GetDownloadLink(string directoryName, string blobName)
+        {
+            var blob = GetCloudBlockBlob(directoryName, blobName);
+
+            var policy = new SharedAccessBlobPolicy
             {
-                var blob = _blobContainer.GetBlockBlobReference(Guid.NewGuid() + "-" + file.FileName);
-                await blob.UploadFromStreamAsync(file.OpenReadStream());
-                return new FileModel
-                {
-                    Name = file.FileName,
-                    Link = blob.Uri.AbsoluteUri,
-                    Size = file.Length
-                };
-            }));
+                Permissions = SharedAccessBlobPermissions.Read,
+                SharedAccessExpiryTime = DateTime.UtcNow.AddMinutes(15),
+            };
+            var headers = new SharedAccessBlobHeaders
+            {
+                ContentDisposition = $"attachment;filename=\"{blobName}\"",
+            };
+
+            return blob.Uri.AbsoluteUri + blob.GetSharedAccessSignature(policy, headers);
+        }
+
+        private CloudBlockBlob GetCloudBlockBlob(string directoryName, string blobName)
+        {
+            if (string.IsNullOrWhiteSpace(directoryName))
+                throw new AppException(ExceptionEvent.InvalidParameters);
+            if (string.IsNullOrWhiteSpace(blobName))
+                throw new AppException(ExceptionEvent.InvalidParameters);
+
+            var directory = _blobContainer.GetDirectoryReference(directoryName);
+            return directory.GetBlockBlobReference(blobName);
+        }
     }
 }

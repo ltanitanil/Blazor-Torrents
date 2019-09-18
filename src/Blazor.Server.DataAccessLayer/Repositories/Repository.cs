@@ -27,6 +27,13 @@ namespace Blazor.Server.DataAccessLayer.Repositories
             return result.Entity;
         }
 
+        public async Task<TEntity> RemoveAsync(TEntity entity)
+        {
+            var result = _dbSet.Remove(entity);
+            await _context.SaveChangesAsync();
+            return result.Entity;
+        }
+
         public async Task<long> MaxAsync(Expression<Func<TEntity, long>> expression) =>
                     await _dbSet.AsNoTracking().MaxAsync(expression);
 

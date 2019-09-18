@@ -62,5 +62,11 @@ namespace Blazor.Server.BusinessLayer.Services.TorrentsService
 
             return await _cache.GetOrCreateAsync(cacheKey, () => _torrentsService.GetCategoriesWithSubcategories(), _cacheEntryOptions);
         }
+
+        public string GetLinkToDownloadFile(string directoryName, string fileName) => 
+            _torrentsService.GetLinkToDownloadFile(directoryName, fileName);
+
+        public Task DeleteTorrent(int id, string userName) => 
+            _torrentsService.DeleteTorrent(id, userName);
     }
 }

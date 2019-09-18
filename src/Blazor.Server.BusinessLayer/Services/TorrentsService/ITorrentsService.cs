@@ -14,6 +14,8 @@ namespace Blazor.Server.BusinessLayer.Services.TorrentsService
         Task<IReadOnlyList<Category>> GetCategoriesWithSubcategories();
         Task<Torrent> GetTorrent(int id);
         Task<(IReadOnlyList<Subcategory>, long)> GetDataToFilter(int forumsCount);
+        Task DeleteTorrent(int id, string userName);
         Task UploadTorrent(Torrent torrent,IEnumerable<IFormFile> files,string userName);
+        string GetLinkToDownloadFile(string directoryName, string fileName);
     }
 }

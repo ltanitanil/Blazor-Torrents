@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -10,6 +12,7 @@ using Blazor.Server.DataAccessLayer.Context.Torrents;
 using Blazor.Server.DataAccessLayer.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
+using File = Blazor.Server.DataAccessLayer.Entities.File;
 
 namespace Blazor.Server.BusinessLayer.Services.TorrentsService
 {
@@ -30,14 +33,39 @@ namespace Blazor.Server.BusinessLayer.Services.TorrentsService
             if (!files.Any())
                 throw new AppException(ExceptionEvent.InvalidParameters, "List of files can't be empty");
 
-            var fileLinksList = await _blobContainer.UploadFiles(files);
+            torrent.DirName = Guid.NewGuid().ToString();
+            var fileLinksList = await Task.WhenAll(files.Select(async file =>
+                                     new File
+                                     {
+                                         Name = file.FileName,
+                                         Size = file.Length,
+                                         Link = await _blobContainer.UploadFileToDirectoryAsync(torrent.DirName, file.FileName, file.OpenReadStream())
+                                     })) ?? throw new AppException(ExceptionEvent.UploadFailed, "List of files can't be empty");
 
-            torrent.Files = fileLinksList.Select(x =>
-                new File { Name = x.Name, Link = x.Link, Size = x.Size }).ToList();
+            torrent.Files = fileLinksList;
             torrent.UserName = userName;
             torrent.Size = fileLinksList.Sum(x => x.Size);
 
             await _unitOfWork.Torrents.AddAsync(torrent);
+        }
+
+        public async Task DeleteTorrent(int id, string userName)
+        {
+            var torrent = await _unitOfWork.Torrents.SingleAsync(x => x.Id == id,
+                new List<Expression<Func<Torrent, object>>> { x => x.Files });
+
+            if (torrent.UserName != userName)
+                throw new AppException(ExceptionEvent.NoRights, "Only the creator of the torrent has the right to remove.");
+
+            await _unitOfWork.Torrents.RemoveAsync(torrent);
+
+            await Task.WhenAll(torrent.Files.Select(async x =>
+                await _blobContainer.DeleteFileFromDirectoryAsync(torrent.DirName, x.Name)));
+        }
+
+        public string GetLinkToDownloadFile(string directoryName, string fileName)
+        {
+            return _blobContainer.GetDownloadLink(directoryName, fileName);
         }
 
         public async Task<(IReadOnlyList<Subcategory>, long)> GetDataToFilter(int forumsCount)
