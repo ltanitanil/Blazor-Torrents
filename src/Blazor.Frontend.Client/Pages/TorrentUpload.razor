@@ -1,0 +1,121 @@
+﻿@page "/TorrentUpload"
+@attribute [Authorize]
+
+@inject ITorrentsService torrentsService
+@inject NavigationManager UriHelper
+
+
+<div class="register-container">
+    <div class="register-container-card">
+        <div class="register-container-card-h">
+            <h1>Добавление</h1>
+            <h1>торрента</h1>
+        </div>
+        @if (ShowErrors)
+        {
+            <div class="alert alert-danger" role="alert">
+                <p>@response.Error</p>
+            </div>
+        }
+        <EditForm Model=@newTorrent OnValidSubmit=@UploadTorrent>
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+            <div class="form-group">
+                <label for="title">Название: </label>
+                <InputText Id="title" Class="form-control" @bind-Value="newTorrent.Title" />
+                <ValidationMessage For="@(() => newTorrent.Title)" />
+            </div>
+            <div class="form-group">
+                <label for="content">Описание: </label>
+                <InputTextArea Id="content" Class="form-control" @bind-Value="newTorrent.Content" />
+                <ValidationMessage For="@(() => newTorrent.Content)" />
+            </div>
+            @if (categories != null)
+            {
+                <div class="form-group">
+                    <label data-title="Категория" class="filter-label">
+                        <select @onchange=@CategoriesClicked class="filter-select">
+                            <option></option>
+                            @foreach (var category in categories)
+                            {
+                                <option value=@category.Id>@category.Title</option>
+                            }
+                        </select>
+                    </label>
+                </div>
+                <div class="form-group">
+                    @if (subcategories != null)
+                    {
+                        <label data-title="Подкатегория" class="filter-label">
+                            <select @onchange=@SubCategoriesClicked class="filter-select">
+                                <option></option>
+                                @foreach (var subcategory in subcategories)
+                                {
+                                    <option value=@subcategory.Id>@subcategory.Title</option>
+                                }
+                            </select>
+                        </label>
+                        <ValidationMessage For="@(() => newTorrent.SubcategoryId)" />
+                    }
+                </div>
+            }
+            else
+            {
+                <Loader />
+            }
+            <div>
+                <input type="file" name="files" @ref=inputTypeFileElement multiple />
+            </div>
+
+            <button>Сохранить</button>
+        </EditForm>
+    </div>
+</div>
+@code {
+    private bool ShowErrors;
+    ElementReference inputTypeFileElement;
+    TorrentUploadViewModel newTorrent = new TorrentUploadViewModel();
+
+    IReadOnlyList<CategoryView> categories;
+    int? SelectedCategoryId;
+    IEnumerable<SubcategoryView> subcategories;
+    
+    ResponseModel response;
+    
+
+    protected override async Task OnInitializedAsync()
+    {
+        categories = await torrentsService.GetCategoriesWithSubcategories();
+        StateHasChanged();
+    }
+
+    public async Task UploadTorrent()
+    {
+        response = await torrentsService.UploadTorrent(newTorrent, inputTypeFileElement);
+
+        if (response.Successful)
+        {
+            UriHelper.NavigateTo("/");
+        }
+        else
+        {
+            ShowErrors = true;
+            StateHasChanged();
+        }
+    }
+
+    private protected void CategoriesClicked(ChangeEventArgs categoryIdEvent)
+    {
+        SelectedCategoryId = Int32.TryParse(categoryIdEvent.Value.ToString(), out var tempVal) ? tempVal : (int?)null;
+        subcategories = categories.First(x => SelectedCategoryId == null ? true : x.Id == SelectedCategoryId).Subcategories;
+
+        StateHasChanged();
+    }
+
+    private protected void SubCategoriesClicked(ChangeEventArgs categoryIdEvent)
+    {
+        Int32.TryParse(categoryIdEvent.Value.ToString(), out var tempVal);
+        newTorrent.SubcategoryId = tempVal;
+    }
+
+}

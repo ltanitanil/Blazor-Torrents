@@ -1,11 +1,15 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using AutoMapper;
 using Blazor.Server.BusinessLayer.Services.TorrentsService;
 using Blazor.Shared.ViewModels;
 using Blazor.Shared.ViewModels.Search;
-using Blazor.Shared.ViewModels.TorrentModel;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
+using Blazor.Server.DataAccessLayer.Entities;
+using Blazor.Shared.Models.ViewModels.TorrentModel;
 
 namespace Blazor.Server.WebApi.Controllers.Api
 {
@@ -21,7 +25,7 @@ namespace Blazor.Server.WebApi.Controllers.Api
         [HttpPost]
         public async Task<TorrentsViewModel> GetTorrents(int pageIndex, SearchAndFilterCriteria criteria)
         {
-            var (torrents, count) = await _torrentsService.GetTorrentsAndCount(pageIndex, Constants.ITEMS_PER_PAGE, criteria.SearchText, criteria.SelectedForumId,
+            var (torrents, count) = await _torrentsService.GetTorrentsAndCount(pageIndex, Constants.ITEMS_PER_PAGE, criteria.SearchText, criteria.SubcategoryId,
                 criteria.Size.From, criteria.Size.To, criteria.Date.From, criteria.Date.To);
 
             return new TorrentsViewModel
@@ -35,6 +39,7 @@ namespace Blazor.Server.WebApi.Controllers.Api
                 }
             };
         }
+
         [Authorize]
         [HttpGet]
         public async Task<TorrentDescriptionView> GetTorrent(int id) =>
@@ -43,13 +48,35 @@ namespace Blazor.Server.WebApi.Controllers.Api
         [HttpGet]
         public async Task<SearchAndFilterData> GetDataToFilter()
         {
-            var (forums, maxTorrentSize) = await _torrentsService.GetDataToFilter(Constants.FORUMS_PER_PAGE);
+            var (subcategories, maxTorrentSize) = await _torrentsService.GetDataToFilter(Constants.FORUMS_PER_PAGE);
 
             return new SearchAndFilterData
             {
-                Forums = _mapper.Map<ForumView[]>(forums),
+                Subcategory = _mapper.Map<SubcategoryView[]>(subcategories),
                 TorrentMaxSize = maxTorrentSize
             };
+        }
+
+        [HttpGet]
+        public async Task<IReadOnlyList<CategoryView>> GetCategoriesWithSubcategories() => 
+            _mapper.Map<CategoryView[]>(await _torrentsService.GetCategoriesWithSubcategories());
+
+        [Authorize(Roles = "User")]
+        [HttpPost]
+        public async Task UploadTorrent([FromForm]string json, IEnumerable<IFormFile> files) =>
+            await _torrentsService.UploadTorrent(_mapper.Map<Torrent>(JsonSerializer.Deserialize<TorrentUploadViewModel>(json)), 
+                files, User.Identity.Name);
+
+        [Authorize(Roles = "User")]
+        [HttpDelete("{id}")]
+        public async Task DeleteTorrent(int id)
+            => await _torrentsService.DeleteTorrent(id, User.Identity.Name);
+
+        [Authorize(Roles = "User")]
+        [HttpGet("{directoryName}/{fileName}")]
+        public string GetLinkToDownloadFile(string directoryName, string fileName)
+        {
+            return _torrentsService.GetLinkToDownloadFile(directoryName, fileName);
         }
     }
 }

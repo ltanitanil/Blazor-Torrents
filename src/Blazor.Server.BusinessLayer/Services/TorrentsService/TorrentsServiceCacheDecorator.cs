@@ -6,6 +6,7 @@ using Blazor.Server.BusinessLayer.Settings;
 using Blazor.Server.DataAccessLayer.Entities;
 using Microsoft.Extensions.Options;
 using Blazor.Server.BusinessLayer.Extensions;
+using Microsoft.AspNetCore.Http;
 
 namespace Blazor.Server.BusinessLayer.Services.TorrentsService
 {
@@ -45,12 +46,27 @@ namespace Blazor.Server.BusinessLayer.Services.TorrentsService
                 _cacheEntryOptions);
         }
 
-        public async Task<(IReadOnlyList<Forum>, long)> GetDataToFilter(int forumsCount)
+        public async Task<(IReadOnlyList<Subcategory>, long)> GetDataToFilter(int forumsCount)
         {
             var cacheKey = $"popularForums-{forumsCount}";
 
             return await _cache.GetOrCreateAsync(cacheKey, () => _torrentsService.GetDataToFilter(forumsCount), _cacheEntryOptions);
         }
 
+        public async Task UploadTorrent(Torrent torrent, IEnumerable<IFormFile> files, string userName)
+            => await _torrentsService.UploadTorrent(torrent, files, userName);
+
+        public async Task<IReadOnlyList<Category>> GetCategoriesWithSubcategories()
+        {
+            var cacheKey = "categories";
+
+            return await _cache.GetOrCreateAsync(cacheKey, () => _torrentsService.GetCategoriesWithSubcategories(), _cacheEntryOptions);
+        }
+
+        public string GetLinkToDownloadFile(string directoryName, string fileName) => 
+            _torrentsService.GetLinkToDownloadFile(directoryName, fileName);
+
+        public Task DeleteTorrent(int id, string userName) => 
+            _torrentsService.DeleteTorrent(id, userName);
     }
 }

@@ -8,6 +8,7 @@ namespace Blazor.Server.DataAccessLayer.Entities
     {
         public string Name { get; set; }
         public long Size { get; set; }
+        public string Link { get; set; }
 
         public int TorrentId { get; set; }
 

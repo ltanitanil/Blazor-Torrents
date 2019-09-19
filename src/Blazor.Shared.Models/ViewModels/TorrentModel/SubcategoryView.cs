@@ -4,9 +4,9 @@ using System.Text;
 
 namespace Blazor.Shared.Models.ViewModels.TorrentModel
 {
-    public class FileView
+    public class SubcategoryView
     {
-        public string Name { get; set; }
-        public long Size { get; set; }
+        public int Id { get; set; }
+        public string Title { get; set; }
     }
 }

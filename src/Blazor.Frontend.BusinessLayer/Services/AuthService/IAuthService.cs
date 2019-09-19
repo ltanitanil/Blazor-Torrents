@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
+using Blazor.Shared.Models.ViewModels;
 using Blazor.Shared.Models.ViewModels.Account;
 
 namespace Blazor.Frontend.BusinessLayer.Services.AuthService

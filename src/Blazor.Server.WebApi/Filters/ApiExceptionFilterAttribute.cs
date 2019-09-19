@@ -27,6 +27,10 @@ namespace Blazor.Server.WebApi.Filters
             {
                 ExceptionEvent.LoginFailed,
                 StatusCodes.Status400BadRequest
+            },
+            {
+                ExceptionEvent.AccessDenied,
+                StatusCodes.Status403Forbidden
             }
         };
 

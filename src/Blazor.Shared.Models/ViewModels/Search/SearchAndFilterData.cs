@@ -1,13 +1,11 @@
-﻿using Blazor.Shared.ViewModels.TorrentModel;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
+using Blazor.Shared.Models.ViewModels.TorrentModel;
 
 namespace Blazor.Shared.ViewModels.Search
 {
     public class SearchAndFilterData
     {
-        public IEnumerable<ForumView> Forums { get; set; }
+        public IEnumerable<SubcategoryView> Subcategory { get; set; }
         public long TorrentMaxSize { get; set; }
     }
 }

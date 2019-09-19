@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace Blazor.Server.DataAccessLayer.Context
+namespace Blazor.Server.DataAccessLayer.Context.Identity
 {
     public class IdentityContext : IdentityDbContext<ApplicationUser>
     {

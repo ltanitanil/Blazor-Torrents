@@ -21,12 +21,12 @@
                 @if (Data != null)
                 {
                     <div class="filters-items">
-                        <lable class="filter-label" data-title="Форумы">
+                        <lable class="filter-label" data-title="Подкатегории">
                             <select @onchange=@ForumsClicked class="filter-select">
                                 <option>Все</option>
-                                @foreach (var forum in Data.Forums)
+                                @foreach (var subcategory in Data.Subcategory)
                                 {
-                                    <option value=@forum.Id>@forum.Value</option>
+                                    <option value=@subcategory.Id>@subcategory.Title</option>
                                 }
                             </select>
                         </lable>
@@ -38,8 +38,8 @@
                         <div class="filters-items-size">
                             <label class="label-size">Размер торрентов:</label>
                             <div style="padding:10px;">
-                                <input type="number" @bind=@Criteria.Size.From placeholder="0" />
-                                <input type="number" @bind=@Criteria.Size.To placeholder=@Data.TorrentMaxSize />
+                                <input type="number" @bind="Criteria.Size.From" placeholder="0" />
+                                <input type="number" @bind="Criteria.Size.To" placeholder=@Data.TorrentMaxSize />
                             </div>
                         </div>
                     </div>
@@ -92,7 +92,7 @@
     private async void ResetFilters()
     {
         Criteria.SearchText = null;
-        Criteria.SelectedForumId = null;
+        Criteria.SubcategoryId = null;
         Criteria.Size.From = null;
         Criteria.Size.To = null;
         Criteria.Date.From = null;
@@ -101,9 +101,9 @@
         await GetTorrentsList(0);
     }
 
-    private protected void ForumsClicked(UIChangeEventArgs forumEvent)
+    private protected void ForumsClicked(ChangeEventArgs subcategoryIdEvent)
     {
-        Criteria.SelectedForumId = Int32.TryParse(forumEvent.Value.ToString(), out var tempVal) ? tempVal : (int?)null;
+        Criteria.SubcategoryId = Int32.TryParse(subcategoryIdEvent.Value.ToString(), out var tempVal) ? tempVal : (int?)null;
     }
 
 }

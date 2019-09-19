@@ -4,8 +4,9 @@ using System.Text;
 
 namespace Blazor.Server.DataAccessLayer.Entities
 {
-    public class Forum : BaseEntity
+    public class Subcategory : BaseEntity
     {
-        public string Value { get; set; }
+        public string Title { get; set; }
+        public int CategoryId { get; set; }
     }
 }
