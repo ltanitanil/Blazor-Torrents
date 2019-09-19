@@ -74,9 +74,9 @@ namespace Blazor.Server.WebApi.Controllers.Api
 
         [Authorize(Roles = "User")]
         [HttpGet("{directoryName}/{fileName}")]
-        public IActionResult DownloadTorrent(string directoryName, string fileName)
+        public string GetLinkToDownloadFile(string directoryName, string fileName)
         {
-            return Redirect(_torrentsService.GetLinkToDownloadFile(directoryName, fileName));
+            return _torrentsService.GetLinkToDownloadFile(directoryName, fileName);
         }
     }
 }
