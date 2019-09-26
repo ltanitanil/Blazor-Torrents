@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿using System.Collections.Generic;
+using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Blazor.Frontend.BusinessLayer.Extensions;
@@ -6,6 +7,7 @@ using Blazor.Frontend.BusinessLayer.Provider;
 using Blazor.Shared.Models.ViewModels;
 using Blazor.Shared.Models.ViewModels.Account;
 using Blazored.LocalStorage;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 
 namespace Blazor.Frontend.BusinessLayer.Services.AuthService
@@ -24,6 +26,9 @@ namespace Blazor.Frontend.BusinessLayer.Services.AuthService
             _authenticationStateProvider = authenticationStateProvider;
             _localStorage = localStorage;
         }
+
+        public async Task<IEnumerable<string>> GetLoginProviders()
+        => await _httpClient.GetJsonAsync<IEnumerable<string>>("api/account/loginproviders");
 
         public async Task<ResponseModel> Register(RegistrationViewModel registrationViewModel)
         {
