@@ -90,7 +90,6 @@ namespace Blazor.Server.WebApi
             services.AddMvc(options =>
             {
                 options.Filters.Add<ApiExceptionFilterAttribute>();
-                options.OutputFormatters.RemoveType<StringOutputFormatter>();
             });
 
             services.AddResponseCompression(opts =>

@@ -32,8 +32,7 @@ namespace Blazor.Server.WebApi.Controllers.Api
         [HttpGet]
         public IActionResult Login(string providerName)
         {
-            var redirectUrl = Url.Action("ExternalLoginCallback", "Account");
-            var properties = _accountsService.ConfigureExternalAuthenticationProperties(providerName, redirectUrl);
+            var properties = _accountsService.ConfigureExternalAuthenticationProperties(providerName, "/ExternalCallback");
             return Challenge(properties, providerName);
         }
 

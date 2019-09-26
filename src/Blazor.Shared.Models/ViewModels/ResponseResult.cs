@@ -4,9 +4,9 @@ using System.Text;
 
 namespace Blazor.Shared.Models.ViewModels
 {
-    public class ResponseModel
+    public class ResponseResult
     {
-        public bool Successful { get; set; }
-        public string Error { get; set; }
+        public bool IsSuccessful { get; set; }
+        public string ContentResult { get; set; }
     }
 }

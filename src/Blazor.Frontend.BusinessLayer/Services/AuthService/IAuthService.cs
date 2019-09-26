@@ -9,8 +9,9 @@ namespace Blazor.Frontend.BusinessLayer.Services.AuthService
     public interface IAuthService
     {
         Task<IEnumerable<string>> GetLoginProviders();
-        Task<ResponseModel> Register(RegistrationViewModel registrationViewModel);
-        Task<ResponseModel> Login(LoginViewModel loginModel);
+        Task<ResponseResult> Register(RegistrationViewModel registrationViewModel);
+        Task<ResponseResult> Login(LoginViewModel loginModel);
+        Task<ResponseResult> ExternalLogin();
         Task Logout();
     }
 }

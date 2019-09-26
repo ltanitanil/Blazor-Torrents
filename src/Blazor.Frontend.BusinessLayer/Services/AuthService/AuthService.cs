@@ -28,27 +28,25 @@ namespace Blazor.Frontend.BusinessLayer.Services.AuthService
         }
 
         public async Task<IEnumerable<string>> GetLoginProviders()
-        => await _httpClient.GetJsonAsync<IEnumerable<string>>("api/account/loginproviders");
+            => await _httpClient.GetJsonAsync<IEnumerable<string>>("api/account/loginproviders");
 
-        public async Task<ResponseModel> Register(RegistrationViewModel registrationViewModel)
+        public async Task<ResponseResult> Register(RegistrationViewModel registrationViewModel) 
+            => await _httpClient.MyPostJsonAsync("api/account/register", registrationViewModel);
+
+        public async Task<ResponseResult> Login(LoginViewModel loginModel)
         {
-            var (successStatusCode, content) = await _httpClient.MyPostJsonAsync<string>("api/account/register", registrationViewModel);
-
-            return new ResponseModel { Successful = successStatusCode, Error = content };
+            var result = await _httpClient.MyPostJsonAsync("api/account/login", loginModel);
+            if (result.IsSuccessful)
+                await SetAsAuthenticated(result.ContentResult);
+            return result;
         }
 
-        public async Task<ResponseModel> Login(LoginViewModel loginModel)
+        public async Task<ResponseResult> ExternalLogin()
         {
-            var (successStatusCode, content) = await _httpClient.MyPostJsonAsync<string>("api/account/login", loginModel);
-
-            if (successStatusCode)
-            {
-                await _localStorage.SetItemAsync("authToken", content);
-                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", content);
-                ((ApiAuthenticationStateProvider)_authenticationStateProvider).MarkUserAsAuthenticated(content);
-            }
-
-            return new ResponseModel { Successful = successStatusCode, Error = content };
+            var result = await _httpClient.MyGetAsync("/api/account/ExternalLoginCallback");
+            if(result.IsSuccessful)
+                await SetAsAuthenticated(result.ContentResult);
+            return result;
         }
 
         public async Task Logout()
@@ -56,6 +54,13 @@ namespace Blazor.Frontend.BusinessLayer.Services.AuthService
             await _localStorage.RemoveItemAsync("authToken");
             ((ApiAuthenticationStateProvider)_authenticationStateProvider).MarkUserAsLoggedOut();
             _httpClient.DefaultRequestHeaders.Authorization = null;
+        }
+
+        private async Task SetAsAuthenticated(string token)
+        {
+            await _localStorage.SetItemAsync("authToken", token);
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", token);
+            ((ApiAuthenticationStateProvider)_authenticationStateProvider).MarkUserAsAuthenticated(token);
         }
     }
 }

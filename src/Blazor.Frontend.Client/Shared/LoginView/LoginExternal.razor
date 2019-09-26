@@ -1,24 +1,23 @@
 ﻿@inject IAuthService authService
 
-@if(loginProviders!=null)
-@foreach (var provider in loginProviders)
-{
-    <form action="/api/account/Login" method="get">
-        <button type="submit"
-                class="pure-button pure-button-primary"
-                name="providerName"
-                value="@provider"
-                title="@($"Log in using your {provider} account")">
-            @provider
-        </button>
-    </form>
-}
+
+@if (loginProviders != null)
+    @foreach (var provider in loginProviders)
+    {
+        <a href=@GetPath(provider)>@provider</a>
+    }
 
 @code {
     IEnumerable<string> loginProviders;
+
     protected override async Task OnInitializedAsync()
     {
         loginProviders = await authService.GetLoginProviders();
         StateHasChanged();
+    }
+
+    private string GetPath(string provider)
+    {
+        return $"/api/account/Login/?providerName={provider}";
     }
 }

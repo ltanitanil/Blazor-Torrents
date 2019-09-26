@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Blazor.Shared.Models.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -10,16 +11,27 @@ namespace Blazor.Frontend.BusinessLayer.Extensions
 {
     public static class HttpClientExtension
     {
-        public static async Task<(bool, T)> MyPostJsonAsync<T>(this HttpClient httpClient, string path, object model)
-            where T : class
+        public static async Task<ResponseResult> MyPostJsonAsync(this HttpClient httpClient, string path, object model)
         {
             using var response = await httpClient.PostAsync(path,
                 new StringContent(JsonSerializer.Serialize(model), Encoding.UTF8, "application/json"));
 
-            var responseContent = await response.Content.ReadAsStringAsync();
+            return new ResponseResult
+            {
+                IsSuccessful = response.IsSuccessStatusCode,
+                ContentResult = await response.Content.ReadAsStringAsync()
+            };
+        }
 
-            return string.IsNullOrWhiteSpace(responseContent) ? (response.IsSuccessStatusCode, null) : 
-                (response.IsSuccessStatusCode, JsonSerializer.Deserialize<T>(responseContent));
+        public static async Task<ResponseResult> MyGetAsync(this HttpClient httpClient, string path)
+        {
+            using var response = await httpClient.GetAsync(path);
+
+            return new ResponseResult
+            {
+                IsSuccessful = response.IsSuccessStatusCode,
+                ContentResult = await response.Content.ReadAsStringAsync()
+            };
         }
     }
 }

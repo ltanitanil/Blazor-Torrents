@@ -2,10 +2,10 @@
 @inject IModalService ModalService
 
 
-@if (ShowErrors)
+@if (!string.IsNullOrWhiteSpace(Errors))
 {
     <div class="alert alert-danger" role="alert">
-        <p>@loginResult.Error</p>
+        <p>@Errors</p>
     </div>
 }
 
@@ -34,18 +34,17 @@
 
 @code {
     private LoginViewModel loginModel = new LoginViewModel();
-    private ResponseModel loginResult;
-    private bool ShowErrors;
+    private string Errors;
 
     public async void HandleLogin()
     {
-        loginResult = await AuthService.Login(loginModel);
+        var loginResult = await AuthService.Login(loginModel);
 
-        if (loginResult.Successful)
+        if (loginResult.IsSuccessful)
             CloseModal();
         else
         {
-            ShowErrors = true;
+            Errors = loginResult.ContentResult;
             StateHasChanged();
         }
     }

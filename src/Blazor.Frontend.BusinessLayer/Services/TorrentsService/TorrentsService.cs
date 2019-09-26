@@ -35,7 +35,7 @@ namespace Blazor.Frontend.BusinessLayer.Services.TorrentsService
         public async Task<TorrentDescriptionView> GetTorrentDescription(int id) =>
             await _httpClient.GetJsonAsync<TorrentDescriptionView>($"api/Torrents/GetTorrent/?id={id}");
 
-        public async Task<ResponseModel> UploadTorrent(TorrentUploadViewModel torrent, ElementReference filesRef)
+        public async Task<ResponseResult> UploadTorrent(TorrentUploadViewModel torrent, ElementReference filesRef)
         {
             using var content = new MultipartFormDataContent
             {
@@ -49,14 +49,11 @@ namespace Blazor.Frontend.BusinessLayer.Services.TorrentsService
             }
 
             using var response = await _httpClient.PostAsync("api/torrents/UploadTorrent", content);
-            var responseContent = await response.Content.ReadAsStringAsync();
 
-            return new ResponseModel
+            return new ResponseResult
             {
-                Successful = response.IsSuccessStatusCode,
-                Error = !string.IsNullOrWhiteSpace(responseContent)
-                    ? JsonSerializer.Deserialize<string>(responseContent)
-                    : null
+                IsSuccessful = response.IsSuccessStatusCode,
+                ContentResult = await response.Content.ReadAsStringAsync()
             }; 
         }
 

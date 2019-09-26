@@ -1,0 +1,31 @@
+﻿@page "/ExternalCallback"
+
+@inject IAuthService AuthService
+@inject NavigationManager NavigationManager
+
+<h3>ExternalCallback</h3>
+
+@if (!string.IsNullOrWhiteSpace(Errors))
+{
+    <div class="alert alert-danger" role="alert">
+        <p>@Errors</p>
+    </div>
+}
+
+@code {
+    string Errors { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var result = await AuthService.ExternalLogin();
+        if (result.IsSuccessful)
+        {
+            NavigationManager.NavigateTo("/");
+        }
+        else
+        {
+            Errors = result.ContentResult;
+            StateHasChanged();
+        }
+    }
+}
