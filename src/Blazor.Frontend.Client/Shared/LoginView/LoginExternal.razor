@@ -4,7 +4,12 @@
 @if (loginProviders != null)
     @foreach (var provider in loginProviders)
     {
-        <a href=@GetPath(provider)>@provider</a>
+        <div class="blazor-loginexternal @provider">
+            <a class="provider-link" href=@GetPath(provider)>
+                <i class="fab fa-@provider.ToLower()"></i>
+                <span>Войти через @provider</span>
+            </a>
+        </div>
     }
 
 @code {
