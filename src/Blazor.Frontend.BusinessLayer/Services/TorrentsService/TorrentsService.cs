@@ -58,6 +58,6 @@ namespace Blazor.Frontend.BusinessLayer.Services.TorrentsService
         }
 
         public async Task<string> GetLinkToDownloadFile(string directoryName, string fileName) => 
-            await _httpClient.GetJsonAsync<string>($"api/torrents/GetLinkToDownloadFile/{directoryName}/{fileName}");
+            await _httpClient.GetStringAsync($"api/torrents/GetLinkToDownloadFile/{directoryName}/{fileName}");
     }
 }
