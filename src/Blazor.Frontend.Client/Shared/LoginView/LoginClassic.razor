@@ -38,18 +38,19 @@
 
     public async void HandleLogin()
     {
-        var loginResult = await AuthService.Login(loginModel);
-
-        if (loginResult.IsSuccessful)
-            CloseModal();
-        else
+        try
         {
-            Errors = loginResult.ContentResult;
+            await AuthService.Login(loginModel);
+            CloseModal();
+        }
+        catch(ResponseException exc)
+        {
+            Errors = exc.Message;
             StateHasChanged();
         }
     }
 
-private void CloseModal()
+    private void CloseModal()
     {
         ModalService.Close(ModalResult.Cancel());
     }

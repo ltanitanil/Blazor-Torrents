@@ -9,33 +9,35 @@ using System.Text.Json;
 using Blazor.FileReader;
 using Blazor.Shared.Models.ViewModels;
 using Blazor.Shared.Models.ViewModels.TorrentModel;
+using Blazor.Frontend.BusinessLayer.Services.CustomHTTPClient;
+
 
 namespace Blazor.Frontend.BusinessLayer.Services.TorrentsService
 {
     public class TorrentsService : ITorrentsService
     {
-        private readonly HttpClient _httpClient;
+        private readonly CustomHttpClient _customHttpClient;
         private readonly IFileReaderService _fileReaderService;
 
-        public TorrentsService(HttpClient httpClient, IFileReaderService fileReaderService)
+        public TorrentsService(CustomHttpClient customHttpClient, IFileReaderService fileReaderService)
         {
-            _httpClient = httpClient;
+            _customHttpClient = customHttpClient;
             _fileReaderService = fileReaderService;
         }
 
         public async Task<TorrentsViewModel> GetTorrentsAsync(SearchAndFilterCriteria criteria, int? pageIndex) =>
-            await _httpClient.PostJsonAsync<TorrentsViewModel>($"api/Torrents/GetTorrents/?pageIndex={pageIndex}", criteria);
+            await _customHttpClient.PostJsonAsync<TorrentsViewModel>($"api/Torrents/GetTorrents/?pageIndex={pageIndex}", criteria);
 
         public async Task<SearchAndFilterData> GetDataToFilter() =>
-            await _httpClient.GetJsonAsync<SearchAndFilterData>("api/Torrents/GetDataToFilter");
+            await _customHttpClient.GetJsonAsync<SearchAndFilterData>("api/Torrents/GetDataToFilter");
 
         public async Task<IReadOnlyList<CategoryView>> GetCategoriesWithSubcategories() =>
-            await _httpClient.GetJsonAsync<IReadOnlyList<CategoryView>>("api/Torrents/GetCategoriesWithSubcategories");
+            await _customHttpClient.GetJsonAsync<IReadOnlyList<CategoryView>>("api/Torrents/GetCategoriesWithSubcategories");
 
         public async Task<TorrentDescriptionView> GetTorrentDescription(int id) =>
-            await _httpClient.GetJsonAsync<TorrentDescriptionView>($"api/Torrents/GetTorrent/?id={id}");
+            await _customHttpClient.GetJsonAsync<TorrentDescriptionView>($"api/Torrents/GetTorrent/?id={id}");
 
-        public async Task<ResponseResult> UploadTorrent(TorrentUploadViewModel torrent, ElementReference filesRef)
+        public async Task UploadTorrent(TorrentUploadViewModel torrent, ElementReference filesRef)
         {
             using var content = new MultipartFormDataContent
             {
@@ -48,16 +50,10 @@ namespace Blazor.Frontend.BusinessLayer.Services.TorrentsService
                 content.Add(new StreamContent(await file.OpenReadAsync()), "files", fileInfo.Name);
             }
 
-            using var response = await _httpClient.PostAsync("api/torrents/UploadTorrent", content);
-
-            return new ResponseResult
-            {
-                IsSuccessful = response.IsSuccessStatusCode,
-                ContentResult = await response.Content.ReadAsStringAsync()
-            }; 
+            await _customHttpClient.SendAsync(HttpMethod.Post, "api/torrents/UploadTorrent", content);
         }
 
-        public async Task<string> GetLinkToDownloadFile(string directoryName, string fileName) => 
-            await _httpClient.GetStringAsync($"api/torrents/GetLinkToDownloadFile/{directoryName}/{fileName}");
+        public async Task<string> GetLinkToDownloadFile(string directoryName, string fileName) =>
+            await _customHttpClient.GetJsonAsync<string>($"api/torrents/GetLinkToDownloadFile/{directoryName}/{fileName}");
     }
 }

@@ -80,7 +80,7 @@
     private IEnumerable<SubcategoryView> subcategories;
 
     private string Errors;
-    
+
 
     protected override async Task OnInitializedAsync()
     {
@@ -90,13 +90,14 @@
 
     public async Task UploadTorrent()
     {
-        var response = await torrentsService.UploadTorrent(newTorrent, inputTypeFileElement);
-
-        if (response.IsSuccessful)
-            UriHelper.NavigateTo("/");
-        else
+        try
         {
-            Errors = response.ContentResult;
+            await torrentsService.UploadTorrent(newTorrent, inputTypeFileElement);
+            UriHelper.NavigateTo("/");
+        }
+        catch (ResponseException exc)
+        {
+            Errors = exc.Message;
             StateHasChanged();
         }
     }

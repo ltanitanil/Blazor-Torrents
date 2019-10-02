@@ -8,7 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="Blazored.LocalStorage" Version="2.0.14" />
-    <PackageReference Include="Microsoft.AspNetCore.Blazor.HttpClient" Version="3.0.0-preview9.19457.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Blazor.HttpClient" Version="3.0.0-preview9.19465.2" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="5.5.0" />
 	<PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="3.0.0-rc1.19457.4" />
 	<PackageReference Include="Tewr.Blazor.FileReader" Version="0.15.0.19248" />

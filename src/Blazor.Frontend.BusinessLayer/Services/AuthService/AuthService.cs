@@ -2,7 +2,7 @@
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using Blazor.Frontend.BusinessLayer.Extensions;
+using Blazor.Frontend.BusinessLayer.Services.CustomHTTPClient;
 using Blazor.Frontend.BusinessLayer.Provider;
 using Blazor.Shared.Models.ViewModels;
 using Blazor.Shared.Models.ViewModels.Account;
@@ -14,52 +14,48 @@ namespace Blazor.Frontend.BusinessLayer.Services.AuthService
 {
     public class AuthService : IAuthService
     {
-        private readonly HttpClient _httpClient;
+        private readonly CustomHttpClient _customHttpClient;
         private readonly AuthenticationStateProvider _authenticationStateProvider;
         private readonly ILocalStorageService _localStorage;
 
-        public AuthService(HttpClient httpClient,
+        public AuthService(CustomHttpClient customHttpClient,
             AuthenticationStateProvider authenticationStateProvider,
             ILocalStorageService localStorage)
         {
-            _httpClient = httpClient;
+            _customHttpClient = customHttpClient;
             _authenticationStateProvider = authenticationStateProvider;
             _localStorage = localStorage;
         }
 
         public async Task<IEnumerable<string>> GetLoginProviders()
-            => await _httpClient.GetJsonAsync<IEnumerable<string>>("api/account/loginproviders");
+            => await _customHttpClient.GetJsonAsync<IEnumerable<string>>("api/account/loginproviders");
 
-        public async Task<ResponseResult> Register(RegistrationViewModel registrationViewModel) 
-            => await _httpClient.MyPostJsonAsync("api/account/register", registrationViewModel);
+        public async Task Register(RegistrationViewModel registrationViewModel)
+            => await _customHttpClient.PostJsonAsync("api/account/register", registrationViewModel);
 
-        public async Task<ResponseResult> Login(LoginViewModel loginModel)
+        public async Task Login(LoginViewModel loginModel)
         {
-            var result = await _httpClient.MyPostJsonAsync("api/account/login", loginModel);
-            if (result.IsSuccessful)
-                await SetAsAuthenticated(result.ContentResult);
-            return result;
+            var token = await _customHttpClient.PostJsonAsync<string>("api/account/login", loginModel);
+            await SetAsAuthenticated(token);
         }
 
-        public async Task<ResponseResult> ExternalLogin()
+        public async Task ExternalLogin()
         {
-            var result = await _httpClient.MyGetAsync("/api/account/ExternalLoginCallback");
-            if(result.IsSuccessful)
-                await SetAsAuthenticated(result.ContentResult);
-            return result;
+            var token = await _customHttpClient.GetJsonAsync<string>("/api/account/ExternalLoginCallback");
+            await SetAsAuthenticated(token);
         }
 
         public async Task Logout()
         {
             await _localStorage.RemoveItemAsync("authToken");
             ((ApiAuthenticationStateProvider)_authenticationStateProvider).MarkUserAsLoggedOut();
-            _httpClient.DefaultRequestHeaders.Authorization = null;
+            _customHttpClient.SetAuthenticationHeaderValue(null);
         }
 
         private async Task SetAsAuthenticated(string token)
         {
             await _localStorage.SetItemAsync("authToken", token);
-            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", token);
+            _customHttpClient.SetAuthenticationHeaderValue(new AuthenticationHeaderValue("bearer", token));
             ((ApiAuthenticationStateProvider)_authenticationStateProvider).MarkUserAsAuthenticated(token);
         }
     }

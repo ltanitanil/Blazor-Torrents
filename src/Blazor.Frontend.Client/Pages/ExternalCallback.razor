@@ -17,14 +17,14 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var result = await AuthService.ExternalLogin();
-        if (result.IsSuccessful)
+        try
         {
+            await AuthService.ExternalLogin();
             NavigationManager.NavigateTo("/");
         }
-        else
+        catch(ResponseException exc)
         {
-            Errors = result.ContentResult;
+            Errors = exc.Message;
             StateHasChanged();
         }
     }

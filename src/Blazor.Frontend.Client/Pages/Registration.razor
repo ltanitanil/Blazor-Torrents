@@ -71,16 +71,15 @@
 
     private async Task HandleRegistration()
     {
-        var registerResult = await AuthService.Register(registerModel);
-
-        if (registerResult.IsSuccessful)
+        try
         {
+            await AuthService.Register(registerModel);
             Modal.Show("ФОРМА ВХОДА", typeof(Login));
             UriHelper.NavigateTo("/");
         }
-        else
+        catch(ResponseException exp)
         {
-            Errors = registerResult.ContentResult;
+            Errors = exp.Message;
             StateHasChanged();
         }
     }

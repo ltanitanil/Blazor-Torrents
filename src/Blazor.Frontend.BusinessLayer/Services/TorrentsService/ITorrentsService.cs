@@ -14,7 +14,7 @@ namespace Blazor.Frontend.BusinessLayer.Services.TorrentsService
         Task<SearchAndFilterData> GetDataToFilter();
         Task<IReadOnlyList<CategoryView>> GetCategoriesWithSubcategories();
         Task<TorrentDescriptionView> GetTorrentDescription(int id);
-        Task<ResponseResult> UploadTorrent(TorrentUploadViewModel torrent, ElementReference filesRef);
+        Task UploadTorrent(TorrentUploadViewModel torrent, ElementReference filesRef);
         Task<string> GetLinkToDownloadFile(string directoryName, string fileName);
     }
 }
