@@ -49,7 +49,7 @@ namespace Blazor.Frontend.BusinessLayer.Services.CustomHTTPClient
             var requestMessage = new HttpRequestMessage
             {
                 Method = method,
-                RequestUri = new Uri(requestUri),
+                RequestUri = new Uri(requestUri, UriKind.Relative),
                 Content = content
             };
 
