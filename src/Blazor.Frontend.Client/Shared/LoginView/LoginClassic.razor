@@ -43,7 +43,7 @@
             await AuthService.Login(loginModel);
             CloseModal();
         }
-        catch(ResponseException exc)
+        catch(AppException exc)
         {
             Errors = exc.Message;
             StateHasChanged();

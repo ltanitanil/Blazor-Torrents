@@ -11,6 +11,7 @@ namespace Blazor.Shared.Core.Exceptions
         LoginFailed,
         RegistrationFailed,
         UploadFailed,
-        AccessDenied
+        AccessDenied,
+        HTTPRequestFailed
     }
 }

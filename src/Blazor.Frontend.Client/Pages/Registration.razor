@@ -77,7 +77,7 @@
             Modal.Show("ФОРМА ВХОДА", typeof(Login));
             UriHelper.NavigateTo("/");
         }
-        catch(ResponseException exp)
+        catch(AppException exp)
         {
             Errors = exp.Message;
             StateHasChanged();

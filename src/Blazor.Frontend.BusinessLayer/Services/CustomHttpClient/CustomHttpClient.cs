@@ -1,4 +1,5 @@
 ﻿using Blazor.Frontend.BusinessLayer.Exceptions;
+using Blazor.Shared.Core.Exceptions;
 using Newtonsoft.Json;
 using System;
 using System.Net.Http;
@@ -17,7 +18,8 @@ namespace Blazor.Frontend.BusinessLayer.Services.CustomHTTPClient
             _httpClient = httpClient;
 
         public void SetAuthenticationHeaderValue(AuthenticationHeaderValue authenticationHeaderValue) =>
-            _httpClient.DefaultRequestHeaders.Authorization = authenticationHeaderValue;
+            _httpClient.DefaultRequestHeaders.Authorization = authenticationHeaderValue
+            ?? throw new AppException(ExceptionEvent.InvalidParameters, "AuthenticationHeader can't be null.");
 
         public async Task<T> GetJsonAsync<T>(string requestUri) =>
             await SendJsonAsync<T>(HttpMethod.Get, requestUri);
@@ -46,9 +48,13 @@ namespace Blazor.Frontend.BusinessLayer.Services.CustomHTTPClient
 
         public async Task<string> SendAsync(HttpMethod method, string requestUri, HttpContent content = null)
         {
+            if (string.IsNullOrWhiteSpace(requestUri))
+                throw new AppException(ExceptionEvent.InvalidParameters, "Uri can't be null or empty.");
+
             var requestMessage = new HttpRequestMessage
             {
-                Method = method,
+                Method = method
+                        ?? throw new AppException(ExceptionEvent.InvalidParameters, "HttpMethod can't be null."),
                 RequestUri = new Uri(requestUri, UriKind.Relative),
                 Content = content
             };
@@ -56,7 +62,7 @@ namespace Blazor.Frontend.BusinessLayer.Services.CustomHTTPClient
             using var httpResponseMessage = await _httpClient.SendAsync(requestMessage);
 
             if (!httpResponseMessage.IsSuccessStatusCode)
-                throw new ResponseException(await httpResponseMessage.Content.ReadAsStringAsync());
+                throw new AppException(ExceptionEvent.HTTPRequestFailed, await httpResponseMessage.Content.ReadAsStringAsync());
 
             return await httpResponseMessage.Content.ReadAsStringAsync();
         }

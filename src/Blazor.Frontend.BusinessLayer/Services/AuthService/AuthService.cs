@@ -9,6 +9,7 @@ using Blazor.Shared.Models.ViewModels.Account;
 using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
+using Blazor.Shared.Core.Exceptions;
 
 namespace Blazor.Frontend.BusinessLayer.Services.AuthService
 {
@@ -31,11 +32,15 @@ namespace Blazor.Frontend.BusinessLayer.Services.AuthService
             => await _customHttpClient.GetJsonAsync<IEnumerable<string>>("api/account/loginproviders");
 
         public async Task Register(RegistrationViewModel registrationViewModel)
-            => await _customHttpClient.PostJsonAsync("api/account/register", registrationViewModel);
+        {
+            await _customHttpClient.PostJsonAsync("api/account/register", registrationViewModel
+                ?? throw new AppException(ExceptionEvent.InvalidParameters, "Registration form can't be empty."));
+        }
 
         public async Task Login(LoginViewModel loginModel)
         {
-            var token = await _customHttpClient.PostJsonAsync<string>("api/account/login", loginModel);
+            var token = await _customHttpClient.PostJsonAsync<string>("api/account/login", loginModel
+                ?? throw new AppException(ExceptionEvent.InvalidParameters, "Login form can't be empty."));
             await SetAsAuthenticated(token);
         }
 
@@ -54,6 +59,9 @@ namespace Blazor.Frontend.BusinessLayer.Services.AuthService
 
         private async Task SetAsAuthenticated(string token)
         {
+            if (string.IsNullOrWhiteSpace(token))
+                throw new AppException(ExceptionEvent.InvalidParameters, "Token can't be null or empty.");
+
             await _localStorage.SetItemAsync("authToken", token);
             _customHttpClient.SetAuthenticationHeaderValue(new AuthenticationHeaderValue("bearer", token));
             ((ApiAuthenticationStateProvider)_authenticationStateProvider).MarkUserAsAuthenticated(token);

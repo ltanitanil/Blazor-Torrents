@@ -95,7 +95,7 @@
             await torrentsService.UploadTorrent(newTorrent, inputTypeFileElement);
             UriHelper.NavigateTo("/");
         }
-        catch (ResponseException exc)
+        catch (AppException exc)
         {
             Errors = exc.Message;
             StateHasChanged();

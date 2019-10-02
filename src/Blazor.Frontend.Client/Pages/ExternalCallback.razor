@@ -22,7 +22,7 @@
             await AuthService.ExternalLogin();
             NavigationManager.NavigateTo("/");
         }
-        catch(ResponseException exc)
+        catch(AppException exc)
         {
             Errors = exc.Message;
             StateHasChanged();
