@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.IO.Compression;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Blazor.Server.BusinessLayer.Exceptions;
 using Blazor.Server.BusinessLayer.Helpers;
 using Blazor.Server.BusinessLayer.Services.BlobContainerService;
 using Blazor.Server.DataAccessLayer.Context.Torrents;
@@ -13,6 +10,7 @@ using Blazor.Server.DataAccessLayer.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 using File = Blazor.Server.DataAccessLayer.Entities.File;
+using Blazor.Shared.Core.Exceptions;
 
 namespace Blazor.Server.BusinessLayer.Services.TorrentsService
 {

@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Blazor.Server.BusinessLayer.Entities;
-using Blazor.Server.BusinessLayer.Exceptions;
 using Blazor.Server.BusinessLayer.Services.JwtTokenService;
 using Blazor.Server.DataAccessLayer.Entities;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Blazor.Server.BusinessLayer.Extensions;
+using Blazor.Shared.Core.Exceptions;
 
 namespace Blazor.Server.BusinessLayer.Services.AccountService
 {
@@ -72,9 +70,6 @@ namespace Blazor.Server.BusinessLayer.Services.AccountService
             }
             (await _userManager.AddLoginAsync(user, externalLoginInfo)).ErrorChecking();
         }
-
-       
-
 
         public async Task<string> Login(string email, string password)
         {

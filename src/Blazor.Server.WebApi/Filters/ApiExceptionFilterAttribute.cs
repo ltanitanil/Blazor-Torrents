@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Blazor.Server.BusinessLayer.Exceptions;
 using Microsoft.Extensions.Logging;
+using Blazor.Shared.Core.Exceptions;
 
 namespace Blazor.Server.WebApi.Filters
 {
