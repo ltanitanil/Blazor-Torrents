@@ -24,7 +24,7 @@
 .blazored-modal {
     display: flex;
     flex-direction: column;
-    height: 450px;
+    height: 550px;
     background-color: #fff;
     border: 1px solid #fff;
     padding: 1.5rem;

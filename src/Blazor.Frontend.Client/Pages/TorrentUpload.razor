@@ -11,10 +11,10 @@
             <h1>Добавление</h1>
             <h1>торрента</h1>
         </div>
-        @if (ShowErrors)
+        @if (!string.IsNullOrWhiteSpace(Errors))
         {
             <div class="alert alert-danger" role="alert">
-                <p>@response.Error</p>
+                <p>@Errors</p>
             </div>
         }
         <EditForm Model=@newTorrent OnValidSubmit=@UploadTorrent>
@@ -72,16 +72,15 @@
     </div>
 </div>
 @code {
-    private bool ShowErrors;
-    ElementReference inputTypeFileElement;
-    TorrentUploadViewModel newTorrent = new TorrentUploadViewModel();
+    private ElementReference inputTypeFileElement;
+    private TorrentUploadViewModel newTorrent = new TorrentUploadViewModel();
 
-    IReadOnlyList<CategoryView> categories;
-    int? SelectedCategoryId;
-    IEnumerable<SubcategoryView> subcategories;
-    
-    ResponseModel response;
-    
+    private IReadOnlyList<CategoryView> categories;
+    private int? SelectedCategoryId;
+    private IEnumerable<SubcategoryView> subcategories;
+
+    private string Errors;
+
 
     protected override async Task OnInitializedAsync()
     {
@@ -91,15 +90,14 @@
 
     public async Task UploadTorrent()
     {
-        response = await torrentsService.UploadTorrent(newTorrent, inputTypeFileElement);
-
-        if (response.Successful)
+        try
         {
+            await torrentsService.UploadTorrent(newTorrent, inputTypeFileElement);
             UriHelper.NavigateTo("/");
         }
-        else
+        catch (AppException exc)
         {
-            ShowErrors = true;
+            Errors = exc.Message;
             StateHasChanged();
         }
     }

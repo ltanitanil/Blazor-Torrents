@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using AutoMapper;
 using Blazor.Server.BusinessLayer.Entities;
 using Blazor.Server.BusinessLayer.Services.AccountService;
@@ -23,5 +24,20 @@ namespace Blazor.Server.WebApi.Controllers.Api
         [HttpPost]
         public async Task Register(RegistrationViewModel model) =>
             await _accountsService.Register(_mapper.Map<RegistrationModel>(model));
+
+        [HttpGet]
+        public async Task<IEnumerable<string>> LoginProviders() =>
+            await _accountsService.GetLoginProviders();
+
+        [HttpGet]
+        public IActionResult Login(string providerName)
+        {
+            var properties = _accountsService.ConfigureExternalAuthenticationProperties(providerName, "/ExternalCallback");
+            return Challenge(properties, providerName);
+        }
+
+        [HttpGet]
+        public async Task<string> ExternalLoginCallback() =>
+           await _accountsService.LoginWithExternalIdentifier();
     }
 }

@@ -1,16 +1,11 @@
 ﻿using Microsoft.WindowsAzure.Storage.Blob;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Blazor.Server.BusinessLayer.Entities;
-using Blazor.Server.BusinessLayer.Exceptions;
 using Blazor.Server.BusinessLayer.Settings;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using Microsoft.WindowsAzure.Storage;
+using Blazor.Shared.Core.Exceptions;
 
 namespace Blazor.Server.BusinessLayer.Services.BlobContainerService
 {

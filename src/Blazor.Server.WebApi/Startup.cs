@@ -23,8 +23,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Mvc.Formatters;
 
-
-
 namespace Blazor.Server.WebApi
 {
     public class Startup
@@ -62,7 +60,17 @@ namespace Blazor.Server.WebApi
                         ValidIssuer = Configuration["JWTSettings:Issuer"],
                         ValidAudience = Configuration["JWTSettings:Audience"],
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWTSettings:SecurityKey"]))
-                    });
+                    })
+                .AddGoogle(googleOptions =>
+                {
+                    googleOptions.ClientId = Configuration["Authentication:Google:ClientId"];
+                    googleOptions.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
+                })
+                .AddMicrosoftAccount(microsoftOptions =>
+                {
+                    microsoftOptions.ClientId = Configuration["Authentication:Microsoft:ClientId"];
+                    microsoftOptions.ClientSecret = Configuration["Authentication:Microsoft:ClientSecret"];
+                });
 
             services.Configure<CacheOptionsSettings>(Configuration.GetSection("CacheSettings"));
             services.Configure<TokenManagerSettings>(Configuration.GetSection("JWTSettings"));
@@ -80,11 +88,10 @@ namespace Blazor.Server.WebApi
 
 
             services.AddMvc(options =>
-                {
-                    options.Filters.Add<ApiExceptionFilterAttribute>();
-                    options.OutputFormatters.RemoveType<StringOutputFormatter>();
-                }
-                );
+            {
+                options.Filters.Add<ApiExceptionFilterAttribute>();
+                options.OutputFormatters.RemoveType<StringOutputFormatter>();
+            });
 
             services.AddResponseCompression(opts =>
             {

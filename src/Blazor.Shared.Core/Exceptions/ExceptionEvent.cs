@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Blazor.Server.BusinessLayer.Exceptions
+namespace Blazor.Shared.Core.Exceptions
 {
     public enum ExceptionEvent
     {
@@ -11,6 +11,7 @@ namespace Blazor.Server.BusinessLayer.Exceptions
         LoginFailed,
         RegistrationFailed,
         UploadFailed,
-        AccessDenied
+        AccessDenied,
+        HTTPRequestFailed
     }
 }

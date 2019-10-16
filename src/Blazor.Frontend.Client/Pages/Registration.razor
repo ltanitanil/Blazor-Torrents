@@ -11,10 +11,10 @@
             <h1>Регистрация</h1>
             <h1>аккаунта</h1>
         </div>
-        @if (ShowErrors)
+        @if (!string.IsNullOrWhiteSpace(Errors))
         {
             <div class="alert alert-danger" role="alert">
-                <p>@registerResult.Error</p>
+                <p>@Errors</p>
             </div>
         }
         <div class="card-myform">
@@ -67,24 +67,21 @@
 </div>
 @code {
     private RegistrationViewModel registerModel = new RegistrationViewModel();
-    private ResponseModel registerResult;
-    private bool ShowErrors;
+    private string Errors;
 
     private async Task HandleRegistration()
     {
-        registerResult = await AuthService.Register(registerModel);
-
-        if (registerResult.Successful)
+        try
         {
+            await AuthService.Register(registerModel);
             Modal.Show("ФОРМА ВХОДА", typeof(Login));
             UriHelper.NavigateTo("/");
         }
-        else
+        catch(AppException exp)
         {
-            ShowErrors = true;
+            Errors = exp.Message;
             StateHasChanged();
         }
-
     }
 
 }

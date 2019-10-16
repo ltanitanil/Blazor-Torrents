@@ -1,0 +1,28 @@
+﻿@inject IAuthService authService
+
+
+@if (loginProviders != null)
+    @foreach (var provider in loginProviders)
+    {
+        <div class="blazor-loginexternal @provider">
+            <a class="provider-link" href=@GetPath(provider)>
+                <i class="fab fa-@provider.ToLower()"></i>
+                <span>Войти через @provider</span>
+            </a>
+        </div>
+    }
+
+@code {
+    IEnumerable<string> loginProviders;
+
+    protected override async Task OnInitializedAsync()
+    {
+        loginProviders = await authService.GetLoginProviders();
+        StateHasChanged();
+    }
+
+    private string GetPath(string provider)
+    {
+        return $"/api/account/Login/?providerName={provider}";
+    }
+}

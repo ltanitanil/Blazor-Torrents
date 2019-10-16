@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Blazor.Server.BusinessLayer.Exceptions
+namespace Blazor.Shared.Core.Exceptions
 {
     public class AppException:Exception
     {

@@ -1,6 +1,7 @@
 using Blazor.FileReader;
 using Blazor.Frontend.BusinessLayer.Provider;
 using Blazor.Frontend.BusinessLayer.Services.AuthService;
+using Blazor.Frontend.BusinessLayer.Services.CustomHTTPClient;
 using Blazor.Frontend.BusinessLayer.Services.TorrentsService;
 using Blazored.LocalStorage;
 using Blazored.Modal;
@@ -20,6 +21,7 @@ namespace Blazor.Frontend.Client
             services.AddScoped<AuthenticationStateProvider, ApiAuthenticationStateProvider>();
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<ITorrentsService, TorrentsService>();
+            services.AddSingleton<CustomHttpClient>();
             services.AddBlazoredModal();
             services.AddFileReaderService(options => options.UseWasmSharedBuffer = true);
         }
